@@ -1,0 +1,98 @@
+<html lang="en-us"><head>
+  <base href="https://calc84maniac.github.io/tiboyce/converter/" target="_blank">
+  
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  
+    <title>
+      
+        ROM Converter · TI-Boy CE
+      
+    </title>
+  
+    
+  
+  
+    <!-- CSS -->
+  
+    <!-- Icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/tiboyce/favicon.png">
+  <link rel="shortcut icon" href="/tiboyce/favicon.ico">
+  
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+
+    <style>
+        body, main, div {
+            background: transparent !important;
+        }
+        button {background: darkgrey !important;}
+        p, h1,h2,h3, a {
+            color: white !important;
+        }
+
+
+    </style>
+
+<link rel="stylesheet" href="/tiboyce/assets/css/main.css">
+    
+  
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
+  
+    <!-- Additional head bits without overriding original head -->
+      
+  </head>
+  
+  
+    <body class="page"><center>
+  
+      
+  
+      <main class="container">
+        <header>
+    <h1 class="page-title">ROM Converter</h1>
+  </header>
+  <div class="content">
+    <link rel="stylesheet" href="/tiboyce/assets/css/bootstrap.css">
+  
+  <link rel="stylesheet" href="/tiboyce/assets/css/bootstrap-theme.css">
+  
+  <style>
+      #buttonsContainer button { margin-right: 5px; }
+      #dlList li { display: inline-block; }
+      #dlList li:before { content: '\2022'; margin-left: 0.5em; margin-right: 0.25em; }
+  </style>
+  
+  <p>Create .8xv files from your Game Boy (Color) ROM file: <input style="display: inline-block" type="file" accept=".gb,.gbc,.rom,.zip" onchange="fileLoad(event)" control-id="ControlID-1"></p>
+  
+  <p>File links will appear here (click to download):</p>
+  <ul id="dlList"></ul>
+  
+  <div id="buttonsContainer"></div>
+  
+  
+  
+  
+  
+  
+  
+  <script src="romgen-utils.js"></script>
+  
+  <script>
+      var script = document.createElement('script');
+      script.src = "romgen.js?v=2";
+      document.body.appendChild(script);
+  </script>
+  
+  
+  </div>
+  
+      </main><script src="romgen.js?v=2"></script>
+  
+      <!-- Optional footer content -->
+  
+    
+  
+  </center></body></html>

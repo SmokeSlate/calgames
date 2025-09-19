@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ</title>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Heebo', sans-serif;
+            color: #a7a7a7;
+            background: black;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        header {
+            background: linear-gradient(to bottom, #616161, #1b2631, black);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .faq {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #606060;
+            border-radius: 15px;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .faq h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-item h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .faq-item p {
+            font-size: 1.2em;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        footer a {
+            color: #39d;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<header>
+    <h1>Calculator Games</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/games.html">Games</a></li>
+            <li><a href="/tools.html">Tools</a></li>
+            <li><a href="/downloads.html">Downloads</a></li>
+            <li><a style="color: #a7a7a7;" href="/faq.html">FAQ</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+        <h3>1. What is Calculator Games?</h3>
+        <p>Calculator Games is a website where you can find and download games for TI calculators. We offer a variety of games ranging from classic to new releases.</p>
+    </div>
+    <div class="faq-item">
+        <h3>2. How do I download a game?</h3>
+        <p>Simply navigate to the 'Games' section, select a game you're interested in, and follow the download link provided on the game page.</p>
+    </div>
+    <div class="faq-item">
+        <h3>3. Are the games free?</h3>
+        <p>Most of the games are free to download. However, some may have a cost associated with them, which will be clearly indicated on the game page.</p>
+    </div>
+    <div class="faq-item">
+        <h3>4. Can I contribute a game?</h3>
+        <p>Yes! If you have a game you'd like to contribute, please reach out to us through the 'Contact' page with details about your game.</p>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
+    <p>Not affiliated with TI. Use at your own risk.</p>
+</footer>
+
+<!-- Include Particles.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<script>
+    // Initialize Particles.js
+    particlesJS('particles-js', {
+        "particles": {
+            "number": {
+                "value": 100,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": ["#ffadad", "#ffd6a5", "#fdffb6", "#caffbf", "#9bf6ff", "#a0c4ff", "#bdb2ff", "#ffc6ff"]
+            },
+            "shape": {
+                "type": "circle"
+            },
+            "opacity": {
+                "value": 0.5
+            },
+            "size": {
+                "value": 4,
+                "random": true
+            },
+            "move": {
+                "enable": true,
+                "speed": 3,
+                "direction": "random",
+                "out_mode": "out"
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

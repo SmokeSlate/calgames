@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "calculatgames",
+    "calgames": "calculatgames"
+  },
+  "targets": {},
+  "etags": {}
+}

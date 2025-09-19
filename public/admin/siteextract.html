@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Data Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #urlInput {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #email {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #fetchData {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #output {
+            white-space: pre-wrap;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        #urlList {
+            margin-bottom: 10px;
+        }
+        #urlList input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Website Data Extractor</h1>
+    
+    <div id="urlList">
+        <input type="text" id="urlInput" placeholder="Enter URL and press Enter"><br>
+        <input type="email" id="email" placeholder="Enter Email and press Enter"><br>
+        <button id="fetchData">Fetch Data</button>
+    </div>
+    
+    <pre id="output"></pre>
+
+    <script>
+        // Function to fetch and extract data using a CORS proxy
+        async function fetchDataFromUrl(url) {
+            const proxyUrl = 'https://corsproxy.io/?';
+
+            try {
+                // Fetch the URL using the CORS proxy
+                const response = await fetch(proxyUrl + encodeURIComponent(url));
+
+                // Ensure that the request was successful
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Get the HTML text
+                const htmlText = await response.text();
+
+                // Create a DOM parser to process the HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(htmlText, 'text/html');
+
+                return doc;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return null;
+            }
+        }
+
+        // Function to extract text between two headings
+        function extractTextBetween(startText, endText, container) {
+            let isBetweenHeadings = false;
+            let resultText = '';
+            let startFound = false;
+
+            const nodes = container.childNodes;
+            nodes.forEach(node => {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    const elementText = node.innerText.trim();
+
+                    if (!startFound && elementText.includes(startText)) {
+                        startFound = true;
+                        isBetweenHeadings = true;
+                    }
+
+                    if (isBetweenHeadings && elementText.includes(endText)) {
+                        isBetweenHeadings = false;
+                    }
+
+                    if (isBetweenHeadings) {
+                        resultText += elementText + ' ';
+                    }
+                }
+            });
+
+            return resultText.trim();
+        }
+
+        // Function to extract text from elements with a specific class
+        function extractTextFromClass(doc, className) {
+            const elements = doc.querySelectorAll(className);
+            return Array.from(elements).map(el => el.innerText.trim()).join(', ');
+        }
+
+        // Function to extract href attributes from anchor tags with a specific class
+        function extractLinksFromClass(doc, className) {
+            const elements = doc.querySelectorAll(className);
+            return Array.from(elements).map(el => el.href).join(', ');
+        }
+
+        // Function to process the extracted content from the fetched document
+        function extractDataFromDoc(doc) {
+            const outputData = {};
+
+            // Get the specific element with the class "archive_block-last"
+            const archiveBlockLastElement = doc.querySelector('.archive_block-last');
+
+            // Initialize variables to store extracted content
+            let description = '';
+            let author = '';
+            let title = '';
+            let download = '';
+
+            // Check if the element with the class "archive_block-last" exists
+            if (archiveBlockLastElement) {
+                const startHeading = 'Description';
+                const endHeading = 'Source :...';
+
+                // Extract the text content between the specified headings
+                description = extractTextBetween(startHeading, endHeading, archiveBlockLastElement);
+                outputData.description = description || 'No content found between headings.';
+            } else {
+                outputData.description = 'No elements found with class "archive_block-last".';
+            }
+
+            // Extract text from elements with the class "username-coloured"
+            author = extractTextFromClass(doc, '.archive_block-last .bootstrap div b a');
+            outputData.usernames = author || 'No elements found with class "username-coloured".';
+
+            // Extract text from all h2 elements with the class "archive_block"
+            const archiveBlockHeaders = doc.querySelectorAll('h2.archive_block');
+            title = Array.from(archiveBlockHeaders).map(header => header.innerText.trim()).join(', ');
+            outputData.title = title || 'No h2 elements found with class "archive_block".';
+
+            // Extract href attributes from a elements with class "btn btn-success"
+            download = extractLinksFromClass(doc, 'div.panelhist.archive .archive_block-last div.bootstrap a.btn.btn-success:first-of-type');
+            outputData.download = download || 'No links found with class "btn btn-success".';
+
+            return outputData;
+        }
+
+        // Function to handle the fetch and extraction process
+        async function handleFetchData() {
+            const urlInput = document.getElementById('urlInput');
+            const urls = urlInput.value.split('\n').map(url => url.trim()).filter(url => url);
+
+            const outputElement = document.getElementById('output');
+            outputElement.innerText = 'Fetching data...\n';
+
+            let finalResults = [];
+
+            for (const url of urls) {
+                const doc = await fetchDataFromUrl(url);
+                if (doc) {
+                    const extractedData = extractDataFromDoc(doc);
+                    finalResults.push({ url, data: extractedData });
+                } else {
+                    finalResults.push({ url, error: 'Error fetching or parsing data.' });
+                }
+            }
+            
+            outputElement.innerText = JSON.stringify(finalResults, null, 2);
+            const fetchdata = new URLSearchParams({'gamedata': encodeURIComponent(outputElement.innerText),'email': document.getElementById('email').value});
+            fetch('https://script.google.com/macros/s/AKfycbzLGDmAprHjksqpa4ELJnkRNz5uSffivj6HLgIZ34egwlLmuuiznW8vksDd9xVy0O8-/exec', {
+            method: 'POST',
+            body: fetchdata,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+            })
+        }
+
+        // Add event listeners
+        document.getElementById('fetchData').addEventListener('click', handleFetchData);
+        document.getElementById('urlInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleFetchData();
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

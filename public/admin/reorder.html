@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Reorder Games</title>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Heebo', sans-serif;
+            color: #a7a7a7;
+            background: black;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        .admin-section {
+            padding: 50px;
+            background-color: #333;
+            border-radius: 10px;
+            margin-top: 50px;
+            color: white;
+        }
+        .login-section {
+            text-align: center;
+            padding: 100px;
+        }
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #39d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1d9bf0;
+        }
+        .list-item {
+            padding: 15px;
+            background-color: #606060;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: move;
+        }
+        h2 {
+            text-align: center;
+            color: white;
+        }
+        .output {
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container login-section" id="login-section">
+    <h2>Admin Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="login-message" style="color: red;"></p>
+</div>
+
+<div class="container hidden" id="admin-section">
+    <div class="admin-section">
+        <h2>Reorder Games</h2>
+        <div id="game-list">
+            <!-- List items will be populated here -->
+        </div>
+        <button onclick="saveOrder()">Save Order</button>
+        <div class="output">
+            <h3>Reordered List Output</h3>
+            <pre id="output"></pre>
+        </div>
+    </div>
+</div>
+
+<script>
+// Admin credentials
+const ADMIN_USERNAME = "smoke";
+const ADMIN_PASSWORD = "slate";
+
+// Sample GitHub repository details (update with your details)
+const GITHUB_REPO = 'github.sm0ke.org';
+const GITHUB_FILE_PATH = 'random/calculator/games/games.json';
+const GITHUB_API_URL = `https://api.github.com//repos/smokeslate/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
+let games = []; // List of games from JSON
+let sha; // File SHA needed to update the file
+
+// Login function
+function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const loginMessage = document.getElementById('login-message');
+
+    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('admin-section').classList.remove('hidden');
+        loadGames();
+    } else {
+        loginMessage.textContent = "Invalid username or password!";
+    }
+}
+
+// Fetch the games from the JSON file
+function loadGames() {
+    fetch('https://github.sm0ke.org/random/calculator/games/games.json')
+        .then(response => response.json())
+        .then(data => {
+            games = data;
+            renderGames();
+        })
+        .catch(error => {
+            console.error('Error fetching games:', error);
+        });
+}
+
+// Function to render games on the page
+function renderGames() {
+    const gameList = document.getElementById('game-list');
+    gameList.innerHTML = '';
+    games.forEach((game, index) => {
+        const gameItem = document.createElement('div');
+        gameItem.className = 'list-item';
+        gameItem.setAttribute('draggable', true);
+        gameItem.innerHTML = `<strong>${game.title}</strong> - ${game.author}zx`;
+        gameItem.dataset.index = index;
+        gameList.appendChild(gameItem);
+    });
+
+    // Make the items draggable
+    makeDraggable();
+}
+
+// Make the list items draggable for reordering
+function makeDraggable() {
+    const items = document.querySelectorAll('.list-item');
+    let dragStartIndex;
+
+    items.forEach(item => {
+        item.addEventListener('dragstart', () => {
+            dragStartIndex = +item.dataset.index;
+        });
+
+        item.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        item.addEventListener('drop', () => {
+            const dragEndIndex = +item.dataset.index;
+            swapItems(dragStartIndex, dragEndIndex);
+            renderGames();
+        });
+    });
+}
+
+// Swap list items
+function swapItems(fromIndex, toIndex) {
+    const itemOne = games[fromIndex];
+    const itemTwo = games[toIndex];
+    games[fromIndex] = itemTwo;
+    games[toIndex] = itemOne;
+}
+
+// Save and display the reordered list
+function saveOrder() {
+    const output = document.getElementById('output');
+    output.textContent = JSON.stringify(games, null, 2);
+
+    // Update the JSON file on GitHub using the API
+    updateGitHubFile();
+}
+
+// GitHub API call to update the JSON file
+function updateGitHubFile() {
+    const token = prompt("Enter your GitHub Personal Access Token:");
+    
+    if (!token) {
+        alert("GitHub token is required to update the file.");
+        return;
+    }
+
+    // Fetch the current file's SHA (needed for update)
+    fetch(GITHUB_API_URL, {
+        headers: {
+            Authorization: `token ${token}`,
+            Accept: "application/vnd.github.v3+json"
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        sha = data.sha;
+        const updatedContent = btoa(unescape(encodeURIComponent(JSON.stringify(games, null, 2))));
+        
+        // Make the PUT request to update the file
+        fetch(GITHUB_API_URL, {
+            method: 'PUT',
+            headers: {
+                Authorization: `token ${token}`,
+                Accept: "application/vnd.github.v3+json"
+            },
+            body: JSON.stringify({
+                message: 'Update games.json via admin reorder',
+                content: updatedContent,
+                sha: sha,
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            alert('Games.json updated successfully!');
+            console.log(result);
+        })
+        .catch(error => {
+            console.error('Error updating the file:', error);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching file SHA:', error);
+    });
+}
+
+</script>
+
+</body>
+</html>

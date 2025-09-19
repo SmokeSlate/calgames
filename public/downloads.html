@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads</title>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Heebo', sans-serif;
+            color: #a7a7a7;
+            background: black;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        header {
+            background: linear-gradient(to bottom, #616161, #1b2631, black);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .downloads {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #606060;
+            border-radius: 15px;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .downloads h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .downloads ul {
+            list-style: none;
+            padding: 0;
+        }
+        .downloads li {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #444;
+            border-radius: 10px;
+        }
+        .downloads li a {
+            color: #39d;
+            text-decoration: none;
+        }
+        .downloads li a:hover {
+            text-decoration: underline;
+        }
+        .downloads li h3 {
+            margin: 0;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        footer a {
+            color: #39d;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<header>
+    <h1>Calculator Games</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/games.html">Games</a></li>
+            <li><a href="/tools.html">Tools</a></li>
+            <li><a style="color: #a7a7a7;" href="/downloads.html">Downloads</a></li>
+            <li><a href="/faq.html">FAQ</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="downloads">
+    <h2>Required Software</h2>
+    <ul>
+        <li>
+            <h3>TI Connect CE</h3>
+            <p>TI Connect CE is essential for transferring games and other files to your TI calculator.</p>
+            <a id="tilink" href="" target="_blank">Download TI Connect CE</a>
+        </li>
+        <li>
+            <h3>CE Libraries</h3>
+            <p>CE Libraries are REQUIRED to run almost ANY game on all TI calculators.</p>
+            <a href="https://github.com/CE-Programming/libraries/releases" target="_blank">Download CE Libraries</a>
+        </li>
+        <li>
+            <h3>arTIfaCE</h3>
+            <p>arTIfaCE are REQUIRED to open games on newer versions.<br> Note: arTIfiCE is not needed if your calculator has OS 5.4 or earlier!</p>
+            <a href="https://yvantt.github.io/arTIfiCE/" target="_blank">Download arTIfaCE</a>
+        </li>
+    </ul>
+</section>
+
+<footer>
+    <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
+    <p>Not affiliated with TI. Use at your own risk.</p>
+</footer>
+
+<!-- Include Particles.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<script>
+    // Initialize Particles.js
+    particlesJS('particles-js', {
+        "particles": {
+            "number": {
+                "value": 100,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": ["#ffadad", "#ffd6a5", "#fdffb6", "#caffbf", "#9bf6ff", "#a0c4ff", "#bdb2ff", "#ffc6ff"]
+            },
+            "shape": {
+                "type": "circle"
+            },
+            "opacity": {
+                "value": 0.5
+            },
+            "size": {
+                "value": 4,
+                "random": true
+            },
+            "move": {
+                "enable": true,
+                "speed": 3,
+                "direction": "random",
+                "out_mode": "out"
+            }
+        }
+    });
+
+    
+</script>
+<script>
+    // Function to detect the OS from userAgent
+    function getOS() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.indexOf('win') !== -1) {
+            return 'windows';
+        } else if (userAgent.indexOf('mac') !== -1) {
+            return 'macos';
+        } else if (userAgent.indexOf('linux') !== -1) {
+            return 'linux';
+        } else {
+            return 'unknown';
+        }
+    }
+
+    // Function to update the link based on the OS
+    function updateLinkBasedOnOS() {
+        const os = getOS();
+        const link = document.getElementById('tilink');
+
+        let downloadUrl = '';
+        switch (os) {
+            case 'windows':
+                downloadUrl = 'https://education.ti.com/download/en/ed-tech/CA9C74CAD02440A69FDC7189D7E1B6C2/EB5C99AD6B2C42E7BEC073117B0FDC46/TIConnectCE-6.0.1.344.exe';
+                break;
+            case 'macos':
+                downloadUrl = 'https://education.ti.com/download/en/ed-tech/CA9C74CAD02440A69FDC7189D7E1B6C2/D96C79959E494383BDCA94D0478FFF05/TIConnectCE-6.0.1.344.dmg';
+                break;
+            case 'linux':
+                downloadUrl = 'https://education.ti.com/en/customer-support/knowledge-base/sofware-apps/general-information/11522';
+                link.textContent = `Currently no support for Linux <br> Click to view article`;
+                return;
+            default:
+                downloadUrl = 'https://education.ti.com/en/products/computer-software/ti-connect-ce-sw';
+                break;
+        }
+
+        link.href = downloadUrl;
+        link.textContent = `Download for ${os.charAt(0).toUpperCase() + os.slice(1)}`;
+    }
+
+    // Call the function to update the link
+    updateLinkBasedOnOS();
+</script>
+
+</body>
+</html>

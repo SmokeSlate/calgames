@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="ksFa6lhF2WPfMgdz9ucdrSd0r4zSPmgqR25GgEYoRFE" />
+    <title>Calculator Games</title>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Heebo', sans-serif;
+            color: #a7a7a7;
+            background: black;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        header {
+            background: linear-gradient(to bottom, #616161, #1b2631, black);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .hero.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        .featured-games {
+            margin: 50px 0;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .featured-games.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .featured-games h2 {
+            font-size: 2.5em;
+        }
+        .game {
+            display: inline-block;
+            width: 35%;
+            margin: 20px;
+            background-color: #606060;
+            padding: 20px;
+            border-radius: 8px;
+            color: #fff;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .game.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .game img {
+            width: auto;
+            height: 300px;
+            border-radius: 5px;
+        }
+        .game h3, .game h6 {
+            margin-top: 10px;
+            margin-bottom: 0;
+            bottom: 0;
+        }
+        .game p {
+            height: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        footer a {
+            color: #39d;
+            text-decoration: none;
+        }
+        .button, button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #39d;
+            color: white;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body class="has-animations">
+
+<div id="particles-js"></div>
+
+<header>
+    <h1>Calculator Games</h1>
+    <nav>
+        <ul>
+            <li><a style="color: #a7a7a7;" href="/">Home</a></li>
+            <li><a href="/games.html">Games</a></li>
+            <li><a href="/tools.html">Tools</a></li>
+            <li><a href="/downloads.html">Downloads</a></li>
+            <li><a href="/faq.html">FAQ</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1>Discover Classic and New Games for Your Calculator!</h1>
+        <p>Explore a vast collection of games for TI calculators. Download, play, and enjoy!</p>
+        <a class="button" href="/games.html">Browse Games</a><br><br><br><br><br>
+    </div>
+</section>
+
+<center><section class="featured-games container">
+    <h2>Featured Games</h2>
+    <div id="games-container"></div>
+</section></center>
+
+<footer>
+    <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
+    <p>Not affiliated with TI. Use at your own risk.</p>
+</footer>
+
+<!-- Include Particles.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<!-- Initialize Particles.js -->
+<script>
+    particlesJS('particles-js', {
+        "particles": {
+            "number": {
+                "value": 100,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": [ "#ffadad",  "#ffd6a5",  "#fdffb6",  "#caffbf",  "#9bf6ff",  "#a0c4ff",  "#bdb2ff",  "#ffc6ff" ]
+            },
+            "shape": {
+                "type": "circle"
+            },
+            "opacity": {
+                "value": 0.5
+            },
+            "size": {
+                "value": 4,
+                "random": true
+            },
+            "line_linked": {
+                "enable": false
+            },
+            "move": {
+                "enable": true,
+                "speed": 3,
+                "direction": "random",
+                "random": true,
+                "out_mode": "out",
+                "bounce": false
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "resize": true
+            }
+        },
+        "retina_detect": true
+    });
+</script>
+
+<!-- Scroll Animation Script -->
+<script>
+    function revealOnScroll() {
+        const elements = document.querySelectorAll('.hero, .featured-games, .game, footer');
+        const windowHeight = window.innerHeight;
+        
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+
+            if (elementTop < windowHeight - 100) {
+                element.classList.add('visible');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll); // Trigger reveal for elements already in view
+</script>
+
+<!-- Fetch and Display Games -->
+<script>
+    fetch('https://github.sm0ke.org/random/calculator/games/featuredgames.json')
+        .then(response => response.json())
+        .then(data => { console.log(data)
+            const gamesContainer = document.getElementById('games-container');
+            data.forEach(game => {
+                const gameElement = document.createElement('div');
+                gameElement.className = 'game';
+                gameElement.innerHTML = `
+                    <img src="${game.image}" alt="${game.title}">
+                    <h3>${game.title}</h3>
+                    <h6>${game.author}</h6>
+                    <p>${game.description}</p>
+                    <a href=".${game.link}" class="button">Play/Download</a>
+                `;
+                gamesContainer.appendChild(gameElement);
+            });
+
+            revealOnScroll(); // Ensure the loaded games are animated on scroll
+        })
+        .catch(error => console.error('Error loading games:', error));
+</script>
+
+</body>
+</html>

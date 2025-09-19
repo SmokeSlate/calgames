@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Heebo', sans-serif;
+            color: #a7a7a7;
+            background: black;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        header {
+            background: linear-gradient(to bottom, #616161, #1b2631, black);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .contact-form, .data-extractor {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #606060;
+            border-radius: 15px;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .contact-form h2, .data-extractor h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .contact-form label, .data-extractor label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .contact-form input, .contact-form textarea, .data-extractor input, .data-extractor textarea {
+            width: 96.5%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background: #444;
+            color: #fff;
+
+        }
+        .contact-form button, .data-extractor button {
+            padding: 10px 20px;
+            background-color: #39d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .contact-form button:hover, .data-extractor button:hover {
+            background-color: #28a745;
+        }
+        #output {
+            white-space: pre-wrap;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #fff;
+            color: #333;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        footer a {
+            color: #39d;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<header>
+    <h1>Calculator Games</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/games.html">Games</a></li>
+            <li><a href="/tools.html">Tools</a></li>
+            <li><a href="/downloads.html">Downloads</a></li>
+            <li><a href="/faq.html">FAQ</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="contact-form">
+    <h2>Contact Us</h2>
+    <form id="contactForm">
+        <label for="contactName">Name:</label>
+        <input type="text" id="contactName" name="name" required>
+
+        <label for="contactEmail">Email:</label>
+        <input type="email" id="contactEmail" name="email" required>
+
+        <label for="contactMessage">Message:</label>
+        <textarea id="contactMessage" name="message" rows="5" required></textarea>
+
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+
+<section class="data-extractor">
+    <h2>Submit Game from <a style="color: #39d !important;" href="https://tiplanet.org">tiplanet.org</a></h2>
+    <input type="text" id="urlInput" placeholder="Enter URL"><br>
+    <input type="email" id="email" placeholder="Your Email"><br>
+    <button id="fetchData">Fetch Data</button>
+    <pre hidden id="output"></pre>
+</section>
+
+<footer>
+    <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
+    <p>Not affiliated with TI. Use at your own risk.</p>
+</footer>
+
+<!-- Include Particles.js Library -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<script>
+    // Initialize Particles.js
+    particlesJS('particles-js', {
+        "particles": {
+            "number": {
+                "value": 100,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": ["#ffadad", "#ffd6a5", "#fdffb6", "#caffbf", "#9bf6ff", "#a0c4ff", "#bdb2ff", "#ffc6ff"]
+            },
+            "shape": {
+                "type": "circle"
+            },
+            "opacity": {
+                "value": 0.5
+            },
+            "size": {
+                "value": 4,
+                "random": true
+            },
+            "move": {
+                "enable": true,
+                "speed": 3,
+                "direction": "random",
+                "out_mode": "out"
+            }
+        }
+    });
+
+    // Contact Form Submission
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('contactName').value;
+        const email = document.getElementById('contactEmail').value;
+        const message = document.getElementById('contactMessage').value;
+
+        try {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbwlprqc4q_SiaP_hVt3NtgPNggNjqChAT7bzyg-embyNKWFJZ-2szsVVaEaqRd8sWwOYg/exec', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'name': name,
+                    'email': email,
+                    'message': message
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            if (response.ok) {
+                alert('Message sent successfully!');
+            } else {
+                alert('Failed to send message.');
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('Error sending message.');
+        }
+    });
+
+    // Data Extraction
+    async function fetchDataFromUrl(url) {
+        const proxyUrl = 'https://corsproxy.io/?';
+
+        try {
+            const response = await fetch(proxyUrl + encodeURIComponent(url));
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const htmlText = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlText, 'text/html');
+            return doc;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return null;
+        }
+    }
+
+    function extractTextBetween(startText, endText, container) {
+        let isBetweenHeadings = false;
+        let resultText = '';
+        let startFound = false;
+
+        const nodes = container.childNodes;
+        nodes.forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                const elementText = node.innerText.trim();
+
+                if (!startFound && elementText.includes(startText)) {
+                    startFound = true;
+                    isBetweenHeadings = true;
+                }
+
+                if (isBetweenHeadings && elementText.includes(endText)) {
+                    isBetweenHeadings = false;
+                }
+
+                if (isBetweenHeadings) {
+                    resultText += elementText + ' ';
+                }
+            }
+        });
+
+        return resultText.trim();
+    }
+
+    function extractTextFromClass(doc, className) {
+        const elements = doc.querySelectorAll(className);
+        return Array.from(elements).map(el => el.innerText.trim()).join(', ');
+    }
+
+    function extractLinksFromClass(doc, className) {
+        const elements = doc.querySelectorAll(className);
+        return Array.from(elements).map(el => el.href).join(', ');
+    }
+
+    function extractDataFromDoc(doc) {
+        const outputData = {};
+        const archiveBlockLastElement = doc.querySelector('.archive_block-last');
+
+        let description = '';
+        let author = '';
+        let title = '';
+        let download = '';
+
+        if (archiveBlockLastElement) {
+            const startHeading = 'Description';
+            const endHeading = 'Source :...';
+            description = extractTextBetween(startHeading, endHeading, archiveBlockLastElement);
+            outputData.description = description || 'No content found between headings.';
+        } else {
+            outputData.description = 'No elements found with class "archive_block-last".';
+        }
+
+        author = extractTextFromClass(doc, '.archive_block-last .bootstrap div b a');
+        outputData.usernames = author || 'No elements found with class "username-coloured".';
+
+        const archiveBlockHeaders = doc.querySelectorAll('h2.archive_block');
+        title = Array.from(archiveBlockHeaders).map(header => header.innerText.trim()).join(', ');
+        outputData.title = title || 'No h2 elements found with class "archive_block".';
+
+        download = extractLinksFromClass(doc, 'div.panelhist.archive .archive_block-last div.bootstrap a.btn.btn-success:first-of-type');
+        outputData.download = download || 'No links found with class "btn btn-success".';
+
+        return outputData;
+    }
+
+    async function handleFetchData() {
+        const urlInput = document.getElementById('urlInput');
+        const urls = urlInput.value.split('\n').map(url => url.trim()).filter(url => url);
+
+        const outputElement = document.getElementById('output');
+        outputElement.innerText = 'Fetching data...\n';
+
+        let finalResults = [];
+
+        for (const url of urls) {
+            const doc = await fetchDataFromUrl(url);
+            if (doc) {
+                const extractedData = extractDataFromDoc(doc);
+                finalResults.push({ url, data: extractedData });
+            } else {
+                finalResults.push({ url, error: 'Error fetching or parsing data.' });
+            }
+        }
+
+        outputElement.innerText = JSON.stringify(finalResults, null, 2);
+
+        const fetchdata = new URLSearchParams({
+            'gamedata': encodeURIComponent(outputElement.innerText),
+            'email': document.getElementById('email').value
+        });
+
+        try {
+            await fetch('https://script.google.com/macros/s/AKfycbzLGDmAprHjksqpa4ELJnkRNz5uSffivj6HLgIZ34egwlLmuuiznW8vksDd9xVy0O8-/exec', {
+                method: 'POST',
+                body: fetchdata,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+        } catch (error) {
+            console.error('Error sending data:', error);
+        }
+        alert("Game Submited")
+    }
+
+    document.getElementById('fetchData').addEventListener('click', handleFetchData);
+    document.getElementById('urlInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleFetchData();
+            e.preventDefault();
+        }
+    });
+</script>
+
+</body>
+</html>
