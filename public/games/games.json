@@ -245,7 +245,8 @@
     "author": "Snowberry",
     "image": "https://i.imgur.com/xDp4jua.png",
     "link": "/games/detail/?id=6",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=1726275"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=1726275",
+    "fileUpload": ["https://tiplanet.org/modules/archives/download.php?id=1726275"]
   },
   {
     "title": "Androides",
