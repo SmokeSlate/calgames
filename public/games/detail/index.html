@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Browser</title>
+    <title>Game Details</title>
     <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
     <style>
-
-        
         body {
             margin: 0;
             padding: 0;
@@ -19,7 +17,6 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            position:fixed;
             z-index: -1;
         }
         header {
@@ -41,76 +38,46 @@
             color: #fff;
             text-decoration: none;
         }
-        .games-list {
+        .game-details {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 50px 0;
-            max-width: 1200px;
-            margin: auto;
-            position: relative;
-            z-index: 1;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            gap: 30px;
         }
-        .game-card {
-            background-color: #606060;
-            color: #fff;
-            margin: 20px;
-            width: 25%;
-            border-radius: 15px;
-            padding-top: 100px; /* Give space for the image to peek */
-            text-align: center;
-            overflow: visible;
-            position: relative;
-            transition: transform 0.3s ease;
-            margin-bottom: 75px;
-        }
-        .game-card:hover {
-            transform: scale(1.05);
-        }
-        .game-card img {
-            width: 95%;
+        .game-details img {
+            width: 40%;
             height: auto;
-            border-radius: 15px;
-            position: absolute;
-            top: -60px; /* Move the image up */
-            left: 2.4%;
+            border-radius: 10px;
         }
-        .game-card h3 {
-            font-size: 1.4em;
-            margin-top: 230px;
+        .game-info {
+            width: 50%;
+            color: #ddd;
         }
-        .game-card p {
-            font-size: 1em;
-            padding: 0 15px;
-            height: 170px;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .game-info h1 {
+            color: white;
         }
-        .game-card a.button {
+        .game-info p {
+            font-size: 1.2em;
+        }
+        .game-info a.button {
             display: inline-block;
             padding: 10px 20px;
             background-color: #39d;
             color: white;
             text-decoration: none;
-            margin: 20px 0;
-            border-radius: 5px;
+            margin-top: 20px;
         }
-        .card-actions {
+        .button-group {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
         }
-        .card-actions .button {
-            margin: 0;
-            width: 100%;
-            text-align: center;
-        }
-        .game-card a.button.secondary {
+        .game-info a.button.secondary {
             background-color: #555;
         }
-        .game-card a.button.secondary:hover {
+        .game-info a.button.secondary:hover {
             background-color: #777;
         }
         footer {
@@ -119,17 +86,18 @@
             text-align: center;
             padding: 20px;
             margin-top: 50px;
-            position: relative;
-            z-index: 1;
         }
         footer a {
             color: #39d;
             text-decoration: none;
         }
-
         @media screen and (max-width: 768px) {
-            .game-card {
-                width: 80%;
+            .game-details {
+                flex-direction: column;
+                text-align: center;
+            }
+            .game-details img, .game-info {
+                width: 90%;
             }
         }
     </style>
@@ -143,8 +111,7 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a style="color: #a7a7a7;" href="/games/">Games</a></li>
-            <li><a href="/tools/">Tools</a></li>
+            <li><a href="/games/">Games</a></li>
             <li><a href="/downloads/">Downloads</a></li>
             <li><a href="/faq/">FAQ</a></li>
             <li><a href="/contact/">Contact</a></li>
@@ -152,8 +119,11 @@
     </nav>
 </header>
 
-<section class="games-list" id="games-list">
-    <!-- Games will be dynamically injected here -->
+<section class="game-details">
+    <img id="game-image" src="" alt="Game Image">
+    <div class="game-info" id="game-info">
+        <h1>Loading...</h1>
+    </div>
 </section>
 
 <footer>
@@ -161,9 +131,7 @@
     <p>Not affiliated with TI. Use at your own risk.</p>
 </footer>
 
-<!-- Include Particles.js Library -->
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
 <script>
     // Initialize Particles.js
     particlesJS('particles-js', {
@@ -196,21 +164,6 @@
             }
         }
     });
-
-    function resolveGameLink(game) {
-        const rawLink = typeof game.link === 'string' ? game.link.trim() : '';
-        const encodedId = game.id ? encodeURIComponent(game.id) : '';
-        const fallback = encodedId ? `/games/detail/?id=${encodedId}` : '/games/';
-        if (!rawLink) {
-            return fallback;
-        }
-        const normalized = rawLink
-            .replace('/games/index.html', '/games/detail/')
-            .replace('games/index.html', 'games/detail/')
-            .replace('index.html?', 'detail/?');
-        const prefixed = normalized.startsWith('/') ? normalized : `/${normalized}`;
-        return prefixed || fallback;
-    }
 
     const CALCULATOR_FILE_EXTENSIONS = [
         '.8xp', '.8xk', '.8xg', '.8xl', '.8xm', '.8xv', '.8xi', '.8xn', '.8xs', '.8xt',
@@ -272,34 +225,51 @@
         return `/tools/uploader/?files=${filesParam}&title=${titleParam}`;
     }
 
-    // Fetch and display games in a grid
-    fetch('/games/games.json')
-        .then(response => response.json())
-        .then(data => {
-            const gamesList = document.getElementById('games-list');
-            data.forEach(game => {
-                const gameCard = document.createElement('div');
-                gameCard.className = 'game-card';
-                const detailLink = resolveGameLink(game);
-                const uploaderHref = buildUploaderLink(game);
-                const uploaderLink = uploaderHref
-                    ? `<a href="${uploaderHref}" class="button secondary">Load in uploader</a>`
-                    : '';
-                gameCard.innerHTML = `
-                    <img src="${game.image}" alt="${game.title}">
-                    <h3>${game.title}</h3>
-                    <p>${game.description}</p>
-                    <div class="card-actions">
-                        <a href="${detailLink}" class="button">View Game</a>
-                        ${uploaderLink}
-                    </div>
-                `;
-                gamesList.appendChild(gameCard);
-            });
-        })
-        .catch(error => console.error('Error loading games:', error));
+    // Function to get game ID from URL
+    function getGameIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
+    }
 
-        
+    // Fetch and display game details
+    function displayGameDetails(gameId) {
+        fetch('/games/games.json')
+            .then(response => response.json())
+            .then(data => {
+                const game = data.find(g => g.id === gameId);
+                if (game) {
+                    document.getElementById('game-image').src = game.image;
+                    const uploaderHref = buildUploaderLink(game);
+                    const uploaderLink = uploaderHref
+                        ? `<a href="${uploaderHref}" class="button secondary">Load in uploader</a>`
+                        : '';
+                    const buttonGroup = `
+                        <div class="button-group">
+                            <a href="${game.download}" class="button">Download Game</a>
+                            ${uploaderLink}
+                        </div>
+                    `;
+                    document.getElementById('game-info').innerHTML = `
+                        <h1>${game.title}</h1>
+                        <p><strong>Author:</strong> ${game.author}</p>
+                        <p>${game.description}</p>
+                        ${buttonGroup}
+                    `;
+                } else {
+                    document.getElementById('game-info').innerHTML = '<p>Game not found!</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching game details:', error);
+            });
+    }
+
+    const gameId = getGameIdFromUrl();
+    if (gameId) {
+        displayGameDetails(gameId);
+    } else {
+        document.getElementById('game-info').innerHTML = '<p>No game ID provided!</p>';
+    }
 </script>
 
 </body>
