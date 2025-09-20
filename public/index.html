@@ -129,7 +129,7 @@
             return '';
         }
         const clean = text.trim();
-        const limit = 200;
+        const limit = 160;
         if (clean.length <= limit) {
             return clean;
         }
@@ -139,15 +139,18 @@
     function createGameCard(game) {
         const detailLink = resolveGameLink(game);
         const description = truncateDescription(game.description);
+        const author = typeof game.author === 'string' && game.author.trim()
+            ? `<p class="card__meta">${game.author.trim()}</p>`
+            : '';
         return `
-            <article class="card js-reveal">
-                <div class="card__media">
-                    <img src="${game.image}" alt="${game.title}">
-                </div>
-                <div class="card__overlay">
+            <article class="card card--game js-reveal">
+                <figure class="card__art">
+                    <img src="${game.image}" alt="${game.title}" loading="lazy">
+                </figure>
+                <div class="card__info">
                     <div class="card__body">
                         <h3 class="card__title">${game.title}</h3>
-                        <p class="card__meta">${game.author}</p>
+                        ${author}
                         <p class="card__description">${description}</p>
                     </div>
                     <div class="card__actions">
