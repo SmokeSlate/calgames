@@ -1,0 +1,128 @@
+<svg width="360" height="560" viewBox="0 0 360 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shell-body" x1="180" y1="0" x2="180" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#161C2C" />
+      <stop offset="0.55" stop-color="#0C121F" />
+      <stop offset="1" stop-color="#050A14" />
+    </linearGradient>
+    <linearGradient id="shell-bottom" x1="180" y1="340" x2="180" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A" />
+      <stop offset="1" stop-color="#030714" />
+    </linearGradient>
+    <linearGradient id="keypad" x1="180" y1="340" x2="180" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D1423" />
+      <stop offset="1" stop-color="#050912" />
+    </linearGradient>
+    <linearGradient id="screen-stroke" x1="180" y1="96" x2="180" y2="288" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5F9BFF" stop-opacity="0.8" />
+      <stop offset="1" stop-color="#2D3A58" stop-opacity="0.5" />
+    </linearGradient>
+    <linearGradient id="function-key" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#1F2937" />
+      <stop offset="1" stop-color="#0F172A" />
+    </linearGradient>
+    <linearGradient id="accent-key-blue" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#60A5FA" />
+      <stop offset="1" stop-color="#2563EB" />
+    </linearGradient>
+    <linearGradient id="accent-key-cyan" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#67E8F9" />
+      <stop offset="1" stop-color="#0EA5E9" />
+    </linearGradient>
+    <linearGradient id="accent-key-orange" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#FCD34D" />
+      <stop offset="1" stop-color="#F97316" />
+    </linearGradient>
+    <radialGradient id="top-glow" cx="180" cy="30" r="160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6" stop-opacity="0.28" />
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0" />
+    </radialGradient>
+    <mask id="screen-cutout">
+      <rect width="360" height="560" rx="46" fill="#fff" />
+      <rect x="52" y="96" width="256" height="192" rx="20" fill="#000" />
+    </mask>
+  </defs>
+  <g mask="url(#screen-cutout)">
+    <rect width="360" height="560" rx="46" fill="url(#shell-body)" />
+    <rect width="360" height="220" y="340" fill="url(#shell-bottom)" />
+    <rect x="22" y="328" width="316" height="188" rx="30" fill="url(#keypad)" />
+    <rect x="40" y="300" width="280" height="30" rx="12" fill="#121B2F" opacity="0.85" />
+    <rect x="40" y="300" width="280" height="30" rx="12" stroke="rgba(148, 197, 255, 0.35)" stroke-width="1.2" />
+    <rect width="360" height="560" rx="46" fill="url(#top-glow)" />
+  </g>
+  <rect x="52" y="96" width="256" height="192" rx="20" stroke="url(#screen-stroke)" stroke-width="8" fill="none" />
+  <rect x="58" y="102" width="244" height="180" rx="12" stroke="rgba(148, 197, 255, 0.25)" stroke-width="2" fill="none" />
+  <text x="180" y="60" text-anchor="middle" font-family="'Heebo', 'Segoe UI', sans-serif" font-size="20" font-weight="600" fill="#F8FAFC" letter-spacing="0.08em">TI-84 Plus CE</text>
+  <circle cx="286" cy="58" r="5" fill="#FACC15" />
+  <circle cx="286" cy="58" r="9" stroke="rgba(248, 250, 252, 0.18)" stroke-width="2" />
+  <g font-family="'Heebo', 'Segoe UI', sans-serif" font-size="10" fill="#D1D5F9" letter-spacing="0.08em">
+    <text x="70" y="320">stat plot</text>
+    <text x="116" y="320">tblset</text>
+    <text x="156" y="320">format</text>
+    <text x="198" y="320">calc</text>
+    <text x="232" y="320">table</text>
+    <text x="272" y="320">graph</text>
+  </g>
+  <g font-family="'Heebo', 'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#F1F5FF" text-anchor="middle">
+    <rect x="52" y="336" width="52" height="30" rx="8" fill="url(#function-key)" />
+    <rect x="106" y="336" width="52" height="30" rx="8" fill="url(#function-key)" />
+    <rect x="160" y="336" width="52" height="30" rx="8" fill="url(#function-key)" />
+    <rect x="214" y="336" width="52" height="30" rx="8" fill="url(#function-key)" />
+    <rect x="268" y="336" width="52" height="30" rx="8" fill="url(#function-key)" />
+    <text x="78" y="356">y=</text>
+    <text x="132" y="356">window</text>
+    <text x="186" y="356">zoom</text>
+    <text x="240" y="356">trace</text>
+    <text x="294" y="356">graph</text>
+  </g>
+  <g font-family="'Heebo', 'Segoe UI', sans-serif" font-size="11" font-weight="600" text-anchor="middle">
+    <rect x="60" y="376" width="52" height="34" rx="10" fill="url(#accent-key-blue)" />
+    <rect x="122" y="376" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="184" y="376" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="246" y="376" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <text x="86" y="397" fill="#0B1726">2nd</text>
+    <text x="148" y="397" fill="#F8FAFC">mode</text>
+    <text x="210" y="397" fill="#F8FAFC">del</text>
+    <text x="272" y="397" fill="#F8FAFC">clear</text>
+  </g>
+  <g font-family="'Heebo', 'Segoe UI', sans-serif" font-size="11" font-weight="600" text-anchor="middle">
+    <rect x="60" y="420" width="52" height="34" rx="10" fill="url(#accent-key-cyan)" />
+    <rect x="122" y="420" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="184" y="420" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="246" y="420" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <text x="86" y="441" fill="#053B4A">alpha</text>
+    <text x="148" y="441" fill="#F8FAFC">x,T,θ,n</text>
+    <text x="210" y="441" fill="#F8FAFC">stat</text>
+    <text x="272" y="441" fill="#F8FAFC">math</text>
+  </g>
+  <g font-family="'Heebo', 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="middle">
+    <rect x="60" y="464" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="122" y="464" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="184" y="464" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="246" y="464" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <text x="86" y="486" fill="#F8FAFC">apps</text>
+    <text x="148" y="486" fill="#F8FAFC">prgm</text>
+    <text x="210" y="486" fill="#F8FAFC">vars</text>
+    <text x="272" y="486" fill="#F8FAFC">clear</text>
+  </g>
+  <g font-family="'Heebo', 'Segoe UI', sans-serif" font-size="12" font-weight="600" text-anchor="middle">
+    <rect x="60" y="508" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="122" y="508" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="184" y="508" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <rect x="246" y="508" width="52" height="34" rx="10" fill="url(#function-key)" />
+    <text x="86" y="530" fill="#F8FAFC">store</text>
+    <text x="148" y="530" fill="#F8FAFC">on</text>
+    <text x="210" y="530" fill="#F8FAFC">enter</text>
+    <text x="272" y="530" fill="#F8FAFC">graph</text>
+  </g>
+  <g opacity="0.9">
+    <circle cx="180" cy="446" r="40" fill="#0C1422" stroke="rgba(148, 197, 255, 0.25)" stroke-width="4" />
+    <rect x="174" y="412" width="12" height="20" rx="4" fill="#1F2937" />
+    <rect x="174" y="460" width="12" height="20" rx="4" fill="#1F2937" />
+    <rect x="140" y="444" width="20" height="12" rx="4" fill="#1F2937" />
+    <rect x="200" y="444" width="20" height="12" rx="4" fill="#1F2937" />
+    <circle cx="180" cy="446" r="12" fill="#111827" />
+  </g>
+  <rect x="240" y="504" width="64" height="40" rx="12" fill="url(#accent-key-orange)" />
+  <text x="272" y="528" text-anchor="middle" font-family="'Heebo', 'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#111827">enter</text>
+</svg>
