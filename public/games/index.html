@@ -4,175 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Browser</title>
-    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
-    <style>
-
-        
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Heebo', sans-serif;
-            color: #a7a7a7;
-            background: black;
-        }
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            position:fixed;
-            z-index: -1;
-        }
-        header {
-            background: linear-gradient(to bottom, #616161, #1b2631, black);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        nav ul {
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            list-style: none;
-        }
-        nav ul li {
-            margin: 0 15px;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-        .games-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 50px 0;
-            max-width: 1200px;
-            margin: auto;
-            position: relative;
-            z-index: 1;
-        }
-        .game-card {
-            background-color: #606060;
-            color: #fff;
-            margin: 20px;
-            width: 25%;
-            border-radius: 15px;
-            padding-top: 100px; /* Give space for the image to peek */
-            text-align: center;
-            overflow: visible;
-            position: relative;
-            transition: transform 0.3s ease;
-            margin-bottom: 75px;
-        }
-        .game-card:hover {
-            transform: scale(1.05);
-        }
-        .game-card img {
-            width: 95%;
-            height: auto;
-            border-radius: 15px;
-            position: absolute;
-            top: -60px; /* Move the image up */
-            left: 2.4%;
-        }
-        .game-card h3 {
-            font-size: 1.4em;
-            margin-top: 230px;
-        }
-        .game-card p {
-            font-size: 1em;
-            padding: 0 15px;
-            height: 170px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .game-card a.button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #39d;
-            color: white;
-            text-decoration: none;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-        .card-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            margin: 20px 0;
-        }
-        .card-actions .button {
-            margin: 0;
-            width: 100%;
-            text-align: center;
-        }
-        .game-card a.button.secondary {
-            background-color: #555;
-        }
-        .game-card a.button.secondary:hover {
-            background-color: #777;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-            position: relative;
-            z-index: 1;
-        }
-        footer a {
-            color: #39d;
-            text-decoration: none;
-        }
-
-        @media screen and (max-width: 768px) {
-            .game-card {
-                width: 80%;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
-
 <div id="particles-js"></div>
 
-<header>
-    <h1>Calculator Games</h1>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a style="color: #a7a7a7;" href="/games/">Games</a></li>
-            <li><a href="/tools/">Tools</a></li>
-            <li><a href="/downloads/">Downloads</a></li>
-            <li><a href="/faq/">FAQ</a></li>
-            <li><a href="/contact/">Contact</a></li>
-        </ul>
-    </nav>
+<header class="site-header">
+    <div class="nav-container">
+        <a class="brand" href="/">Calculator Games</a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+            <span class="sr-only">Toggle navigation</span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="primary-nav" class="site-nav">
+            <ul>
+                <li><a data-nav="/" href="/">Home</a></li>
+                <li><a data-nav="/games/" href="/games/">Games</a></li>
+                <li><a data-nav="/tools/" href="/tools/">Tools</a></li>
+                <li><a data-nav="/downloads/" href="/downloads/">Downloads</a></li>
+                <li><a data-nav="/faq/" href="/faq/">FAQ</a></li>
+                <li><a data-nav="/contact/" href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
-<section class="games-list" id="games-list">
-    <!-- Games will be dynamically injected here -->
-</section>
+<main class="page-content">
+    <section class="hero hero--subpage js-reveal">
+        <div class="content-container">
+            <h1 class="hero-title">Browse the full game collection</h1>
+            <p class="hero-subtitle">Filter through every calculator game we host. Tap into screenshots, descriptions, and ready-to-transfer downloads tailored for TI devices.</p>
+        </div>
+    </section>
 
-<footer>
+    <section class="page-section js-reveal">
+        <div class="content-container">
+            <div id="games-list" class="card-grid" aria-live="polite"></div>
+            <p id="games-empty" class="tool-note" hidden>No games were found. Try again in a moment.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer js-reveal">
     <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
     <p>Not affiliated with TI. Use at your own risk.</p>
 </footer>
 
-<!-- Include Particles.js Library -->
+<script src="/assets/js/site.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
 <script>
-    // Initialize Particles.js
     particlesJS('particles-js', {
         "particles": {
             "number": {
-                "value": 100,
+                "value": 90,
                 "density": {
                     "enable": true,
-                    "value_area": 800
+                    "value_area": 900
                 }
             },
             "color": {
@@ -182,17 +72,22 @@
                 "type": "circle"
             },
             "opacity": {
-                "value": 0.5
+                "value": 0.45
             },
             "size": {
-                "value": 4,
+                "value": 3.6,
                 "random": true
+            },
+            "line_linked": {
+                "enable": false
             },
             "move": {
                 "enable": true,
-                "speed": 3,
-                "direction": "random",
-                "out_mode": "out"
+                "speed": 2.6,
+                "direction": "none",
+                "random": true,
+                "out_mode": "out",
+                "bounce": false
             }
         }
     });
@@ -212,34 +107,50 @@
         return prefixed || fallback;
     }
 
-    // Fetch and display games in a grid
+    function createGameCard(game) {
+        const detailLink = resolveGameLink(game);
+        const uploaderLink = Array.isArray(game.fileUpload) && game.fileUpload.length
+            ? `<a href="/tools/uploader/?files=${encodeURIComponent(JSON.stringify(game.fileUpload))}&title=${encodeURIComponent(game.title)}" class="button button--secondary">Load in uploader</a>`
+            : '';
+
+        return `
+            <article class="card js-reveal">
+                <div class="card__media">
+                    <img src="${game.image}" alt="${game.title}">
+                </div>
+                <div class="card__body">
+                    <h3 class="card__title">${game.title}</h3>
+                    <p class="card__meta">${game.author}</p>
+                    <p class="card__description">${game.description}</p>
+                </div>
+                <div class="card__actions">
+                    <a href="${detailLink}" class="button">View game</a>
+                    ${uploaderLink}
+                </div>
+            </article>
+        `;
+    }
+
     fetch('/games/games.json')
         .then(response => response.json())
         .then(data => {
             const gamesList = document.getElementById('games-list');
-            data.forEach(game => {
-                const gameCard = document.createElement('div');
-                gameCard.className = 'game-card';
-                const detailLink = resolveGameLink(game);
-                const uploaderLink = Array.isArray(game.fileUpload) && game.fileUpload.length
-                    ? `<a href="/tools/uploader/?files=${encodeURIComponent(JSON.stringify(game.fileUpload))}&title=${encodeURIComponent(game.title)}" class="button secondary">Load in uploader</a>`
-                    : '';
-                gameCard.innerHTML = `
-                    <img src="${game.image}" alt="${game.title}">
-                    <h3>${game.title}</h3>
-                    <p>${game.description}</p>
-                    <div class="card-actions">
-                        <a href="${detailLink}" class="button">View Game</a>
-                        ${uploaderLink}
-                    </div>
-                `;
-                gamesList.appendChild(gameCard);
-            });
+            const emptyState = document.getElementById('games-empty');
+
+            if (!Array.isArray(data) || data.length === 0) {
+                emptyState.hidden = false;
+                return;
+            }
+
+            const markup = data.map(createGameCard).join('');
+            gamesList.innerHTML = markup;
         })
-        .catch(error => console.error('Error loading games:', error));
-
-        
+        .catch(error => {
+            console.error('Error loading games:', error);
+            const emptyState = document.getElementById('games-empty');
+            emptyState.hidden = false;
+            emptyState.textContent = 'We ran into an issue loading games. Please refresh to retry.';
+        });
 </script>
-
 </body>
 </html>

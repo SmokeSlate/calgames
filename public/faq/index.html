@@ -4,131 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ</title>
-    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Heebo', sans-serif;
-            color: #a7a7a7;
-            background: black;
-        }
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        header {
-            background: linear-gradient(to bottom, #616161, #1b2631, black);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        nav ul {
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            list-style: none;
-        }
-        nav ul li {
-            margin: 0 15px;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-        .faq {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #606060;
-            border-radius: 15px;
-            color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-        .faq h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        .faq-item {
-            margin-bottom: 20px;
-        }
-        .faq-item h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-        .faq-item p {
-            font-size: 1.2em;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-        }
-        footer a {
-            color: #39d;
-            text-decoration: none;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
-
 <div id="particles-js"></div>
 
-<header>
-    <h1>Calculator Games</h1>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/games/">Games</a></li>
-            <li><a href="/tools/">Tools</a></li>
-            <li><a href="/downloads/">Downloads</a></li>
-            <li><a style="color: #a7a7a7;" href="/faq/">FAQ</a></li>
-            <li><a href="/contact/">Contact</a></li>
-        </ul>
-    </nav>
+<header class="site-header">
+    <div class="nav-container">
+        <a class="brand" href="/">Calculator Games</a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+            <span class="sr-only">Toggle navigation</span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="primary-nav" class="site-nav">
+            <ul>
+                <li><a data-nav="/" href="/">Home</a></li>
+                <li><a data-nav="/games/" href="/games/">Games</a></li>
+                <li><a data-nav="/tools/" href="/tools/">Tools</a></li>
+                <li><a data-nav="/downloads/" href="/downloads/">Downloads</a></li>
+                <li><a data-nav="/faq/" href="/faq/">FAQ</a></li>
+                <li><a data-nav="/contact/" href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
-<section class="faq">
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq-item">
-        <h3>1. What is Calculator Games?</h3>
-        <p>Calculator Games is a website where you can find and download games for TI calculators. We offer a variety of games ranging from classic to new releases.</p>
-    </div>
-    <div class="faq-item">
-        <h3>2. How do I download a game?</h3>
-        <p>Simply navigate to the 'Games' section, select a game you're interested in, and follow the download link provided on the game page.</p>
-    </div>
-    <div class="faq-item">
-        <h3>3. Are the games free?</h3>
-        <p>Most of the games are free to download. However, some may have a cost associated with them, which will be clearly indicated on the game page.</p>
-    </div>
-    <div class="faq-item">
-        <h3>4. Can I contribute a game?</h3>
-        <p>Yes! If you have a game you'd like to contribute, please reach out to us through the 'Contact' page with details about your game.</p>
-    </div>
-</section>
+<main class="page-content">
+    <section class="hero hero--subpage js-reveal">
+        <div class="content-container">
+            <h1 class="hero-title">Frequently asked questions</h1>
+            <p class="hero-subtitle">Everything you need to know about installing, running, and contributing calculator games.</p>
+        </div>
+    </section>
 
-<footer>
+    <section class="page-section js-reveal">
+        <div class="content-container">
+            <div class="accordion-list">
+                <details class="accordion" open>
+                    <summary>What is Calculator Games?</summary>
+                    <p>Calculator Games is a community-powered library where you can discover, download, and learn about games for TI calculators. We highlight classic titles alongside brand new releases.</p>
+                </details>
+                <details class="accordion">
+                    <summary>How do I download a game?</summary>
+                    <p>Visit the Games section, open any title, and use the download button. Each page also lists instructions for transferring the files to your calculator.</p>
+                </details>
+                <details class="accordion">
+                    <summary>Are the games free?</summary>
+                    <p>Most games are completely free. If a creator charges or requests attribution, we will clearly indicate that on the game detail page.</p>
+                </details>
+                <details class="accordion">
+                    <summary>Can I contribute a game?</summary>
+                    <p>Absolutely! Reach out to us through the contact form with details about your project or a link to its source. We will review and help you publish it to the catalog.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer js-reveal">
     <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
     <p>Not affiliated with TI. Use at your own risk.</p>
 </footer>
 
-<!-- Include Particles.js Library -->
+<script src="/assets/js/site.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
 <script>
-    // Initialize Particles.js
     particlesJS('particles-js', {
         "particles": {
             "number": {
-                "value": 100,
+                "value": 90,
                 "density": {
                     "enable": true,
-                    "value_area": 800
+                    "value_area": 900
                 }
             },
             "color": {
@@ -138,21 +88,25 @@
                 "type": "circle"
             },
             "opacity": {
-                "value": 0.5
+                "value": 0.45
             },
             "size": {
-                "value": 4,
+                "value": 3.6,
                 "random": true
+            },
+            "line_linked": {
+                "enable": false
             },
             "move": {
                 "enable": true,
-                "speed": 3,
-                "direction": "random",
-                "out_mode": "out"
+                "speed": 2.6,
+                "direction": "none",
+                "random": true,
+                "out_mode": "out",
+                "bounce": false
             }
         }
     });
 </script>
-
 </body>
 </html>
