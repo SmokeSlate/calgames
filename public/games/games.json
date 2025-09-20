@@ -6,7 +6,8 @@
     "author": "MateoConLechuga",
     "image": "https://i.imgur.com/MbL8Ap5.png",
     "link": "/games/detail/?id=3",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=123456"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=123456",
+    "fileUpload": ["/games/dls/OIRAM.8xv","/games/dls/OiramPK.8xv","/games/dls/OiramS.8xv","/games/dls/OiramT.8xv"]
   },
   {
     "title": "Geometry Dash CE",

@@ -3,18 +3,46 @@
 
 name: Deploy to Firebase Hosting on PR
 on: pull_request
+
 permissions:
   checks: write
   contents: read
   pull-requests: write
+
 jobs:
   build_and_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # Prepare cache directories so warnings don't show
+      - name: Ensure cache dirs exist
+        run: |
+          mkdir -p ~/.npm
+          mkdir -p ~/.cache/firebase
+
+      # Cache npm (optional if you don’t install anything via npm)
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      # Cache Firebase CLI
+      - name: Cache Firebase CLI
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/firebase
+          key: ${{ runner.os }}-firebase-cli
+          restore-keys: |
+            ${{ runner.os }}-firebase-cli
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CALCULATGAMES }}
           projectId: calculatgames
+          target: calgames

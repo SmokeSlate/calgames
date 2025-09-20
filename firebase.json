@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "public",
+    "site": "calgames",
     "ignore": [
       "firebase.json",
       "**/.*",
