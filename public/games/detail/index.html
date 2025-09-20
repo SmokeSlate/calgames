@@ -42,15 +42,27 @@
 
     <section class="page-section js-reveal">
         <div class="content-container">
-            <div class="detail-layout" id="game-detail">
-                <div class="detail-media js-reveal">
-                    <img id="game-image" src="" alt="" loading="lazy">
+            <article class="detail-feature" id="game-detail">
+                <div class="detail-feature__visual js-reveal">
+                    <figure class="ti-device" id="ti-device" aria-label="TI-84 Plus CE preview">
+                        <div class="ti-device__top">
+                            <span class="ti-device__brand">TI-84 Plus CE</span>
+                            <span class="ti-device__indicator">TI-84</span>
+                        </div>
+                        <div class="ti-device__screen">
+                            <div class="ti-device__screen-inner">
+                                <img id="game-image" src="" alt="" loading="lazy" hidden>
+                            </div>
+                        </div>
+                        <div class="ti-device__divider" aria-hidden="true"></div>
+                        <div class="ti-device__controls" aria-hidden="true"></div>
+                    </figure>
                 </div>
-                <div class="detail-body js-reveal" id="game-info">
+                <div class="detail-feature__body js-reveal" id="game-info">
                     <h1>Loading…</h1>
                     <p>Please hold on while we fetch the latest description and download links.</p>
                 </div>
-            </div>
+            </article>
         </div>
     </section>
 </main>
@@ -117,6 +129,8 @@
         const heroSubtitle = document.getElementById('hero-subtitle');
         const image = document.getElementById('game-image');
         const info = document.getElementById('game-info');
+        const deviceFigure = document.getElementById('ti-device');
+        const screenInner = image.closest('.ti-device__screen-inner');
 
         document.title = `${game.title} · Calculator Games`;
         heroTitle.textContent = game.title;
@@ -124,13 +138,20 @@
 
         image.src = game.image;
         image.alt = `${game.title} screenshot`;
+        image.hidden = false;
+        if (screenInner) {
+            screenInner.classList.add('ti-device__screen-inner--has-image');
+        }
+        if (deviceFigure) {
+            deviceFigure.setAttribute('aria-label', `TI-84 Plus CE showing ${game.title}`);
+        }
 
         const safeDescription = game.description || 'This title is still being described. Check the download link for more info.';
 
         info.innerHTML = `
+            <p class="detail-feature__eyebrow">By ${game.author}</p>
             <h1>${game.title}</h1>
-            <p><strong>Author:</strong> ${game.author}</p>
-            <p>${safeDescription}</p>
+            <div class="detail-feature__description">${safeDescription}</div>
             ${buildButtonGroup(game)}
         `;
     }
@@ -140,12 +161,21 @@
         const heroSubtitle = document.getElementById('hero-subtitle');
         const info = document.getElementById('game-info');
         const image = document.getElementById('game-image');
+        const deviceFigure = document.getElementById('ti-device');
+        const screenInner = image.closest('.ti-device__screen-inner');
 
         document.title = 'Game not found · Calculator Games';
         heroTitle.textContent = 'Game not found';
         heroSubtitle.textContent = 'The game you are looking for could not be located.';
         image.removeAttribute('src');
         image.alt = '';
+        image.hidden = true;
+        if (screenInner) {
+            screenInner.classList.remove('ti-device__screen-inner--has-image');
+        }
+        if (deviceFigure) {
+            deviceFigure.setAttribute('aria-label', 'TI-84 Plus CE preview');
+        }
 
         info.innerHTML = `
             <h1>We could not load this game</h1>
