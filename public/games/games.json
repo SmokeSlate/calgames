@@ -7,7 +7,12 @@
     "image": "https://i.imgur.com/MbL8Ap5.png",
     "link": "/games/detail/?id=3",
     "download": "https://tiplanet.org/modules/archives/download.php?id=123456",
-    "fileUpload": ["/games/dls/OIRAM.8xv","/games/dls/OiramPK.8xv","/games/dls/OiramS.8xv","/games/dls/OiramT.8xv"]
+    "fileUpload": [
+      "/games/dls/OIRAM.8xp",
+      "/games/dls/OiramPK.8xv",
+      "/games/dls/OiramS.8xv",
+      "/games/dls/OiramT.8xv"
+    ]
   },
   {
     "title": "Geometry Dash CE",
@@ -16,7 +21,20 @@
     "author": "Epharius , Anonymous0",
     "image": "https://i.imgur.com/um6vvuA.png",
     "link": "/games/detail/?id=5",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=790041"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=790041",
+    "fileUpload": [
+      "/games/dls/AGD.8xp",
+      "/games/dls/BACK_ON_TRACK.8xv",
+      "/games/dls/BASE_AFTER_BASE.8xv",
+      "/games/dls/CAN_T_LET_GO.8xv",
+      "/games/dls/DRY_OUT.8xv",
+      "/games/dls/GDGrphc.8xv",
+      "/games/dls/GDMenu.8xv",
+      "/games/dls/JUMPER.8xv",
+      "/games/dls/POLARGEIST.8xv",
+      "/games/dls/STEREO_MADNESS.8xv",
+      "/games/dls/TIME_MACHINE.8xv"
+    ]
   },
   {
     "title": "FlappyBird",
@@ -25,7 +43,10 @@
     "author": "Rico",
     "image": "https://i.imgur.com/JmXLTMB.png",
     "link": "/games/detail/?id=18",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=530922"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=530922",
+    "fileUpload": [
+      "/games/dls/FLAPPYB.8xp"
+    ]
   },
   {
     "title": "CEleste",
@@ -36,7 +57,7 @@
     "link": "/games/detail/?id=21",
     "download": "https://github.com/commandblockguy/CEleste/releases/download/v1.2/CELESTE.8xp",
     "fileUpload": [
-      "https://github.com/commandblockguy/CEleste/releases/download/v1.2/CELESTE.8xp"
+      "/games/dls/CELESTE.8xp"
     ]
   },
   {
@@ -48,7 +69,7 @@
     "link": "/games/detail/?id=20",
     "download": "https://github.com/ashbit06/RanGen_CE/raw/refs/heads/main/bin/RanGen.8xp",
     "fileUpload": [
-      "https://github.com/ashbit06/RanGen_CE/raw/refs/heads/main/bin/RanGen.8xp"
+      "/games/dls/RanGen.8xp"
     ]
   },
   {
@@ -58,7 +79,10 @@
     "author": "MateoConLechuga",
     "image": "https://i.imgur.com/13NwJwk.png",
     "link": "/games/detail/?id=4",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=235053"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=235053",
+    "fileUpload": [
+      "/games/dls/PacMan.8xp"
+    ]
   },
   {
     "title": "Fruit Ninja CE",
@@ -67,7 +91,10 @@
     "author": "Michael2_3B, MateoConLechuga",
     "image": "https://i.imgur.com/PFQlT7O.png",
     "link": "/games/detail/?id=19",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=2790626"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2790626",
+    "fileUpload": [
+      "/games/dls/FRTNINJA.8xp"
+    ]
   },
   {
     "title": "Jetpack Joyride CE",
@@ -76,7 +103,18 @@
     "author": "King, Dub, Dub",
     "image": "https://i.imgur.com/eFIZmse.png",
     "link": "/games/detail/?id=10",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=2840759"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2840759",
+    "fileUpload": [
+      "/games/dls/BARRY.8xv",
+      "/games/dls/JETPACK.8xp",
+      "/games/dls/JPJRBG1.8xv",
+      "/games/dls/JPJRBG2.8xv",
+      "/games/dls/JPJRBG3.8xv",
+      "/games/dls/JPJRBG4.8xv",
+      "/games/dls/JPJRGFX1.8xv",
+      "/games/dls/JPJRGFX2.8xv",
+      "/games/dls/JPJRPAL.8xv"
+    ]
   },
   {
     "title": "Tetric A (Tetris-like) (Version CE)",
@@ -85,7 +123,11 @@
     "author": "Kerm, Martian",
     "image": "https://i.imgur.com/xMlk6TE.png",
     "link": "/games/detail/?id=17",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=302673"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=302673",
+    "fileUpload": [
+      "/games/dls/ATETRIS.8xp",
+      "/games/dls/tetrica.8xp"
+    ]
   },
   {
     "title": "Cesium",
@@ -103,7 +145,10 @@
     "author": "Rico",
     "image": "https://i.imgur.com/jwx2x87.png",
     "link": "/games/detail/?id=15",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=489129"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=489129",
+    "fileUpload": [
+      "/games/dls/CE2048.8xp"
+    ]
   },
   {
     "title": "Donkey Kong CE",
@@ -112,7 +157,10 @@
     "author": "Rico",
     "image": "https://i.imgur.com/Acluf2q.png",
     "link": "/games/detail/?id=16",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=1113934"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=1113934",
+    "fileUpload": [
+      "/games/dls/DKONG.8xp"
+    ]
   },
   {
     "title": "Blocks CE",
@@ -130,7 +178,10 @@
     "author": "Iambian",
     "image": "https://i.imgur.com/2UgUVgK.png",
     "link": "/games/detail/?id=8",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=2620347"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2620347",
+    "fileUpload": [
+      "/games/dls/PJUMP.8xp"
+    ]
   },
   {
     "title": "Mario Kart CE",
@@ -148,7 +199,13 @@
     "author": "James, Vernon",
     "image": "https://i.imgur.com/DpY67NI.png",
     "link": "/games/detail/?id=9",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=1210483"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=1210483",
+    "fileUpload": [
+      "/games/dls/bancgfx.8xv",
+      "/games/dls/banchor.8xp",
+      "/games/dls/bancmaps.8xv",
+      "/games/dls/bancsav.8xv"
+    ]
   },
   {
     "title": "TI-Boy CE (gameboy color emulator)",
@@ -166,7 +223,19 @@
     "author": "calclover2514",
     "image": "https://i.imgur.com/Qh6zLL5.png",
     "link": "/games/detail/?id=11",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=2432477"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2432477",
+    "fileUpload": [
+      "/games/dls/MC2DCSRC.8xp",
+      "/games/dls/MC2DDAT.8xv",
+      "/games/dls/MC2DGSRC.8xp",
+      "/games/dls/MC2DMPMK.8xp",
+      "/games/dls/MC2DSMOB.8xp",
+      "/games/dls/MC2DSRC.8xp",
+      "/games/dls/MC2DSSRC.8xp",
+      "/games/dls/MC2DTB.8xp",
+      "/games/dls/MC2DWSD.8xp",
+      "/games/dls/MCRAFT2D.8xp"
+    ]
   },
   {
     "title": "Chess",
@@ -184,7 +253,11 @@
     "author": "Xavier, Andréani, William, Hennebois, Adriweb",
     "image": "https://i.imgur.com/Mg1JbUY.png",
     "link": "/games/detail/?id=13",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=335066"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=335066",
+    "fileUpload": [
+      "/games/dls/ANDRODAT.8xv",
+      "/games/dls/ANDROIDES.8xp"
+    ]
   },
   {
     "title": "Race2D",
@@ -193,6 +266,44 @@
     "author": "marcrob01",
     "image": "https://i.imgur.com/GweFv3H.png",
     "link": "/games/detail/?id=7",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=2432453"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2432453",
+    "fileUpload": [
+      "/games/dls/Back_0.8xv",
+      "/games/dls/Back_1.8xv",
+      "/games/dls/Back_10.8xv",
+      "/games/dls/Back_11.8xv",
+      "/games/dls/Back_12.8xv",
+      "/games/dls/Back_13.8xv",
+      "/games/dls/Back_14.8xv",
+      "/games/dls/Back_15.8xv",
+      "/games/dls/Back_16.8xv",
+      "/games/dls/Back_17.8xv",
+      "/games/dls/Back_18.8xv",
+      "/games/dls/Back_19.8xv",
+      "/games/dls/Back_2.8xv",
+      "/games/dls/Back_20.8xv",
+      "/games/dls/Back_21.8xv",
+      "/games/dls/Back_22.8xv",
+      "/games/dls/Back_23.8xv",
+      "/games/dls/Back_24.8xv",
+      "/games/dls/Back_25.8xv",
+      "/games/dls/Back_26.8xv",
+      "/games/dls/Back_27.8xv",
+      "/games/dls/Back_28.8xv",
+      "/games/dls/Back_29.8xv",
+      "/games/dls/Back_3.8xv",
+      "/games/dls/Back_4.8xv",
+      "/games/dls/Back_5.8xv",
+      "/games/dls/Back_6.8xv",
+      "/games/dls/Back_7.8xv",
+      "/games/dls/Back_8.8xv",
+      "/games/dls/Back_9.8xv",
+      "/games/dls/Bus.8xv",
+      "/games/dls/CARG.8xp",
+      "/games/dls/Player.8xv",
+      "/games/dls/Race2D.8xp",
+      "/games/dls/Van.8xp",
+      "/games/dls/bCar.8xv"
+    ]
   }
 ]
