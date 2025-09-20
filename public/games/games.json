@@ -1,0 +1,198 @@
+[
+  {
+    "title": "Oiram",
+    "id": "3",
+    "description": "Oiram CE : a Mario-like for the TI-84 Plus CE / TI-83 Premium CE!<br>_________________________<br><br>Source code: https://github.com/mateoconlechuga/oiram<br>Level Editor: https://github.com/mateoconlechuga/oiram-editor",
+    "author": "MateoConLechuga",
+    "image": "https://i.imgur.com/MbL8Ap5.png",
+    "link": "/games/detail/?id=3",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=123456",
+    "fileUpload": ["/games/dls/OIRAM.8xv","/games/dls/OiramPK.8xv","/games/dls/OiramS.8xv","/games/dls/OiramT.8xv"]
+  },
+  {
+    "title": "Geometry Dash CE",
+    "id": "5",
+    "description": "If you want to play other levels than the basic ones (since there are only 8) do not hesitate to take a look at the Games Levels Geometry Dash category !<br>In addition, you can create your own level! I refer you to the project topic if you want to do it on a computer or to the integrated level editor topic if you want to do it directly on your calculator!<br><br>NEW:<br>- Creation of the editing mode accessible from the main menu by pressing [Alpha] to edit and [+] to create!<br>- Improvement of the hitbox<br>- Correction of minor bugs<br>- ...<br><br>Geometry Dash (The Impossible Game) ported to TI-83 Premium CE and TI-84+CE! Play 8 different levels (Stereo Madness/Back On Track/Polargeist/Dry Out/Base After Base/Can't Let Go/Jumper/Time Machine) and create them using the integrated level editor or the online converter! (see the project and editor presentation topics below)<br><br>KEYS:<br>***** In the menu:<br>- MODE/DEL/CANCEL: quit<br>- </>: choose a level<br>- ENTER/2NDE: launch the game for the selected level<br>- ALPHA: Edit the selected level<br>- +: Create a level<br>***** In the game:<br>- 2NDE: Jump<br>- DEL: Return to the main menu<br>- CANCEL: Quit the game instantly<br>- ENTER: Open the pause menu (minimalist)<br><br>For the level editor keys, read the README.md file or see the shortcut_gdedit.png image in the archive!<br><br>This program is licensed under the Creative Commons BY-NC-SA 4.0 license.<br><br>Feel free to check out the project progress topic!<br>https://tiplanet.org/forum/viewtopic.php?f=12&t=19211<br>And here is the topic for the presentation of the integrated level editor!<br>https://tiplanet.org/forum/viewtopic.php?f=12&t=23601<br><br>The project is also on Github: https://github.com/MathisLav/GeometryDashCE",
+    "author": "Epharius , Anonymous0",
+    "image": "https://i.imgur.com/um6vvuA.png",
+    "link": "/games/detail/?id=5",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=790041"
+  },
+  {
+    "title": "FlappyBird",
+    "id": "18",
+    "description": "<br><br>FlappyBird for TI-83 Premium CE / TI-84 Plus CE.<br><br>Requires having the Libs C on his calculator",
+    "author": "Rico",
+    "image": "https://i.imgur.com/JmXLTMB.png",
+    "link": "/games/detail/?id=18",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=530922"
+  },
+  {
+    "title": "CEleste",
+    "id": "21",
+    "description": "<p><em>(A video tutorial for the following steps is also available<br /> <a href='https://www.youtube.com/watch?v=_e8pgw9d7S4'>here</a>)</em></p> <p>Transfer <a href='https://github.com/commandblockguy/CEleste/releases/latest/download/CEleste.8xp'>CELESTE.8xp</a><br /> and the <a href='https://tiny.cc/clibs'>C Libraries</a> to the calculator using TI Connect CE<br /> or TiLP. Then, select prgmCELESTE from the program menu and press enter.<br /> If this results in an error, <a href='https://yvantt.github.io/arTIfiCE/'>arTIfiCE</a> is<br /> required for your OS version.</p> <p>Use the arrow keys to move, 2nd to jump and alpha to dash. To exit the game, press<br /> the clear key to save your progress, or del to exit without saving.</p> <p>A practice mode for speedrunning can be accessed by pressing the graph key from<br /> the title screen. In this mode, the time for the current room is displayed in white, and<br /> your best time for the room (in frames) is displayed in yellow. After completing a room,<br /> you will restart on the same level. To move to the previous level, press y=; to move to<br /> the next, press graph. You can also press window to toggle the HUD, and zoom to toggle<br /> gemskip mode.</p> ",
+    "author": "commandblockguy",
+    "image": "https://i.imgur.com/ODxemrM.png",
+    "link": "/games/detail/?id=21",
+    "download": "https://github.com/commandblockguy/CEleste/releases/download/v1.2/CELESTE.8xp",
+    "fileUpload": [
+      "https://github.com/commandblockguy/CEleste/releases/download/v1.2/CELESTE.8xp"
+    ]
+  },
+  {
+    "title": "RanGen CE",
+    "id": "20",
+    "description": "This is my second shared attempt at RanGen, or random generation. I call it that because it sounds cooler and is shorter. No need to credit me for the name—I just feel there should be a simplified name for it. I got the idea of making one of these from @surlo_gamez wasteland platformer. I recovered the first version for y'all if you'd like to play it. Here's the link: https://scratch.mit.edu/projects/552030316/<br>For an extended version of the game, go to https://github.com/ashbit06/RanGen and download the RanGen.zip file. There will be an HTML file that you can open to play the game. Some features include full gamepad support. ",
+    "author": "ashbit_",
+    "image": "https://smokeslate.github.io/random/calculator/games/IMG_4264.png",
+    "link": "/games/detail/?id=20",
+    "download": "https://github.com/ashbit06/RanGen_CE/raw/refs/heads/main/bin/RanGen.8xp",
+    "fileUpload": [
+      "https://github.com/ashbit06/RanGen_CE/raw/refs/heads/main/bin/RanGen.8xp"
+    ]
+  },
+  {
+    "title": "PacMan CE",
+    "id": "4",
+    "description": "Adaptation of the 1980 Pac-Man arcade game for CE range calculators.<br><br>Also available on http://www.ticalc.org/archives/files/fileinfo/464/46430.html",
+    "author": "MateoConLechuga",
+    "image": "https://i.imgur.com/13NwJwk.png",
+    "link": "/games/detail/?id=4",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=235053"
+  },
+  {
+    "title": "Fruit Ninja CE",
+    "id": "19",
+    "description": "<br><br>Fruit Ninja CE: an adaptation of the original game on TI-83 Premium CE / TI-84+ CE!<br><br>C libraries required, downloadable here<br><br>_________________________<br><br>Fruit Ninja CE: an adapted game available for the TI-83 Premium CE / TI-84+ CE!<br><br>C libraries required, download them here<br><br>_________________________<br><br>Via Cemetech: https://www.cemetech.net/downloads/files/2207/x2481<br><br>Source code: https://github.com/mateoconlechuga/FruitNinjaCE",
+    "author": "Michael2_3B, MateoConLechuga",
+    "image": "https://i.imgur.com/PFQlT7O.png",
+    "link": "/games/detail/?id=19",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2790626"
+  },
+  {
+    "title": "Jetpack Joyride CE",
+    "id": "10",
+    "description": "<br><br>Jetpack Joyride CE: an adaptation of the original game on TI-83 Premium CE / TI-84+ CE!<br><br>_________________________<br><br>Jetpack Joyride CE: an adapted game available for the TI-83 Premium CE / TI-84+ CE!<br><br>_________________________<br><br>Via Cemetech: https://www.cemetech.net/forum/viewtopic.php? T=16948<br><br>Source code: https://github.com/KingDubDub/Jetpack-Joyride-CE",
+    "author": "King, Dub, Dub",
+    "image": "https://i.imgur.com/eFIZmse.png",
+    "link": "/games/detail/?id=10",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2840759"
+  },
+  {
+    "title": "Tetric A (Tetris-like) (Version CE)",
+    "id": "17",
+    "description": " <br>Written in assembly and a close port of my Tetrizm game for the Casio Prizm, Tetric A is a fast, fun take on the classic arcade game, Tetris. Enjoy five unique modes: Marathon, High Speed, Cascade, Touchdown, and Sadistic. Runs on color-screen TI-84 Plus CE. Try this addicting arcade-style game today!<br><br>Via http://ticalc.org/archives/files/fileinfo/465/46530.html<br>Official topic: https://cemetech.net/news.php?id=755",
+    "author": "Kerm, Martian",
+    "image": "https://i.imgur.com/xMlk6TE.png",
+    "link": "/games/detail/?id=17",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=302673"
+  },
+  {
+    "title": "Cesium",
+    "id": "2",
+    "description": "Very first shell for CE calculators :)<br><br>Features:<br>Running ASM, C, and Basic programs directly, (Un) Archiving, deleting, renaming, and hiding programs<br>Quick access to a program by typing its first letter (≈ catalog) Ability to block the [ON] key when running<br>Basic programs<br>Support for relocatable shared C and ASM libraries Customizable icons for all file types<br>___________________________________<br><br>Source code: https://github.com/MateoConLechuga/Cesium<br>",
+    "author": "MateoConLechuga",
+    "image": "https://i.imgur.com/O8WeIOE.png",
+    "link": "/games/detail/?id=2",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=320019"
+  },
+  {
+    "title": "2048 CE",
+    "id": "15",
+    "description": "<br><br>2048 puzzle, with animations, for TI-84 Plus CE / 83 Premium CE.<br><br>Launch the game with Asm(prgmCE2048 (Asm( can be found at the beginning of the catalog)<br><br>Requires standard C libraries:<br><br>Https://tiplanet.org/forum/archives_voir.php? Id=430702",
+    "author": "Rico",
+    "image": "https://i.imgur.com/jwx2x87.png",
+    "link": "/games/detail/?id=15",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=489129"
+  },
+  {
+    "title": "Donkey Kong CE",
+    "id": "16",
+    "description": " <br>A recreation of the classic arcade game Donkey Kong for the Ti-84 Plus CE.",
+    "author": "Rico",
+    "image": "https://i.imgur.com/Acluf2q.png",
+    "link": "/games/detail/?id=16",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=1113934"
+  },
+  {
+    "title": "Blocks CE",
+    "id": "1",
+    "description": "A Minecraft-esque game for the TI 84 CE calculator. In it you can generate natural-looking worlds, place up to 24 different kinds of blocks, keep up to 5 saves, and enjoy real-time shadow effects, transparent water, and a 10 FPS framerate!",
+    "author": "TheScienceElf",
+    "image": "https://i.imgur.com/P2O0WzQ.png",
+    "link": "/games/detail/?id=1",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=3807678"
+  },
+  {
+    "title": "Plane Jump",
+    "id": "8",
+    "description": "<br><br>Roll your ball on a plane with the arrow keys. Be careful, various holes or narrowings are waiting for you. The [2nd] key will also allow you to jump your ball.<br><br>----------<br><br>Roll forward as a barely-controllable ball along a fast and smoothly-rendered 3D road while avoiding all the pitfalls by jumping or rolling out of the way. Keep rolling as long as possible to achieve the highest score",
+    "author": "Iambian",
+    "image": "https://i.imgur.com/2UgUVgK.png",
+    "link": "/games/detail/?id=8",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2620347"
+  },
+  {
+    "title": "Mario Kart CE",
+    "id": "14",
+    "description": " <br><br><br>----------<br><br>This is an extremely early and potentially buggy test version of<br>Mario Kart CE (or is it Oiram Trak CE?).<br><br>Simply copy MKARTCE.8XP to your calculator with your favourite<br>flavour of linking software and run it with your prefered method<br>for running native ASM programs (homescreen, Asm(, shell etc).<br><br>Keys:<br>2nd - Accelerate<br>Down - Stop<br>Left - Turn left<br>Right - Turn right<br>alpha - Shoot green shell (unlimited but it's the only item)<br>enter - Change character (8 different chars)<br><br>The demo features you vs 5 AI racers. The AI only drive around<br>the track, they don't pick up or use any items. You have access<br>to unlimited green shells as a test item - note that they break<br>when they hit another racer, a wall or object (they dont yet<br>bounce around).<br><br>There is only 1 track and despite there being a lap counter up<br>the top left, there is no end to the race (it will probably<br>overflow if you're really keen).<br><br>As mentioned this is pre pre-alpha and should be considered<br>unstable and potentially dangerous. Whilst it doesn't mess with<br>anything too serious, it does unlock SHA256 mem and rearrange<br>a lot of memory when running.<br><br>The graphics are blocky in places because this runs in half-res<br>(simulated) and is a calculator game ... so sacrifices needed<br>to be made. It should run at a playable frame rate however.<br><br>Collisions, item use, lap tracking and lots of other things are<br>only preliminary at this stage, so there are bound to be lots<br>of glitches and stuff. I'd appreciate if you find anything like<br>this that you let me know.<br><br>It is TEST ONLY. Feel free to check it out but please do not<br>distribute this in the wild as it could have serious bugs that<br>I am not aware of.<br><br>Post thoughts, criticism and findings in the thread on Cemetech.<br><br>Enjoy!<br><br>tr1p1ea",
+    "author": "tr1p1ea",
+    "image": "https://i.imgur.com/360BMoe.png",
+    "link": "/games/detail/?id=14",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2722716"
+  },
+  {
+    "title": "Banchor: Legend of the Hellspawn",
+    "id": "9",
+    "description": "<br><br>Banchor is a Zelda-type RPG for TI-83 Premium CE. Embody Rex the hero, in his gesture to rescue Princess Saphir and undo Banchor, the demon of hell. Improve your weapons, defense and endurance, and help yourself with the many NPCs encountered...<br><br>----------<br><br>Banchor is a huge Zelda-type RPG for the TI-84+CE! You take control of the heroic Rex, as he ventures on a mammoth quest to rescue the kidnapped Princess Sapphira and defeat the evil demon from Hell, Banchor. Upgrade your weapons and defenses, increase your level of life and meet many people along that way that will help you in your quest! Pub / Ads News articles referring to this archive<br><br>Banchor, the Zelda-like RPG in color for TI-83 Premium CE (2637) (31/03/2021) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Update 5.5 removes assembler TI-83 Premium CE & 84+CE (163747) (20/05/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Banchor, a Zelda-like RPG for your TI-83 Premium CE (9125) (04/11/2017) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]",
+    "author": "James, Vernon",
+    "image": "https://i.imgur.com/DpY67NI.png",
+    "link": "/games/detail/?id=9",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=1210483"
+  },
+  {
+    "title": "TI-Boy CE (gameboy color emulator)",
+    "id": "12",
+    "description": "<br><br>Nintendo Game Boy (and GameBoy Color) emulator for the TI-83 Premium CE and TI-84 Plus CE.<br><br>(Compatible Python models)<br><br>Source code: https://github.com/calc84maniac/tiboyce Pub / Ads News articles referring to this archive<br><br>Release of the GameBoy Color TI-Boy CE emulator for 83P/84+CE (1574) (07/12/2022) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>2nd preview of the Game Boy Color emulator for TI-83/84+CE (1930) (20/11/2022) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>The Game Boy Color emulator for 83P/84+CE is on track! (1845) (10/14/2022) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Mario Kart CE, finally compatible TI-83 Premium CE 5.7 (3300) (09/02/2022) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>TI-Boy CE v0.2, Game Boy emulator of TI-84+/83 Premium CE (2000) (07/12/2021) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Mario Kart CE, finally compatible TI-83 Premium CE 5.6.1 (5227) (23/08/2021) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Mario Kart CE, 1st playable demo TI-83 Premium CE / TI-84+CE (3340) (12/04/2021) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Update 5.6.1: TI listening, the ASM arTIfiCE on reprieve! (15167) (26/02/2021) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>arTIFiCE 1.1, jailbreak update ASM 83PCE / 84+CE 5.5+ (3955) (28/09/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>BootSwap: protect your Boot, improve your 84+CE in 83PCE (8893) (16/09/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>AsmHook, direct execution programs ASM 83/84PCE 5.5+ (5934) (15/09/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Cauldron Boot patcher: final control OS 83PCE/84+CE A-L (9377) (08/09/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>arTIfiCE jailbreak: ASM on TI-83 Premium CE 5.5 / 84+CE 5.6 (60371) (07/09/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Output Python complementary modules turtle/box/chart/quivr (6114) (28/05/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Update 5.5 removes assembler TI-83 Premium CE & 84+CE (163747) (20/05/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>TI-83 Premium CE Ed. Python: incompatibilities & updates (5229) (08/24/2019) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>Game Boy ROMs converter update for OS 5.3.5 (7524) (29/03/2019) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br><br>TI-Boy CE: Game Boy emulator for 83 Premium CE/84 Plus CE! (42103) (06/19/2018) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]",
+    "author": "calc84maniac",
+    "image": "https://i.imgur.com/UzBiwFe.png",
+    "link": "/games/detail/?id=12",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=654321"
+  },
+  {
+    "title": "Minecraft 2D CE",
+    "id": "11",
+    "description": " <br>A full 2D Minecraft clone for the TI-84 Plus CE. Includes Creative and Survival mode. ICE Source Included. v2.2<br><br>ticalc.org: https://www.ticalc.org/archives/files/fileinfo/471/47199.html  Pub / Ads  News articles referring to this archive<br>Mise à jour 5.5 supprime assembleur TI-83 Premium CE & 84+CE (163747) (20/05/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]<br>Minecraft enfin adapté en 2D pour ta TI-83 Premium CE ! (2216) (15/05/2020) [News TI-z80 (TI-73, 76, 80, 81, 82, 83, 84, 85, 86)]",
+    "author": "calclover2514",
+    "image": "https://i.imgur.com/Qh6zLL5.png",
+    "link": "/games/detail/?id=11",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2432477"
+  },
+  {
+    "title": "Chess",
+    "id": "6",
+    "description": "<br><br>A simple chess game.<br><br>[V3.0]:<br><br>+ Backup system!",
+    "author": "Snowberry",
+    "image": "https://i.imgur.com/xDp4jua.png",
+    "link": "/games/detail/?id=6",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=1726275"
+  },
+  {
+    "title": "Androides",
+    "id": "13",
+    "description": "<br><br>Type: Lode Runner<br><br>Author: William Hennebois<br><br>Publisher: Infogrames<br><br>Release: 1985<br><br>Platforms: Thomson (MO5, TO7/70)<br><br>Adaptation: Xavier Andréani<br><br>Platforms: TI-83 Premium CE, TI-84 Plus CE<br><br>ANDROIDS (from the Greek ANDROS: man, and EIDOS: aspect): what has HUMAN FORM!<br><br>Scientists have given these robots, in addition to the power to perform common tasks, to kill everything that looks like a human. Is it a coincidence? Is it planned? You are their prey.<br><br>A fantastic 100% machine language action game. Suspense, crazy race, how to escape these dangerous robots while collecting as many gifts as possible!<br><br>-------------<br><br>License: GPL<br><br>-------------<br><br>Transfer the 2 ANDROID and ANDRODAT files to your calculator!",
+    "author": "Xavier, Andréani, William, Hennebois, Adriweb",
+    "image": "https://i.imgur.com/Mg1JbUY.png",
+    "link": "/games/detail/?id=13",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=335066"
+  },
+  {
+    "title": "Race2D",
+    "id": "7",
+    "description": " <br>A 2d racing game, where you get thrown in a random vehicle and have to drive as far as possible without colliding to often.<br>There are highscores and the player vehicle gets faster over time.<br><br>When run in CEmu, the framerate gets increased.<br><br>Source: https://www.cemetech.net/downloads/files/1922/x1922",
+    "author": "marcrob01",
+    "image": "https://i.imgur.com/GweFv3H.png",
+    "link": "/games/detail/?id=7",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=2432453"
+  }
+]

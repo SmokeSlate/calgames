@@ -897,19 +897,58 @@
 			}))
 		}
 
-		function l(e, t) {
-			return new Promise(((n, r) => {
-				const s = a(e, t),
-					i = u("yes", "Okay", (() => {
-						s.classList.remove("active"), n()
-					})),
-					c = u("no", "Cancel", (() => {
-						s.classList.remove("active"), r()
-					}));
-				s.querySelector(".buttons").appendChild(i), s.querySelector(".buttons").appendChild(c), s.classList.add("active")
-			}))
-		}
-		window.addEventListener("load", (() => {
+                function l(e, t) {
+                        return new Promise(((n, r) => {
+                                const s = a(e, t),
+                                        i = u("yes", "Okay", (() => {
+                                                s.classList.remove("active"), n()
+                                        })),
+                                        c = u("no", "Cancel", (() => {
+                                                s.classList.remove("active"), r()
+                                        }));
+                                s.querySelector(".buttons").appendChild(i), s.querySelector(".buttons").appendChild(c), s.classList.add("active")
+                        }))
+                }
+                window.transferTool = {
+                        loadFileFromArrayBuffer(e, n = {}) {
+                                try {
+                                        const o = e instanceof Uint8Array ? e : new Uint8Array(e),
+                                                a = t.parseFile(o);
+                                        if (!t.isValid(a)) return s = null, i(), {
+                                                success: !1,
+                                                reason: "invalid"
+                                        };
+                                        const l = "string" == typeof n ? n : n && n.name ? n.name : "";
+                                        l && (a.displayName = l);
+                                        if (r && !r.canReceive(a)) return {
+                                                success: !1,
+                                                reason: "incompatible",
+                                                device: r.name || null
+                                        };
+                                        return s = a, i(), {
+                                                success: !0
+                                        }
+                                } catch (e) {
+                                        return console.error("Automatic load failed", e), {
+                                                success: !1,
+                                                reason: "error",
+                                                message: e && e.message ? e.message : String(e)
+                                        }
+                                }
+                        },
+                        clearFile() {
+                                s = null, i()
+                        },
+                        getState() {
+                                return {
+                                        hasDevice: !!r,
+                                        deviceName: r ? r.name : null,
+                                        hasFile: !!s,
+                                        fileName: s && (s.displayName || s.name || s.fileName || "")
+                                }
+                        }
+                }
+                window.addEventListener("load", (() => {
 			e.browserSupported() ? (function() {
 					const t = e.models().filter((e => "supported" == e.status || "beta" == e.status)).map((e => "beta" == e.status ? e
 						.name + " (beta)" : e.name)).join(", ");

@@ -6,6 +6,43 @@
     <title>Downloads</title>
     <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
     <style>
+        .collapsible {
+          background-color: #777;
+          color: white;
+          cursor: pointer;
+          padding: 18px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
+        }
+        
+        .active, .collapsible:hover {
+          background-color: #555;
+        }
+        
+        .collapsible:after {
+          content: '\002B';
+          color: white;
+          font-weight: bold;
+          float: right;
+          margin-left: 5px;
+        }
+        
+        .active:after {
+          content: "\2212";
+        }
+        
+        .content {
+          padding: 0 18px;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.2s ease-out;
+          background-color: #60606064;
+        }
+        </style>
+    <style>
         body {
             margin: 0;
             padding: 0;
@@ -71,6 +108,26 @@
         .downloads li h3 {
             margin: 0;
         }
+        .tool-actions {
+            margin-top: 15px;
+        }
+        .tool-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #39d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .tool-button:hover {
+            text-decoration: none;
+            background-color: #1d9bf0;
+        }
+        .tool-note {
+            margin-top: 10px;
+            color: #e0e0e0;
+        }
         footer {
             background-color: #333;
             color: white;
@@ -93,36 +150,30 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/games.html">Games</a></li>
-            <li><a href="/tools.html">Tools</a></li>
-            <li><a style="color: #a7a7a7;" href="/downloads.html">Downloads</a></li>
-            <li><a href="/faq.html">FAQ</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/games/">Games</a></li>
+            <li><a style="color: #a7a7a7;" href="/tools/">Tools</a></li>
+            <li><a href="/downloads/">Downloads</a></li>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/contact/">Contact</a></li>
         </ul>
     </nav>
 </header>
-
-<section class="downloads">
-    <h2>Required Software</h2>
-    <ul>
-        <li>
-            <h3>TI Connect CE</h3>
-            <p>TI Connect CE is essential for transferring games and other files to your TI calculator.</p>
-            <a id="tilink" href="" target="_blank">Download TI Connect CE</a>
-        </li>
-        <li>
-            <h3>CE Libraries</h3>
-            <p>CE Libraries are REQUIRED to run almost ANY game on all TI calculators.</p>
-            <a href="https://github.com/CE-Programming/libraries/releases" target="_blank">Download CE Libraries</a>
-        </li>
-        <li>
-            <h3>arTIfaCE</h3>
-            <p>arTIfaCE are REQUIRED to open games on newer versions.<br> Note: arTIfiCE is not needed if your calculator has OS 5.4 or earlier!</p>
-            <a href="https://yvantt.github.io/arTIfiCE/" target="_blank">Download arTIfaCE</a>
-        </li>
-    </ul>
-</section>
-
+<div>
+<button class="collapsible"><h2>Transfer to calculator</h2><br>More details</button>
+<div class="content transfer">
+    <p>Launch the calculator file uploader in a dedicated page to keep the tool focused and allow games to preload their files for you.</p>
+    <div class="tool-actions">
+        <a class="tool-button" href="/tools/uploader/">Open uploader</a>
+    </div>
+    <p class="tool-note">If a game provides transfer-ready files, the game page will open this uploader with those files listed automatically.</p>
+</div></div>
+<br><br>
+<div>
+<button class="collapsible converter"><h2>TI-Boy CE ROM converter</h2> <br> Open converter</button>
+<div class="content">
+    <iframe src="romconv/" style="margin-left: 165px; width: 100%; height: 500px; max-height: max-content; border: transparent;"></iframe>
+</div></div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <footer>
     <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
     <p>Not affiliated with TI. Use at your own risk.</p>
@@ -167,49 +218,21 @@
     
 </script>
 <script>
-    // Function to detect the OS from userAgent
-    function getOS() {
-        const userAgent = navigator.userAgent.toLowerCase();
-        if (userAgent.indexOf('win') !== -1) {
-            return 'windows';
-        } else if (userAgent.indexOf('mac') !== -1) {
-            return 'macos';
-        } else if (userAgent.indexOf('linux') !== -1) {
-            return 'linux';
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
         } else {
-            return 'unknown';
-        }
+          content.style.maxHeight = content.scrollHeight + "px";
+        } 
+      });
     }
-
-    // Function to update the link based on the OS
-    function updateLinkBasedOnOS() {
-        const os = getOS();
-        const link = document.getElementById('tilink');
-
-        let downloadUrl = '';
-        switch (os) {
-            case 'windows':
-                downloadUrl = 'https://education.ti.com/download/en/ed-tech/CA9C74CAD02440A69FDC7189D7E1B6C2/EB5C99AD6B2C42E7BEC073117B0FDC46/TIConnectCE-6.0.1.344.exe';
-                break;
-            case 'macos':
-                downloadUrl = 'https://education.ti.com/download/en/ed-tech/CA9C74CAD02440A69FDC7189D7E1B6C2/D96C79959E494383BDCA94D0478FFF05/TIConnectCE-6.0.1.344.dmg';
-                break;
-            case 'linux':
-                downloadUrl = 'https://education.ti.com/en/customer-support/knowledge-base/sofware-apps/general-information/11522';
-                link.textContent = `Currently no support for Linux <br> Click to view article`;
-                return;
-            default:
-                downloadUrl = 'https://education.ti.com/en/products/computer-software/ti-connect-ce-sw';
-                break;
-        }
-
-        link.href = downloadUrl;
-        link.textContent = `Download for ${os.charAt(0).toUpperCase() + os.slice(1)}`;
-    }
-
-    // Call the function to update the link
-    updateLinkBasedOnOS();
-</script>
+    </script>
 
 </body>
 </html>
