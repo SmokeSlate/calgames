@@ -4,233 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator File Uploader</title>
-    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Heebo', sans-serif;
-            color: #a7a7a7;
-            background: black;
-        }
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        header {
-            background: linear-gradient(to bottom, #616161, #1b2631, black);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        nav ul {
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            list-style: none;
-        }
-        nav ul li {
-            margin: 0 15px;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-        nav ul li a.active {
-            color: #a7a7a7;
-        }
-        main {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: rgba(96, 96, 96, 0.9);
-            border-radius: 15px;
-            color: #fff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-        .uploader-details {
-            flex: 1 1 320px;
-            min-width: 280px;
-        }
-        .uploader-frame {
-            flex: 1 1 420px;
-            min-width: 320px;
-        }
-        iframe {
-            width: 100%;
-            min-height: 520px;
-            border: none;
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.25);
-        }
-        h2 {
-            margin-top: 0;
-            color: #fff;
-        }
-        .status {
-            margin: 20px 0;
-            padding: 12px 16px;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.35);
-            color: #e0e0e0;
-        }
-        .status.success {
-            background: rgba(57, 221, 160, 0.2);
-            color: #d2ffec;
-        }
-        .status.error {
-            background: rgba(235, 87, 87, 0.25);
-            color: #ffd7d7;
-        }
-        .status.notice {
-            background: rgba(57, 157, 221, 0.25);
-            color: #d7ecff;
-        }
-        .file-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .file-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .file-entry {
-            background: rgba(0, 0, 0, 0.35);
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
-        .file-name {
-            font-weight: 600;
-            color: #fff;
-            word-break: break-word;
-        }
-        .file-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        button {
-            background-color: #39d;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 18px;
-            font-size: 0.95em;
-            cursor: pointer;
-            font-family: 'Heebo', sans-serif;
-            font-weight: 600;
-        }
-        button.secondary {
-            background-color: #555;
-        }
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        button.loading::after {
-            content: '...';
-            margin-left: 6px;
-        }
-        a.download-link {
-            color: #9fd5ff;
-            text-decoration: none;
-            font-size: 0.95em;
-        }
-        a.download-link:hover {
-            text-decoration: underline;
-        }
-        .empty-state {
-            margin: 0;
-            color: #ddd;
-        }
-        .helper-text {
-            margin-top: 15px;
-            color: #ddd;
-            font-size: 0.95em;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-        }
-        footer a {
-            color: #39d;
-            text-decoration: none;
-        }
-        @media (max-width: 900px) {
-            main {
-                flex-direction: column;
-            }
-            iframe {
-                min-height: 520px;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
-
 <div id="particles-js"></div>
 
-<header>
-    <h1>Calculator Games</h1>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/games/">Games</a></li>
-            <li><a class="active" href="/tools/">Tools</a></li>
-            <li><a href="/downloads/">Downloads</a></li>
-            <li><a href="/faq/">FAQ</a></li>
-            <li><a href="/contact/">Contact</a></li>
-        </ul>
-    </nav>
+<header class="site-header">
+    <div class="nav-container">
+        <a class="brand" href="/">Calculator Games</a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+            <span class="sr-only">Toggle navigation</span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="primary-nav" class="site-nav">
+            <ul>
+                <li><a data-nav="/" href="/">Home</a></li>
+                <li><a data-nav="/games/" href="/games/">Games</a></li>
+                <li><a data-nav="/tools/" href="/tools/">Tools</a></li>
+                <li><a data-nav="/downloads/" href="/downloads/">Downloads</a></li>
+                <li><a data-nav="/faq/" href="/faq/">FAQ</a></li>
+                <li><a data-nav="/contact/" href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
-<main>
-    <section class="uploader-details">
-        <h2 id="uploader-title">Calculator File Uploader</h2>
-        <p id="uploader-description">Load calculator program files from this page and send them to your device using the uploader on the right.</p>
-        <div id="uploader-status" class="status notice">Preparing uploader…</div>
-        <div class="file-controls" id="file-controls"></div>
-        <div id="file-list" class="file-list">
-            <p class="empty-state">Provide a list of files from a game page or choose a file directly inside the uploader.</p>
+<main class="page-content">
+    <section class="hero hero--subpage js-reveal">
+        <div class="content-container">
+            <h1 class="hero-title">Calculator file uploader</h1>
+            <p class="hero-subtitle">Load calculator program files and send them straight to your TI device from the browser.</p>
         </div>
-        <p class="helper-text">Tip: Connect your calculator first, then load a file and press <strong>Send it!</strong> inside the uploader.</p>
     </section>
-    <section class="uploader-frame">
-        <iframe id="uploader-frame" src="../transfer/" title="Calculator file uploader" allow="usb"></iframe>
+
+    <section class="page-section">
+        <div class="content-container">
+            <div class="uploader-layout js-reveal">
+                <div class="panel uploader-panel">
+                    <h2 id="uploader-title">Calculator File Uploader</h2>
+                    <p id="uploader-description">Load calculator program files from this page and send them to your device using the uploader.</p>
+                    <div id="uploader-status" class="status notice">Preparing uploader…</div>
+                    <div class="file-controls" id="file-controls"></div>
+                    <div id="file-list" class="file-list">
+                        <p class="empty-state">Provide a list of files from a game page or choose a file directly inside the uploader.</p>
+                    </div>
+                    <p class="helper-text">Tip: Connect your calculator first, then load a file and press <strong>Send it!</strong> inside the uploader.</p>
+                </div>
+                <div class="panel panel--flush uploader-panel">
+                    <iframe id="uploader-frame" class="tool-frame" src="../transfer/" title="Calculator file uploader" allow="usb"></iframe>
+                </div>
+            </div>
+        </div>
     </section>
 </main>
 
-<footer>
+<footer class="site-footer js-reveal">
     <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
     <p>Not affiliated with TI. Use at your own risk.</p>
 </footer>
 
+<script src="/assets/js/site.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
     particlesJS('particles-js', {
         "particles": {
             "number": {
-                "value": 100,
+                "value": 90,
                 "density": {
                     "enable": true,
-                    "value_area": 800
+                    "value_area": 900
                 }
             },
             "color": {
@@ -240,17 +85,22 @@
                 "type": "circle"
             },
             "opacity": {
-                "value": 0.5
+                "value": 0.45
             },
             "size": {
-                "value": 4,
+                "value": 3.6,
                 "random": true
+            },
+            "line_linked": {
+                "enable": false
             },
             "move": {
                 "enable": true,
-                "speed": 3,
-                "direction": "random",
-                "out_mode": "out"
+                "speed": 2.6,
+                "direction": "none",
+                "random": true,
+                "out_mode": "out",
+                "bounce": false
             }
         }
     });
@@ -268,8 +118,8 @@
 
     if (titleParam) {
         decodedTitle = decodeURIComponent(titleParam);
-        titleEl.textContent = `${decodedTitle} - File Uploader`;
-        document.title = `${decodedTitle} - Calculator File Uploader`;
+        titleEl.textContent = `${decodedTitle} · File Uploader`;
+        document.title = `${decodedTitle} · Calculator File Uploader`;
         descriptionEl.textContent = `Load the files for ${decodedTitle} below or choose a file manually.`;
     }
 
@@ -372,19 +222,22 @@
         if (files.length > 1) {
             const loadAllButton = document.createElement('button');
             loadAllButton.textContent = 'Load all files sequentially';
-            loadAllButton.classList.add('secondary');
+            loadAllButton.className = 'button button--secondary';
             loadAllButton.addEventListener('click', async () => {
                 loadAllButton.disabled = true;
+                loadAllButton.classList.add('loading');
                 updateStatus('Loading files…', 'notice');
                 for (const file of files) {
                     const result = await loadFileIntoUploader(file);
                     if (!result.success) {
                         loadAllButton.disabled = false;
+                        loadAllButton.classList.remove('loading');
                         return;
                     }
                 }
                 updateStatus('All files were loaded. Use the uploader to send them one at a time.', 'success');
                 loadAllButton.disabled = false;
+                loadAllButton.classList.remove('loading');
             });
             fileControlsEl.appendChild(loadAllButton);
         }
@@ -402,6 +255,7 @@
 
             const loadButton = document.createElement('button');
             loadButton.textContent = 'Load into uploader';
+            loadButton.className = 'button button--secondary';
             loadButton.addEventListener('click', () => loadFileIntoUploader(file, loadButton));
 
             const downloadLink = document.createElement('a');
@@ -513,6 +367,5 @@
         updateStatus('Uploader ready. Select a file below to load it automatically.', 'notice');
     }
 </script>
-
 </body>
 </html>
