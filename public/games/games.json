@@ -136,7 +136,8 @@
     "author": "MateoConLechuga",
     "image": "https://i.imgur.com/O8WeIOE.png",
     "link": "/games/detail/?id=2",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=320019"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=320019",
+    "fileUpload": ["/games/dls/cesium_en.8xp"]
   },
   {
     "title": "2048 CE",
@@ -244,7 +245,8 @@
     "author": "Snowberry",
     "image": "https://i.imgur.com/xDp4jua.png",
     "link": "/games/detail/?id=6",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=1726275"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=1726275",
+    "fileUpload": ["https://cdn.ti-planet.org/downloads2/1566739608/CHESS.8xp"]
   },
   {
     "title": "Androides",
