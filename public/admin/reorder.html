@@ -98,9 +98,9 @@ const ADMIN_USERNAME = "smoke";
 const ADMIN_PASSWORD = "slate";
 
 // Sample GitHub repository details (update with your details)
-const GITHUB_REPO = 'github.sm0ke.org';
-const GITHUB_FILE_PATH = 'random/calculator/games/games.json';
-const GITHUB_API_URL = `https://api.github.com//repos/smokeslate/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
+const GITHUB_REPO = 'calgames';
+const GITHUB_FILE_PATH = 'public/games/games.json';
+const GITHUB_API_URL = `https://api.github.com/repos/smokeslate/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
 let games = []; // List of games from JSON
 let sha; // File SHA needed to update the file
 
@@ -121,7 +121,7 @@ function login() {
 
 // Fetch the games from the JSON file
 function loadGames() {
-    fetch('https://github.sm0ke.org/random/calculator/games/games.json')
+    fetch('/games/games.json')
         .then(response => response.json())
         .then(data => {
             games = data;

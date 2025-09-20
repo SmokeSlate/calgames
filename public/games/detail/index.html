@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Details</title>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Heebo', sans-serif;
+            color: #a7a7a7;
+            background: black;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        header {
+            background: linear-gradient(to bottom, #616161, #1b2631, black);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            list-style: none;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .game-details {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+            gap: 30px;
+        }
+        .game-details img {
+            width: 40%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .game-info {
+            width: 50%;
+            color: #ddd;
+        }
+        .game-info h1 {
+            color: white;
+        }
+        .game-info p {
+            font-size: 1.2em;
+        }
+        .game-info a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #39d;
+            color: white;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .game-info a.button.secondary {
+            background-color: #555;
+        }
+        .game-info a.button.secondary:hover {
+            background-color: #777;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        footer a {
+            color: #39d;
+            text-decoration: none;
+        }
+        @media screen and (max-width: 768px) {
+            .game-details {
+                flex-direction: column;
+                text-align: center;
+            }
+            .game-details img, .game-info {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<header>
+    <h1>Calculator Games</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/games/">Games</a></li>
+            <li><a href="/downloads/">Downloads</a></li>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/contact/">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="game-details">
+    <img id="game-image" src="" alt="Game Image">
+    <div class="game-info" id="game-info">
+        <h1>Loading...</h1>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
+    <p>Not affiliated with TI. Use at your own risk.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+    // Initialize Particles.js
+    particlesJS('particles-js', {
+        "particles": {
+            "number": {
+                "value": 100,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": ["#ffadad", "#ffd6a5", "#fdffb6", "#caffbf", "#9bf6ff", "#a0c4ff", "#bdb2ff", "#ffc6ff"]
+            },
+            "shape": {
+                "type": "circle"
+            },
+            "opacity": {
+                "value": 0.5
+            },
+            "size": {
+                "value": 4,
+                "random": true
+            },
+            "move": {
+                "enable": true,
+                "speed": 3,
+                "direction": "random",
+                "out_mode": "out"
+            }
+        }
+    });
+
+    // Function to get game ID from URL
+    function getGameIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
+    }
+
+    // Fetch and display game details
+    function displayGameDetails(gameId) {
+        fetch('/games/games.json')
+            .then(response => response.json())
+            .then(data => {
+                const game = data.find(g => g.id === gameId);
+                if (game) {
+                    document.getElementById('game-image').src = game.image;
+                    const uploaderLink = Array.isArray(game.fileUpload) && game.fileUpload.length
+                        ? `<a href="/tools/uploader/?files=${encodeURIComponent(JSON.stringify(game.fileUpload))}&title=${encodeURIComponent(game.title)}" class="button secondary">Load in uploader</a>`
+                        : '';
+                    const buttonGroup = `
+                        <div class="button-group">
+                            <a href="${game.download}" class="button">Download Game</a>
+                            ${uploaderLink}
+                        </div>
+                    `;
+                    document.getElementById('game-info').innerHTML = `
+                        <h1>${game.title}</h1>
+                        <p><strong>Author:</strong> ${game.author}</p>
+                        <p>${game.description}</p>
+                        ${buttonGroup}
+                    `;
+                } else {
+                    document.getElementById('game-info').innerHTML = '<p>Game not found!</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching game details:', error);
+            });
+    }
+
+    const gameId = getGameIdFromUrl();
+    if (gameId) {
+        displayGameDetails(gameId);
+    } else {
+        document.getElementById('game-info').innerHTML = '<p>No game ID provided!</p>';
+    }
+</script>
+
+</body>
+</html>

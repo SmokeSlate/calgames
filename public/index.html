@@ -147,11 +147,11 @@
     <nav>
         <ul>
             <li><a style="color: #a7a7a7;" href="/">Home</a></li>
-            <li><a href="/games.html">Games</a></li>
-            <li><a href="/tools.html">Tools</a></li>
-            <li><a href="/downloads.html">Downloads</a></li>
-            <li><a href="/faq.html">FAQ</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/games/">Games</a></li>
+            <li><a href="/tools/">Tools</a></li>
+            <li><a href="/downloads/">Downloads</a></li>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/contact/">Contact</a></li>
         </ul>
     </nav>
 </header>
@@ -160,7 +160,7 @@
     <div class="container">
         <h1>Discover Classic and New Games for Your Calculator!</h1>
         <p>Explore a vast collection of games for TI calculators. Download, play, and enjoy!</p>
-        <a class="button" href="/games.html">Browse Games</a><br><br><br><br><br>
+        <a class="button" href="/games/">Browse Games</a><br><br><br><br><br>
     </div>
 </section>
 
@@ -244,19 +244,35 @@
 
 <!-- Fetch and Display Games -->
 <script>
-    fetch('https://github.sm0ke.org/random/calculator/games/featuredgames.json')
+    function resolveGameLink(game) {
+        const rawLink = typeof game.link === 'string' ? game.link.trim() : '';
+        const encodedId = game.id ? encodeURIComponent(game.id) : '';
+        const fallback = encodedId ? `/games/detail/?id=${encodedId}` : '/games/';
+        if (!rawLink) {
+            return fallback;
+        }
+        const normalized = rawLink
+            .replace('/games/index.html', '/games/detail/')
+            .replace('games/index.html', 'games/detail/')
+            .replace('index.html?', 'detail/?');
+        const prefixed = normalized.startsWith('/') ? normalized : `/${normalized}`;
+        return prefixed || fallback;
+    }
+
+    fetch('/games/featuredgames.json')
         .then(response => response.json())
         .then(data => { console.log(data)
             const gamesContainer = document.getElementById('games-container');
             data.forEach(game => {
                 const gameElement = document.createElement('div');
                 gameElement.className = 'game';
+                const detailLink = resolveGameLink(game);
                 gameElement.innerHTML = `
                     <img src="${game.image}" alt="${game.title}">
                     <h3>${game.title}</h3>
                     <h6>${game.author}</h6>
                     <p>${game.description}</p>
-                    <a href=".${game.link}" class="button">Play/Download</a>
+                    <a href="${detailLink}" class="button">Play/Download</a>
                 `;
                 gamesContainer.appendChild(gameElement);
             });

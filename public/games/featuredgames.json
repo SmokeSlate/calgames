@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Oiram",
+    "id": "3",
+    "description": "Oiram CE : a Mario-like for the TI-84 Plus CE / TI-83 Premium CE!<br>_________________________<br><br>Source code: https://github.com/mateoconlechuga/oiram<br>Level Editor: https://github.com/mateoconlechuga/oiram-editor",
+    "author": "MateoConLechuga",
+    "image": "https://i.imgur.com/MbL8Ap5.png",
+    "link": "/games/detail/?id=3",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=123456"
+  },
+  {
+    "title": "Cesium",
+    "id": "2",
+    "description": "Very first shell for CE calculators :)<br><br>Features:<br>Running ASM, C, and Basic programs directly.",
+    "author": "MateoConLechuga",
+    "image": "https://i.imgur.com/O8WeIOE.png",
+    "link": "/games/detail/?id=2",
+    "download": "https://tiplanet.org/modules/archives/download.php?id=320019"
+  }
+]
