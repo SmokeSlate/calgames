@@ -537,7 +537,7 @@ button,
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-soft);
-  height: clamp(280px, 52vw, 520px);
+  height: clamp(100%, 100%, 100%);
   background: #020b1f;
 }
 
