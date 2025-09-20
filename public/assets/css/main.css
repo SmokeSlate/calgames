@@ -535,7 +535,6 @@ button,
 .detail-media {
   position: relative;
   border-radius: var(--radius-lg);
-  overflow: hidden;
   box-shadow: var(--shadow-soft);
   background: #020b1f;
 }
