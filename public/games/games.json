@@ -136,7 +136,8 @@
     "author": "MateoConLechuga",
     "image": "https://i.imgur.com/O8WeIOE.png",
     "link": "/games/detail/?id=2",
-    "download": "https://tiplanet.org/modules/archives/download.php?id=320019"
+    "download": "https://tiplanet.org/modules/archives/download.php?id=320019",
+    "fileUpload": ["/games/dls/cesium_en.8xp"]
   },
   {
     "title": "2048 CE",
