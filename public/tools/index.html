@@ -3,194 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Downloads</title>
-    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700" rel="stylesheet">
-    <style>
-        .collapsible {
-          background-color: #777;
-          color: white;
-          cursor: pointer;
-          padding: 18px;
-          width: 100%;
-          border: none;
-          text-align: left;
-          outline: none;
-          font-size: 15px;
-        }
-        
-        .active, .collapsible:hover {
-          background-color: #555;
-        }
-        
-        .collapsible:after {
-          content: '\002B';
-          color: white;
-          font-weight: bold;
-          float: right;
-          margin-left: 5px;
-        }
-        
-        .active:after {
-          content: "\2212";
-        }
-        
-        .content {
-          padding: 0 18px;
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.2s ease-out;
-          background-color: #60606064;
-        }
-        </style>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Heebo', sans-serif;
-            color: #a7a7a7;
-            background: black;
-        }
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        header {
-            background: linear-gradient(to bottom, #616161, #1b2631, black);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        nav ul {
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            list-style: none;
-        }
-        nav ul li {
-            margin: 0 15px;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-        .downloads {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #606060;
-            border-radius: 15px;
-            color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        }
-        .downloads h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-        .downloads ul {
-            list-style: none;
-            padding: 0;
-        }
-        .downloads li {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #444;
-            border-radius: 10px;
-        }
-        .downloads li a {
-            color: #39d;
-            text-decoration: none;
-        }
-        .downloads li a:hover {
-            text-decoration: underline;
-        }
-        .downloads li h3 {
-            margin: 0;
-        }
-        .tool-actions {
-            margin-top: 15px;
-        }
-        .tool-button {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #39d;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-        .tool-button:hover {
-            text-decoration: none;
-            background-color: #1d9bf0;
-        }
-        .tool-note {
-            margin-top: 10px;
-            color: #e0e0e0;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-        }
-        footer a {
-            color: #39d;
-            text-decoration: none;
-        }
-    </style>
+    <title>Tools</title>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css">
 </head>
 <body>
-
 <div id="particles-js"></div>
 
-<header>
-    <h1>Calculator Games</h1>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/games/">Games</a></li>
-            <li><a style="color: #a7a7a7;" href="/tools/">Tools</a></li>
-            <li><a href="/downloads/">Downloads</a></li>
-            <li><a href="/faq/">FAQ</a></li>
-            <li><a href="/contact/">Contact</a></li>
-        </ul>
-    </nav>
-</header>
-<div>
-<button class="collapsible"><h2>Transfer to calculator</h2><br>More details</button>
-<div class="content transfer">
-    <p>Launch the calculator file uploader in a dedicated page to keep the tool focused and allow games to preload their files for you.</p>
-    <div class="tool-actions">
-        <a class="tool-button" href="/tools/uploader/">Open uploader</a>
+<header class="site-header">
+    <div class="nav-container">
+        <a class="brand" href="/">Calculator Games</a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+            <span class="sr-only">Toggle navigation</span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="primary-nav" class="site-nav">
+            <ul>
+                <li><a data-nav="/" href="/">Home</a></li>
+                <li><a data-nav="/games/" href="/games/">Games</a></li>
+                <li><a data-nav="/tools/" href="/tools/">Tools</a></li>
+                <li><a data-nav="/downloads/" href="/downloads/">Downloads</a></li>
+                <li><a data-nav="/faq/" href="/faq/">FAQ</a></li>
+                <li><a data-nav="/contact/" href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
     </div>
-    <p class="tool-note">If a game provides transfer-ready files, the game page will open this uploader with those files listed automatically.</p>
-</div></div>
-<br><br>
-<div>
-<button class="collapsible converter"><h2>TI-Boy CE ROM converter</h2> <br> Open converter</button>
-<div class="content">
-    <iframe src="romconv/" style="margin-left: 165px; width: 100%; height: 500px; max-height: max-content; border: transparent;"></iframe>
-</div></div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<footer>
+</header>
+
+<main class="page-content">
+    <section class="hero hero--subpage js-reveal">
+        <div class="content-container">
+            <h1 class="hero-title">Helpful tools</h1>
+            <p class="hero-subtitle">Use the uploader to move games to your calculator and convert ROMs without leaving the site.</p>
+        </div>
+    </section>
+
+    <section class="page-section js-reveal">
+        <div class="content-container">
+            <div class="collapsible-group">
+                <button class="collapsible is-open">
+                    <span>
+                        <strong>Transfer to calculator</strong>
+                        <small>Open uploader</small>
+                    </span>
+                </button>
+                <div class="collapse-content is-open">
+                    <p>Launch the calculator file uploader in a focused view. Games can preload the files you need so transfers are a single click away.</p>
+                    <div class="tool-actions">
+                        <a class="button" href="/tools/uploader/">Open uploader</a>
+                    </div>
+                    <p class="tool-note">If a game provides transfer-ready files, the game page will open this uploader with those files listed automatically.</p>
+                </div>
+
+                <button class="collapsible">
+                    <span>
+                        <strong>TI-Boy CE ROM converter</strong>
+                        <small>Use converter</small>
+                    </span>
+                </button>
+                <div class="collapse-content">
+                    <iframe class="tool-frame" src="romconv/" title="TI-Boy CE ROM converter"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer js-reveal">
     <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
     <p>Not affiliated with TI. Use at your own risk.</p>
 </footer>
 
-<!-- Include Particles.js Library -->
+<script src="/assets/js/site.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
 <script>
-    // Initialize Particles.js
     particlesJS('particles-js', {
         "particles": {
             "number": {
-                "value": 100,
+                "value": 90,
                 "density": {
                     "enable": true,
-                    "value_area": 800
+                    "value_area": 900
                 }
             },
             "color": {
@@ -200,39 +95,25 @@
                 "type": "circle"
             },
             "opacity": {
-                "value": 0.5
+                "value": 0.45
             },
             "size": {
-                "value": 4,
+                "value": 3.6,
                 "random": true
+            },
+            "line_linked": {
+                "enable": false
             },
             "move": {
                 "enable": true,
-                "speed": 3,
-                "direction": "random",
-                "out_mode": "out"
+                "speed": 2.6,
+                "direction": "none",
+                "random": true,
+                "out_mode": "out",
+                "bounce": false
             }
         }
     });
-
-    
 </script>
-<script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-    
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.maxHeight){
-          content.style.maxHeight = null;
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-        } 
-      });
-    }
-    </script>
-
 </body>
 </html>
