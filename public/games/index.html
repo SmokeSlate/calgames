@@ -107,25 +107,40 @@
         return prefixed || fallback;
     }
 
+    function truncateDescription(text) {
+        if (typeof text !== 'string') {
+            return '';
+        }
+        const clean = text.trim();
+        const limit = 220;
+        if (clean.length <= limit) {
+            return clean;
+        }
+        return `${clean.slice(0, limit).replace(/\s+\S*$/, '')}…`;
+    }
+
     function createGameCard(game) {
         const detailLink = resolveGameLink(game);
         const uploaderLink = Array.isArray(game.fileUpload) && game.fileUpload.length
             ? `<a href="/tools/uploader/?files=${encodeURIComponent(JSON.stringify(game.fileUpload))}&title=${encodeURIComponent(game.title)}" class="button button--secondary">Load in uploader</a>`
             : '';
+        const description = truncateDescription(game.description);
 
         return `
             <article class="card js-reveal">
                 <div class="card__media">
                     <img src="${game.image}" alt="${game.title}">
                 </div>
-                <div class="card__body">
-                    <h3 class="card__title">${game.title}</h3>
-                    <p class="card__meta">${game.author}</p>
-                    <p class="card__description">${game.description}</p>
-                </div>
-                <div class="card__actions">
-                    <a href="${detailLink}" class="button">View game</a>
-                    ${uploaderLink}
+                <div class="card__overlay">
+                    <div class="card__body">
+                        <h3 class="card__title">${game.title}</h3>
+                        <p class="card__meta">${game.author}</p>
+                        <p class="card__description">${description}</p>
+                    </div>
+                    <div class="card__actions">
+                        <a href="${detailLink}" class="button">View game</a>
+                        ${uploaderLink}
+                    </div>
                 </div>
             </article>
         `;
