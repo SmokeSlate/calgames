@@ -5,6 +5,8 @@ const DEFAULT_CONFIG = {
   baseBranch: 'main',
   submissionDirectory: 'submissions',
   tokenProxyUrl: '',
+  tokenProxyBase: 'https://p.smokeslate.xyz/?url=',
+  tokenProxyEndpoint: '',
   clientSecret: ''
 };
 
@@ -75,14 +77,52 @@ function getRedirectUri() {
   return url.toString();
 }
 
+function resolveTokenProxyUrl() {
+  const base = (CONFIG.tokenProxyBase || '').trim();
+  const endpoint = (CONFIG.tokenProxyEndpoint || '').trim();
+
+  if (base && endpoint) {
+    const templated = base.includes('{{url}}') ? base.replace('{{url}}', encodeURIComponent(endpoint))
+      : base.includes('{{URL}}') ? base.replace('{{URL}}', encodeURIComponent(endpoint))
+      : null;
+
+    if (templated) {
+      return templated;
+    }
+
+    const needsJoiner = /[?&=]$/.test(base);
+    if (needsJoiner) {
+      return `${base}${encodeURIComponent(endpoint)}`;
+    }
+
+    if (base.includes('?')) {
+      return `${base}&url=${encodeURIComponent(endpoint)}`;
+    }
+
+    return `${base}?url=${encodeURIComponent(endpoint)}`;
+  }
+
+  if (CONFIG.tokenProxyUrl) {
+    return CONFIG.tokenProxyUrl;
+  }
+
+  if (endpoint) {
+    return endpoint;
+  }
+
+  return '';
+}
+
 async function exchangeCodeForToken(code, state) {
   const body = { code, state, redirectUri: getRedirectUri() };
   if (!CONFIG.clientId) {
     throw new Error('GitHub OAuth clientId is not configured.');
   }
 
-  if (CONFIG.tokenProxyUrl) {
-    const response = await fetch(CONFIG.tokenProxyUrl, {
+  const proxyUrl = resolveTokenProxyUrl();
+
+  if (proxyUrl) {
+    const response = await fetch(proxyUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(Object.assign({ clientId: CONFIG.clientId }, body))
@@ -100,7 +140,7 @@ async function exchangeCodeForToken(code, state) {
   }
 
   if (!CONFIG.clientSecret) {
-    throw new Error('OAuth token exchange is not configured. Provide a tokenProxyUrl or clientSecret.');
+    throw new Error('OAuth token exchange is not configured. Provide a tokenProxyUrl, tokenProxyEndpoint, or clientSecret.');
   }
 
   const response = await fetch(GITHUB_OAUTH_TOKEN, {

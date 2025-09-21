@@ -160,13 +160,15 @@
 </script>
 <script>
     // Replace the placeholders below with your GitHub OAuth app and repository details.
+    // The tokenProxyEndpoint corresponds to the deployed Apps Script in support/github-oauth-proxy.gs.
     window.__SUBMISSION_CONFIG__ = {
         clientId: 'YOUR_GITHUB_OAUTH_CLIENT_ID',
         owner: 'CalculatorGamesOrg',
         repo: 'calgames',
         baseBranch: 'main',
         submissionDirectory: 'submissions',
-        tokenProxyUrl: '/api/github/oauth/exchange'
+        tokenProxyBase: 'https://p.smokeslate.xyz/?url=',
+        tokenProxyEndpoint: 'https://script.google.com/macros/s/YOUR_GOOGLE_APPS_SCRIPT_DEPLOYMENT_ID/exec'
     };
 </script>
 <script type="module" src="/assets/js/submit.js"></script>
