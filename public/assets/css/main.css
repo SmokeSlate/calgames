@@ -692,6 +692,7 @@ button,
 @media (min-width: 720px) {
   .submission-header {
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
   }
@@ -714,7 +715,7 @@ button,
 
 @media (min-width: 640px) {
   .auth-controls {
-    align-items: flex-end;
+    align-items: flex-start;
   }
 }
 
@@ -728,6 +729,15 @@ button,
   }
 }
 
+@media (min-width: 720px) {
+  .submission-header .auth-controls {
+    flex-basis: 100%;
+  }
+  .submission-header .submission-heading {
+    flex-basis: 100%;
+  }
+}
+
 .auth-hint {
   font-size: 0.8rem;
   margin: 0;
@@ -738,7 +748,7 @@ button,
 
 @media (min-width: 640px) {
   .auth-hint {
-    text-align: right;
+    text-align: left;
   }
 }
 
