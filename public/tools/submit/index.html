@@ -43,85 +43,124 @@
 
     <section class="page-section js-reveal">
         <div class="content-container">
-            <div class="panel">
-                <div class="submission-header">
-                    <div>
-                        <h2>Transfer a new game</h2>
-                        <p class="muted">Provide details for the game you would like to add. We will create a JSON intake file and open a pull request automatically.</p>
-                    </div>
-                    <div class="auth-controls">
-                        <button id="sign-in" class="button">Sign in with GitHub</button>
-                        <div id="authenticated" class="auth-status" hidden>
-                            <span class="auth-user" id="auth-user"></span>
-                            <button id="sign-out" class="button button--secondary">Sign out</button>
+            <div class="submission-highlights">
+                <article class="highlight-card">
+                    <span class="highlight-icon" aria-hidden="true">①</span>
+                    <h3>Connect your GitHub</h3>
+                    <p>Authorize once so we can work in a fork on your behalf. We will never access private repositories.</p>
+                </article>
+                <article class="highlight-card">
+                    <span class="highlight-icon" aria-hidden="true">②</span>
+                    <h3>Share the essentials</h3>
+                    <p>Tell us about the game, attach calculator-ready files, and link to any source or download mirrors.</p>
+                </article>
+                <article class="highlight-card">
+                    <span class="highlight-icon" aria-hidden="true">③</span>
+                    <h3>Review the pull request</h3>
+                    <p>We create an intake file and update the games listing automatically. Track progress right in GitHub.</p>
+                </article>
+            </div>
+
+            <div class="submission-grid">
+                <div class="panel submission-main">
+                    <div class="submission-header">
+                        <div class="submission-heading">
+                            <div class="eyebrow">Community intake</div>
+                            <h2>Transfer a new game</h2>
+                            <p class="muted">Provide the details below and we will open a pull request with your submission, including the updated games directory.</p>
+                        </div>
+                        <div class="auth-controls">
+                            <button id="sign-in" class="button">
+                                <span aria-hidden="true">🔐</span>
+                                <span>Sign in with GitHub</span>
+                            </button>
+                            <div id="authenticated" class="auth-status" hidden>
+                                <span class="auth-user" id="auth-user"></span>
+                                <button id="sign-out" class="button button--secondary">Sign out</button>
+                            </div>
+                            <p class="auth-hint muted">Required so we can push to a fork under your account.</p>
                         </div>
                     </div>
+
+                    <div class="submission-status" id="status" role="status" aria-live="polite" hidden></div>
+
+                    <form id="submission-form" novalidate>
+                        <fieldset class="submission-fieldset" disabled>
+                            <legend class="sr-only">Game information</legend>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="game-title">Game title <span class="required">*</span></label>
+                                    <input type="text" id="game-title" name="title" placeholder="e.g. Oiram CE" required maxlength="120">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="game-authors">Author(s) <span class="required">*</span></label>
+                                    <input type="text" id="game-authors" name="authors" placeholder="Primary creators" required maxlength="200">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="game-description">Description <span class="required">*</span></label>
+                                <textarea id="game-description" name="description" placeholder="What makes the game special? Include any setup instructions." required></textarea>
+                                <p class="field-help">Markdown is supported. Keep it concise—extended notes can go in the review conversation.</p>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="game-download">Download link</label>
+                                    <input type="url" id="game-download" name="download" placeholder="https://example.com/game.zip">
+                                    <p class="field-help">Direct links are preferred so players can grab the files right away.</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="game-image">Cover image</label>
+                                    <input type="url" id="game-image" name="image" placeholder="https://imgur.com/...">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="game-files">Transfer-ready files</label>
+                                <textarea id="game-files" name="files" placeholder="One file path or URL per line"></textarea>
+                                <p class="field-help">Provide calculator-ready filenames or links. These populate the uploader if the game is approved.</p>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="game-source">Project or source link</label>
+                                    <input type="url" id="game-source" name="source" placeholder="https://github.com/creator/project">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="game-notes">Extra reviewer notes</label>
+                                    <textarea id="game-notes" name="notes" placeholder="Anything reviewers should double-check"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="button" id="submit-button">Submit game</button>
+                                <p class="submission-footnote">We will open a pull request in the <strong>calgames</strong> repository that includes your intake file and updates the public listing.</p>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
 
-                <div class="submission-status" id="status" role="status" aria-live="polite" hidden></div>
-
-                <form id="submission-form" novalidate>
-                    <fieldset class="submission-fieldset" disabled>
-                        <legend class="sr-only">Game information</legend>
-
-                        <div class="form-group">
-                            <label for="game-title">Game title <span class="required">*</span></label>
-                            <input type="text" id="game-title" name="title" placeholder="e.g. Oiram CE" required maxlength="120">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="game-authors">Author(s) <span class="required">*</span></label>
-                            <input type="text" id="game-authors" name="authors" placeholder="Primary creators" required maxlength="200">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="game-description">Description <span class="required">*</span></label>
-                            <textarea id="game-description" name="description" placeholder="What makes the game special? Include any setup instructions." required></textarea>
-                            <p class="field-help">Markdown is supported. Keep it concise—extended notes can go in the review conversation.</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="game-download">Download link</label>
-                            <input type="url" id="game-download" name="download" placeholder="https://example.com/game.zip">
-                            <p class="field-help">Direct links are preferred so players can grab the files right away.</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="game-image">Cover image</label>
-                            <input type="url" id="game-image" name="image" placeholder="https://imgur.com/...">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="game-files">Transfer-ready files</label>
-                            <textarea id="game-files" name="files" placeholder="One file path or URL per line"></textarea>
-                            <p class="field-help">Provide calculator-ready filenames or links. These populate the uploader if the game is approved.</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="game-source">Project or source link</label>
-                            <input type="url" id="game-source" name="source" placeholder="https://github.com/creator/project">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="game-notes">Extra reviewer notes</label>
-                            <textarea id="game-notes" name="notes" placeholder="Anything reviewers should double-check"></textarea>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="submit" class="button" id="submit-button">Submit game</button>
-                            <p class="submission-footnote">We will open a pull request in the <strong>calgames</strong> repository that includes your intake file.</p>
-                        </div>
-                    </fieldset>
-                </form>
-
-                <aside class="submission-help">
+                <aside class="panel submission-sidebar">
                     <h3>What happens next?</h3>
-                    <ol>
-                        <li>We fork the repository under your account if needed and add a JSON intake file with your details.</li>
-                        <li>A pull request is opened titled with your game. It includes <strong>Transferer: @you</strong> so maintainers know who sent it.</li>
-                        <li>Reviewers will go through the submission, ask follow-up questions, and merge once everything checks out.</li>
+                    <ol class="submission-steps">
+                        <li><strong>Fork &amp; branch:</strong> We create or reuse a fork under your account and spin up a fresh submission branch.</li>
+                        <li><strong>Commit files:</strong> Your intake JSON and the <code>games.json</code> listing update are added in the same branch.</li>
+                        <li><strong>Open review:</strong> A pull request is created with handy links so maintainers can review quickly.</li>
                     </ol>
-                    <p class="muted">Need to update something? Re-run the submission and we will replace the file in a fresh branch.</p>
+                    <div class="tips-card">
+                        <h4>Tips for a speedy merge</h4>
+                        <ul>
+                            <li>Use complete sentences in the description so it reads well on the games page.</li>
+                            <li>Include calculator-ready filenames to help populate the download cards.</li>
+                            <li>Double-check any external links—they are copied directly into the site.</li>
+                        </ul>
+                    </div>
+                    <p class="muted">Need to update something? Submit again and we will replace the files in a fresh branch.</p>
                 </aside>
             </div>
         </div>
