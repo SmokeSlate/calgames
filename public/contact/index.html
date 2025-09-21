@@ -60,20 +60,6 @@
                     <button class="button" type="submit">Send message</button>
                 </form>
             </div>
-
-            <div class="panel js-reveal">
-                <h2>Submit a game from <a href="https://tiplanet.org" target="_blank" rel="noopener">tiplanet.org</a></h2>
-                <div class="form-group">
-                    <label for="urlInput">Game URL</label>
-                    <input type="text" id="urlInput" placeholder="https://tiplanet.org/...">
-                </div>
-                <div class="form-group">
-                    <label for="email">Your email (optional)</label>
-                    <input type="email" id="email" placeholder="you@example.com">
-                </div>
-                <button class="button button--secondary" id="fetchData" type="button">Fetch details</button>
-                <pre id="output" hidden></pre>
-            </div>
         </div>
     </section>
 </main>
@@ -129,7 +115,7 @@
         const message = document.getElementById('contactMessage').value;
 
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbwlprqc4q_SiaP_hVt3NtgPNggNjqChAT7bzyg-embyNKWFJZ-2szsVVaEaqRd8sWwOYg/exec', {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbzSWe7m7mapOUKjs0SFQQeZ7zGBAPsOkRv8bSfo47CHmoOTzLdJG8y5YM9v81d_wZ9TcA/exec', {
                 method: 'POST',
                 body: new URLSearchParams({ name, email, message }),
                 headers: {
@@ -149,75 +135,6 @@
         }
     });
 
-    async function fetchDataFromUrl(url) {
-        const proxyUrl = 'https://corsproxy.io/?';
-
-        try {
-            const response = await fetch(proxyUrl + encodeURIComponent(url));
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const htmlText = await response.text();
-            const parser = new DOMParser();
-            return parser.parseFromString(htmlText, 'text/html');
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            return null;
-        }
-    }
-
-    function extractTextBetween(startText, endText, container) {
-        let isBetweenHeadings = false;
-        let resultText = '';
-
-        container.childNodes.forEach(node => {
-            if (node.nodeType === Node.ELEMENT_NODE && node.textContent.includes(startText)) {
-                isBetweenHeadings = true;
-                return;
-            }
-
-            if (isBetweenHeadings) {
-                if (node.nodeType === Node.ELEMENT_NODE && node.textContent.includes(endText)) {
-                    isBetweenHeadings = false;
-                } else {
-                    resultText += node.textContent + '\n';
-                }
-            }
-        });
-
-        return resultText.trim();
-    }
-
-    document.getElementById('fetchData').addEventListener('click', async () => {
-        const url = document.getElementById('urlInput').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const output = document.getElementById('output');
-
-        if (!url) {
-            alert('Please enter a URL.');
-            return;
-        }
-
-        const doc = await fetchDataFromUrl(url);
-        if (!doc) {
-            output.hidden = false;
-            output.textContent = 'Unable to fetch data. Please check the link and try again.';
-            return;
-        }
-
-        const title = doc.querySelector('h1, h2, h3');
-        const description = extractTextBetween('Description', 'Download', doc.body) || 'No description found.';
-
-        const payload = {
-            source: url,
-            title: title ? title.textContent.trim() : 'Unknown title',
-            description,
-            email
-        };
-
-        output.hidden = false;
-        output.textContent = JSON.stringify(payload, null, 2);
-    });
 </script>
 </body>
 </html>
