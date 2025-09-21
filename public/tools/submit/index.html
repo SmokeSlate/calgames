@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, noimageindex">
+    <title>Submit a Calculator Game</title>
+    <link href="https://fonts.googleapis.com/css?family=Heebo:400,700|Oxygen:700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body class="has-animations">
+<div id="particles-js"></div>
+
+<header class="site-header">
+    <div class="nav-container">
+        <a class="brand" href="/">Calculator Games</a>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+            <span class="sr-only">Toggle navigation</span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="primary-nav" class="site-nav">
+            <ul>
+                <li><a data-nav="/" href="/">Home</a></li>
+                <li><a data-nav="/games/" href="/games/">Games</a></li>
+                <li><a data-nav="/tools/" href="/tools/">Tools</a></li>
+                <li><a data-nav="/downloads/" href="/downloads/">Downloads</a></li>
+                <li><a data-nav="/faq/" href="/faq/">FAQ</a></li>
+                <li><a data-nav="/contact/" href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="page-content">
+    <section class="hero hero--subpage js-reveal">
+        <div class="content-container">
+            <h1 class="hero-title">Submit a Calculator Game</h1>
+            <p class="hero-subtitle">Sign in with GitHub, fill in the game details, and the site will open a pull request with your submission.</p>
+        </div>
+    </section>
+
+    <section class="page-section js-reveal">
+        <div class="content-container">
+            <div class="panel">
+                <div class="submission-header">
+                    <div>
+                        <h2>Transfer a new game</h2>
+                        <p class="muted">Provide details for the game you would like to add. We will create a JSON intake file and open a pull request automatically.</p>
+                    </div>
+                    <div class="auth-controls">
+                        <button id="sign-in" class="button">Sign in with GitHub</button>
+                        <div id="authenticated" class="auth-status" hidden>
+                            <span class="auth-user" id="auth-user"></span>
+                            <button id="sign-out" class="button button--secondary">Sign out</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submission-status" id="status" role="status" aria-live="polite" hidden></div>
+
+                <form id="submission-form" novalidate>
+                    <fieldset class="submission-fieldset" disabled>
+                        <legend class="sr-only">Game information</legend>
+
+                        <div class="form-group">
+                            <label for="game-title">Game title <span class="required">*</span></label>
+                            <input type="text" id="game-title" name="title" placeholder="e.g. Oiram CE" required maxlength="120">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game-authors">Author(s) <span class="required">*</span></label>
+                            <input type="text" id="game-authors" name="authors" placeholder="Primary creators" required maxlength="200">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game-description">Description <span class="required">*</span></label>
+                            <textarea id="game-description" name="description" placeholder="What makes the game special? Include any setup instructions." required></textarea>
+                            <p class="field-help">Markdown is supported. Keep it concise—extended notes can go in the review conversation.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game-download">Download link</label>
+                            <input type="url" id="game-download" name="download" placeholder="https://example.com/game.zip">
+                            <p class="field-help">Direct links are preferred so players can grab the files right away.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game-image">Cover image</label>
+                            <input type="url" id="game-image" name="image" placeholder="https://imgur.com/...">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game-files">Transfer-ready files</label>
+                            <textarea id="game-files" name="files" placeholder="One file path or URL per line"></textarea>
+                            <p class="field-help">Provide calculator-ready filenames or links. These populate the uploader if the game is approved.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game-source">Project or source link</label>
+                            <input type="url" id="game-source" name="source" placeholder="https://github.com/creator/project">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="game-notes">Extra reviewer notes</label>
+                            <textarea id="game-notes" name="notes" placeholder="Anything reviewers should double-check"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="button" id="submit-button">Submit game</button>
+                            <p class="submission-footnote">We will open a pull request in the <strong>calgames</strong> repository that includes your intake file.</p>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <aside class="submission-help">
+                    <h3>What happens next?</h3>
+                    <ol>
+                        <li>We fork the repository under your account if needed and add a JSON intake file with your details.</li>
+                        <li>A pull request is opened titled with your game. It includes <strong>Transferer: @you</strong> so maintainers know who sent it.</li>
+                        <li>Reviewers will go through the submission, ask follow-up questions, and merge once everything checks out.</li>
+                    </ol>
+                    <p class="muted">Need to update something? Re-run the submission and we will replace the file in a fresh branch.</p>
+                </aside>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer js-reveal">
+    <p>&copy; 2024 Calculator Games. All Rights Reserved.</p>
+    <p>Not affiliated with TI. Use at your own risk.</p>
+</footer>
+
+<script src="/assets/js/site.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+    particlesJS('particles-js', {
+        "particles": {
+            "number": {
+                "value": 80,
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": ["#38bdf8", "#818cf8", "#f472b6", "#fb7185"]
+            },
+            "shape": {"type": "circle"},
+            "opacity": {"value": 0.35},
+            "size": {"value": 3, "random": true},
+            "line_linked": {"enable": false},
+            "move": {"enable": true, "speed": 2, "random": true}
+        },
+        "interactivity": {"events": {"resize": true}},
+        "retina_detect": true
+    });
+</script>
+<script>
+    // Replace the placeholders below with your GitHub OAuth app and repository details.
+    window.__SUBMISSION_CONFIG__ = {
+        clientId: 'YOUR_GITHUB_OAUTH_CLIENT_ID',
+        owner: 'CalculatorGamesOrg',
+        repo: 'calgames',
+        baseBranch: 'main',
+        submissionDirectory: 'submissions',
+        tokenProxyUrl: '/api/github/oauth/exchange'
+    };
+</script>
+<script type="module" src="/assets/js/submit.js"></script>
+</body>
+</html>
