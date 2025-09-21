@@ -603,6 +603,132 @@ button,
   margin-top: 1.5rem;
 }
 
+
+.submission-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 720px) {
+  .submission-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.submission-header h2 {
+  margin: 0 0 0.35rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.auth-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+@media (min-width: 640px) {
+  .auth-controls {
+    align-items: flex-end;
+  }
+}
+
+.auth-status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.auth-user {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.submission-status {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: rgba(15, 23, 42, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.14);
+}
+
+.submission-status[hidden] {
+  display: none;
+}
+
+.submission-status[data-status="success"] {
+  border-color: rgba(34, 197, 94, 0.45);
+  color: #bbf7d0;
+  background: rgba(22, 101, 52, 0.35);
+}
+
+.submission-status[data-status="error"] {
+  border-color: rgba(248, 113, 113, 0.45);
+  color: #fecaca;
+  background: rgba(127, 29, 29, 0.35);
+}
+
+.submission-status[data-status="warning"] {
+  border-color: rgba(251, 191, 36, 0.45);
+  color: #fef3c7;
+  background: rgba(146, 64, 14, 0.35);
+}
+
+.submission-status[data-status="info"],
+.submission-status[data-status=""] {
+  border-color: rgba(125, 211, 252, 0.35);
+  color: #bae6fd;
+  background: rgba(30, 64, 175, 0.35);
+}
+
+.field-help {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.required {
+  color: #fca5a5;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.submission-footnote {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.submission-help {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+  color: var(--text-secondary);
+}
+
+.submission-help h3 {
+  margin-top: 0;
+}
+
+.submission-help ol {
+  margin: 0 0 1rem 1.2rem;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
 .form-group {
   display: grid;
   gap: 0.5rem;
