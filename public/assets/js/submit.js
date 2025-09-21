@@ -4,6 +4,7 @@ const DEFAULT_CONFIG = {
   repo: '',
   baseBranch: 'main',
   submissionDirectory: 'submissions',
+  gamesListingPath: 'public/games/games.json',
   tokenProxyUrl: '',
   tokenProxyBase: 'https://p.smokeslate.xyz/?url=',
   tokenProxyEndpoint: '',
@@ -26,6 +27,8 @@ const statusElement = document.getElementById('status');
 const form = document.getElementById('submission-form');
 const fieldset = form ? form.querySelector('fieldset') : null;
 const submitButton = document.getElementById('submit-button');
+const GAMES_LISTING_PATH = CONFIG.gamesListingPath || 'public/games/games.json';
+const utf8Decoder = typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8') : null;
 
 let accessToken = sessionStorage.getItem(TOKEN_KEY) || '';
 let currentUser = null;
@@ -68,6 +71,24 @@ function slugify(value) {
 
 function base64EncodeUnicode(str) {
   return btoa(unescape(encodeURIComponent(str)));
+}
+
+function base64DecodeUnicode(str) {
+  const sanitized = (str || '').replace(/\n/g, '');
+  const binary = atob(sanitized);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i += 1) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  if (utf8Decoder) {
+    return utf8Decoder.decode(bytes);
+  }
+
+  let escaped = '';
+  for (let i = 0; i < bytes.length; i += 1) {
+    escaped += `%${bytes[i].toString(16).padStart(2, '0')}`;
+  }
+  return decodeURIComponent(escaped);
 }
 
 function getRedirectUri() {
@@ -285,6 +306,109 @@ function buildSubmissionPayload(formData, login) {
   return JSON.stringify(record, null, 2) + '\n';
 }
 
+function formatDescriptionForListing(text) {
+  const value = (text || '').trim();
+  if (!value) {
+    return '';
+  }
+
+  const paragraphs = value
+    .split(/\r?\n\s*\r?\n/)
+    .map(paragraph => paragraph.trim())
+    .filter(Boolean);
+
+  if (!paragraphs.length) {
+    return value.replace(/\r?\n/g, '<br>');
+  }
+
+  return paragraphs
+    .map(paragraph => paragraph.replace(/\r?\n/g, '<br>'))
+    .join('<br><br>');
+}
+
+function generateNextGameId(games) {
+  const numericIds = games
+    .map(game => {
+      const parsed = Number.parseInt(game.id, 10);
+      return Number.isFinite(parsed) ? parsed : null;
+    })
+    .filter(value => value !== null);
+
+  const maxId = numericIds.length ? Math.max(...numericIds) : 0;
+  return String(maxId + 1);
+}
+
+function buildGameListingEntry(submissionData, id) {
+  const entry = {
+    title: submissionData.title,
+    id,
+    description: formatDescriptionForListing(submissionData.description),
+    author: submissionData.author
+  };
+
+  if (submissionData.image) {
+    entry.image = submissionData.image;
+  }
+
+  entry.link = `/games/detail/?id=${id}`;
+
+  if (submissionData.download) {
+    entry.download = submissionData.download;
+  }
+
+  if (Array.isArray(submissionData.fileUpload) && submissionData.fileUpload.length) {
+    entry.fileUpload = submissionData.fileUpload;
+  }
+
+  return entry;
+}
+
+async function updateGamesListing(submissionData, login, branchName) {
+  const path = GAMES_LISTING_PATH;
+  let listing;
+
+  try {
+    listing = await apiRequest(`/repos/${login}/${CONFIG.repo}/contents/${path}?ref=${branchName}`);
+  } catch (error) {
+    if (error.status === 404) {
+      throw new Error('Could not find the games listing file to update.');
+    }
+    throw error;
+  }
+
+  const decoded = base64DecodeUnicode(listing.content || '');
+  let games;
+
+  try {
+    games = JSON.parse(decoded);
+  } catch (error) {
+    throw new Error('Existing games.json file is not valid JSON.');
+  }
+
+  if (!Array.isArray(games)) {
+    throw new Error('games.json does not contain a list of games.');
+  }
+
+  const nextId = generateNextGameId(games);
+  const entry = buildGameListingEntry(submissionData, nextId);
+  games.push(entry);
+
+  const updatedContent = JSON.stringify(games, null, 2) + '\n';
+
+  await apiRequest(`/repos/${login}/${CONFIG.repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: `Add ${submissionData.title} to games.json`,
+      content: base64EncodeUnicode(updatedContent),
+      branch: branchName,
+      sha: listing.sha
+    })
+  });
+
+  return { id: nextId, entry };
+}
+
 function validateForm(formData) {
   const title = formData.get('title')?.trim();
   const authors = formData.get('authors')?.trim();
@@ -295,7 +419,7 @@ function validateForm(formData) {
   }
 }
 
-function buildPullRequestBody(details, filePath, login) {
+function buildPullRequestBody(details, filePath, login, listingUpdate) {
   const lines = [];
   lines.push('## New game submission');
   lines.push('');
@@ -312,6 +436,9 @@ function buildPullRequestBody(details, filePath, login) {
   }
   lines.push('');
   lines.push(`Intake file: \`${filePath}\``);
+  if (listingUpdate && listingUpdate.id) {
+    lines.push(`Listing entry: \`${GAMES_LISTING_PATH}\` (ID ${listingUpdate.id})`);
+  }
   lines.push('');
   lines.push('---');
   lines.push('');
@@ -332,6 +459,7 @@ async function submitGame(formData) {
   updateStatus('Preparing your submission…', 'info');
 
   await ensureFork(login);
+  updateStatus('Creating submission branch…', 'info');
 
   const baseRef = await apiRequest(`/repos/${CONFIG.owner}/${CONFIG.repo}/git/ref/heads/${CONFIG.baseBranch}`);
   const baseSha = baseRef?.object?.sha;
@@ -350,6 +478,7 @@ async function submitGame(formData) {
   const fileSlug = slugify(formData.get('title') || 'game');
   const filePath = `${CONFIG.submissionDirectory}/${new Date().toISOString().replace(/[:T]/g, '-').split('.')[0]}-${fileSlug}.json`;
 
+  updateStatus('Uploading intake file…', 'info');
   await apiRequest(`/repos/${login}/${CONFIG.repo}/contents/${filePath}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -360,9 +489,13 @@ async function submitGame(formData) {
     })
   });
 
-  const prTitle = `Add ${submissionData.title} (submission)`;
-  const prBody = buildPullRequestBody(submissionData, filePath, login);
+  updateStatus('Updating games directory…', 'info');
+  const listingUpdate = await updateGamesListing(submissionData, login, branchName);
 
+  const prTitle = `Add ${submissionData.title} (submission)`;
+  const prBody = buildPullRequestBody(submissionData, filePath, login, listingUpdate);
+
+  updateStatus('Opening pull request…', 'info');
   const pullRequest = await apiRequest(`/repos/${CONFIG.owner}/${CONFIG.repo}/pulls`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -374,6 +507,10 @@ async function submitGame(formData) {
       maintainer_can_modify: true
     })
   });
+
+  if (listingUpdate && listingUpdate.id) {
+    pullRequest.generatedGameId = listingUpdate.id;
+  }
 
   return pullRequest;
 }
@@ -492,16 +629,24 @@ if (form) {
       const pullRequest = await submitGame(formData);
       form.reset();
       const prUrl = pullRequest.html_url;
-      updateStatus(`Submission created! Review it at ${prUrl}`, 'success');
+      const listingId = pullRequest.generatedGameId;
+      const messageIntro = listingId
+        ? `Submission created! Game ID ${listingId}. Review it at `
+        : 'Submission created! Review it at ';
+      updateStatus(`${messageIntro}${prUrl}`, 'success');
       if (statusElement) {
         const link = document.createElement('a');
         link.href = prUrl;
         link.target = '_blank';
         link.rel = 'noopener';
         link.textContent = 'your pull request';
-        statusElement.textContent = 'Submission created! Review it at ';
+        statusElement.textContent = messageIntro;
         statusElement.appendChild(link);
-        statusElement.append('.');
+        if (listingId) {
+          statusElement.append('. The games directory was updated automatically.');
+        } else {
+          statusElement.append('.');
+        }
       }
     } catch (error) {
       updateStatus(error.message || 'Submission failed. Please try again.', 'error');
