@@ -88,52 +88,76 @@
                         <fieldset class="submission-fieldset" disabled>
                             <legend class="sr-only">Game information</legend>
 
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="game-title">Game title <span class="required">*</span></label>
-                                    <input type="text" id="game-title" name="title" placeholder="e.g. Oiram CE" required maxlength="120">
+                            <div class="form-section">
+                                <div class="form-section-header">
+                                    <h3 class="form-section-title">Game overview</h3>
+                                    <p class="form-section-description">Introduce the release so we can list it on the site and credit the right creators.</p>
                                 </div>
+                                <div class="form-section-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="game-title">Game title <span class="required">*</span></label>
+                                            <input type="text" id="game-title" name="title" placeholder="e.g. Oiram CE" required maxlength="120">
+                                        </div>
 
-                                <div class="form-group">
-                                    <label for="game-authors">Author(s) <span class="required">*</span></label>
-                                    <input type="text" id="game-authors" name="authors" placeholder="Primary creators" required maxlength="200">
-                                </div>
-                            </div>
+                                        <div class="form-group">
+                                            <label for="game-authors">Author(s) <span class="required">*</span></label>
+                                            <input type="text" id="game-authors" name="authors" placeholder="Primary creators" required maxlength="200">
+                                        </div>
+                                    </div>
 
-                            <div class="form-group">
-                                <label for="game-description">Description <span class="required">*</span></label>
-                                <textarea id="game-description" name="description" placeholder="What makes the game special? Include any setup instructions." required></textarea>
-                                <p class="field-help">Markdown is supported. Keep it concise—extended notes can go in the review conversation.</p>
-                            </div>
-
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="game-download">Download link</label>
-                                    <input type="url" id="game-download" name="download" placeholder="https://example.com/game.zip">
-                                    <p class="field-help">Direct links are preferred so players can grab the files right away.</p>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="game-image">Cover image</label>
-                                    <input type="url" id="game-image" name="image" placeholder="https://imgur.com/...">
+                                    <div class="form-group">
+                                        <label for="game-description">Description <span class="required">*</span></label>
+                                        <textarea id="game-description" name="description" placeholder="What makes the game special? Include any setup instructions." required></textarea>
+                                        <p class="field-help">Markdown is supported. Keep it concise—extended notes can go in the review conversation.</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="game-files">Transfer-ready files</label>
-                                <textarea id="game-files" name="files" placeholder="One file path or URL per line"></textarea>
-                                <p class="field-help">Provide calculator-ready filenames or links. These populate the uploader if the game is approved.</p>
+                            <div class="form-section">
+                                <div class="form-section-header">
+                                    <h3 class="form-section-title">Links &amp; media</h3>
+                                    <p class="form-section-description">Share where players can download the game and any artwork that represents it best.</p>
+                                </div>
+                                <div class="form-section-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label for="game-download">Download link</label>
+                                            <input type="url" id="game-download" name="download" placeholder="https://example.com/game.zip">
+                                            <p class="field-help">Direct links are preferred so players can grab the files right away.</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="game-image">Cover image</label>
+                                            <input type="url" id="game-image" name="image" placeholder="https://imgur.com/...">
+                                            <p class="field-help">Square or landscape images display best on the games page.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="game-source">Project or source link</label>
+                                        <input type="url" id="game-source" name="source" placeholder="https://github.com/creator/project">
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="game-source">Project or source link</label>
-                                    <input type="url" id="game-source" name="source" placeholder="https://github.com/creator/project">
+                            <div class="form-section">
+                                <div class="form-section-header">
+                                    <h3 class="form-section-title">Files &amp; review notes</h3>
+                                    <p class="form-section-description">Let reviewers know what to expect and include any calculator-ready files for transfer.</p>
                                 </div>
+                                <div class="form-section-body">
+                                    <div class="form-group">
+                                        <label for="game-files">Transfer-ready files</label>
+                                        <textarea id="game-files" name="files" placeholder="One file path or URL per line"></textarea>
+                                        <p class="field-help">Provide calculator-ready filenames or links. These populate the uploader if the game is approved.</p>
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="game-notes">Extra reviewer notes</label>
-                                    <textarea id="game-notes" name="notes" placeholder="Anything reviewers should double-check"></textarea>
+                                    <div class="form-group">
+                                        <label for="game-notes">Extra reviewer notes</label>
+                                        <textarea id="game-notes" name="notes" placeholder="Anything reviewers should double-check"></textarea>
+                                        <p class="field-help">Share testing tips, bug warnings, or anything that helps with verification.</p>
+                                    </div>
                                 </div>
                             </div>
 

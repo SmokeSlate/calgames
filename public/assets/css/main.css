@@ -709,7 +709,7 @@ button,
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 @media (min-width: 640px) {
@@ -743,14 +743,19 @@ button,
 }
 
 .auth-status {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .auth-user {
   font-weight: 600;
   color: var(--text-secondary);
+  justify-self: start;
+}
+
+.auth-status .button {
+  width: 100%;
 }
 
 .submission-status {
@@ -791,6 +796,70 @@ button,
   background: rgba(30, 64, 175, 0.35);
 }
 
+.submission-fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.form-section {
+  position: relative;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: linear-gradient(150deg, rgba(30, 41, 59, 0.92), rgba(15, 23, 42, 0.88));
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  overflow: hidden;
+}
+
+.form-section::before {
+  content: '';
+  position: absolute;
+  inset: -40% 40% auto -40%;
+  height: 120%;
+  background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 65%);
+  pointer-events: none;
+}
+
+.form-section + .form-section {
+  margin-top: clamp(1.1rem, 2.5vw, 1.6rem);
+}
+
+.form-section-header {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.form-section-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-section-description {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.form-section-body {
+  position: relative;
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.4rem);
+}
+
+.form-section-body > .form-group:last-child,
+.form-section-body > .form-grid:last-child .form-group {
+  margin-bottom: 0;
+}
+
 .field-help {
   font-size: 0.85rem;
   color: var(--muted);
@@ -806,6 +875,16 @@ button,
   flex-direction: column;
   gap: 0.75rem;
   align-items: flex-start;
+}
+
+.form-actions .button {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .form-actions .button {
+    width: auto;
+  }
 }
 
 .submission-footnote {
@@ -886,7 +965,7 @@ button,
 
 @media (min-width: 720px) {
   .form-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     align-items: start;
   }
 }
@@ -918,7 +997,7 @@ select:focus {
 
 textarea {
   resize: vertical;
-  min-height: 140px;
+  min-height: 160px;
 }
 
 .accordion-list {
