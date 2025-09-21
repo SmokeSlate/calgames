@@ -1,0 +1,16 @@
+{
+  "title": "test",
+  "author": "this is a test of the game submit",
+  "description": "this is a test of the game submit this is a test of the game submit this is a test of the game submit",
+  "download": "https://calgames.web.app/games/dls/BACK_ON_TRACK.8xv",
+  "image": "https://i.imgur.com/MbL8Ap5.png",
+  "source": "https://github.com/SmokeSlate/calgames",
+  "notes": "this is a test of the game submit",
+  "fileUpload": [
+    "https://calgames.web.app/games/dls/BACK_ON_TRACK.8xv"
+  ],
+  "transferer": "SmokeSlate",
+  "submittedAt": "2025-09-21T16:08:18.572Z",
+  "status": "pending",
+  "submission": "web-form"
+}
