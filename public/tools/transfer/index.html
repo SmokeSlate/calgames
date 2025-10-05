@@ -858,18 +858,93 @@
 		let r = null,
 			s = null;
 
-		function i() {
-			document.querySelectorAll(".buttons button").forEach((e => e.classList.remove("active", "complete"))), r ? document.querySelector(
-				"#connect").classList.add("complete") : (document.querySelector("#connect").classList.add("active"), document.querySelector(
-				"#connect").focus()), s ? document.querySelector("#upload").classList.add("complete") : r && (document.querySelector("#upload")
-				.classList.add("active"), document.querySelector("#upload").focus()), r && s && (document.querySelector("#start").classList.add(
-				"active"), document.querySelector("#start").focus())
-		}
-		async function c(e) {
-			await e.isReady() ? (r = e, i()) : d("Sorry!", "The connected device does not seem to be responding.")
-		}
+                let r = null,
+                        s = null,
+                        sending = !1,
+                        autoQueued = !1,
+                        statusLocked = !1;
 
-		function o(e) {
+                function unlockStatus() {
+                        statusLocked = !1
+                }
+
+                function setStatus(e, t = "info", n = !1) {
+                        const r = document.getElementById("transfer-status");
+                        r && (!statusLocked || n) && (r.textContent = e, r.setAttribute("data-state", t), r.className = "status-banner status-" + t,
+                                statusLocked = !!n)
+                }
+
+                function formatBytes(e) {
+                        if ("number" != typeof e || isNaN(e)) return "0 B";
+                        const t = ["B", "KB", "MB"], n = 1024;
+                        let r = e,
+                                s = 0;
+                        for (; r >= n && s < t.length - 1;) r /= n, s++;
+                        const i = r >= 10 || 0 === s ? Math.round(r) : Math.round(10 * r) / 10;
+                        return i + " " + t[s]
+                }
+
+                function escapeHtml(e) {
+                        if (null == e) return "";
+                        const t = document.createElement("div");
+                        return t.textContent = String(e), t.innerHTML
+                }
+
+                function getFileDetails(e) {
+                        const t = e && e.entries ? e.entries : [],
+                                n = t.length > 0 ? t[0].name : "Calculator File";
+                        return {
+                                name: e.displayName || e.fileName || n,
+                                calcType: e.calcType || "Unknown calculator",
+                                sizeBytes: e.size || 0,
+                                entryCount: t.length,
+                                entries: t.map((e => ({
+                                        name: e.name,
+                                        sizeBytes: e.size,
+                                        archived: !!(e.attributes && e.attributes.archived)
+                                }))),
+                                comments: e.comments || ""
+                        }
+                }
+
+                function renderFileSummary(e) {
+                        const t = getFileDetails(e),
+                                n = [];
+                        for (let e = 0; e < t.entries.length && e < 3; e++) {
+                                const r = t.entries[e];
+                                n.push(`<li><span class="entry-name">${escapeHtml(r.name || "Program")}</span><span class="entry-meta">${formatBytes(r.sizeBytes)}</span>${r.archived ? "<span class=\"entry-tag\">Archived</span>" : ""}</li>`)
+                        }
+                        const r = t.entryCount > 3 ? `<li class="entry-more">+${t.entryCount - 3} more program${t.entryCount - 3 === 1 ? "" : "s"}</li>` : "",
+                                s = t.comments ? `<p class="summary-comment">${escapeHtml(t.comments)}</p>` : "";
+                        return `<div class="summary-header"><h3>${escapeHtml(t.name)}</h3><span class="summary-chip">${escapeHtml(t.calcType)}</span></div><dl class="summary-meta"><div><dt>Total size</dt><dd>${formatBytes(t.sizeBytes)}</dd></div><div><dt>Programs</dt><dd>${t.entryCount}</dd></div></dl>${n.length ? `<ul class="entry-list">${n.join("")}${r}</ul>` : ""}${s}`
+                }
+
+                function updateUi() {
+                        const e = document.getElementById("connect"),
+                                t = document.getElementById("upload"),
+                                n = document.getElementById("start"),
+                                o = document.getElementById("device-status"),
+                                a = document.getElementById("file-summary"),
+                                u = document.getElementById("auto-send-indicator");
+                        e && (e.classList.toggle("is-complete", !!r), e.classList.toggle("is-active", !r), e.disabled = sending), t && (t.disabled = sending,
+                                t.classList.toggle("is-ready", !!s));
+                        if (n) {
+                                n.disabled = !r || !s || sending, n.classList.toggle("is-ready", !!r && !!s), n.classList.toggle("is-sending", sending), n.textContent = sending ? "Sending…" : "Send to calculator"
+                        }
+                        o && (o.textContent = r ? r.name + " connected" : "No calculator connected yet."), a && (a.innerHTML = s ? renderFileSummary(s) : "<p>Select a TI game file to see its details.</p>"),
+                                u && (u.hidden = !(r && s));
+                        if (!r || !s) return autoQueued = !1, sending || (unlockStatus(), r ? setStatus("Choose a calculator game to send to your device.", "info") : s ? setStatus("Connect your calculator to begin the transfer.", "info") : setStatus("Connect your calculator and load a game file to start.", "info")),
+                                void 0;
+                        if (sending) return void setStatus("Sending your game…", "working");
+                        autoQueued || (setStatus("Ready! Starting the transfer automatically…", "ready"), autoQueued = !0, setTimeout((() => {
+                                startTransfer(!0)
+                        }), 150))
+                }
+                async function c(e) {
+                        await e.isReady() ? (r = e, autoQueued = !1, unlockStatus(), setStatus("Calculator connected. Choose a game to transfer.", "ready"), updateUi()) : d("Sorry!", "The connected device does not seem to be responding.")
+                }
+
+                function o(e) {
 			e && "Calculator model not supported" == e.message ? l("Sorry!",
 				"It looks like your device is not yet supported. Would you like to submit it for consideration?").then((() => function(e) {
 				document.querySelector("#flow").innerHTML =
@@ -909,27 +984,56 @@
                                 s.querySelector(".buttons").appendChild(i), s.querySelector(".buttons").appendChild(c), s.classList.add("active")
                         }))
                 }
+                async function startTransfer(e) {
+                        if (!r || !s || sending) return;
+                        if (!r.canReceive(s)) return setStatus(`The selected file is not compatible with your ${r.name}.`, "error", !0), autoQueued = !1, void await d("Careful!",
+                                `The file you have selected does not appear to be a valid file for your ${r.name}.`);
+                        let t;
+                        try {
+                                t = await r.getStorageDetails(s)
+                        } catch (n) {
+                                return console.error(n), setStatus("Could not check calculator storage.", "error", !0), autoQueued = !1, void await d("Sorry!",
+                                        "We couldn't check the calculator storage.")
+                        }
+                        if (!t.fits) return setStatus("Not enough free memory on your calculator for this game.", "error", !0), autoQueued = !1, void await d("Sorry!",
+                                "Your calculator does not have enough free memory to receive this file.");
+                        sending = !0, setStatus(e ? "Sending your game automatically…" : "Sending your game…", "working"), updateUi();
+                        try {
+                                await r.sendFile(s);
+                                const t = document.getElementById("start");
+                                t && t.classList.add("complete"), setStatus("Transfer complete! Enjoy your game 🎉", "success", !0), e || await d("Success!",
+                                        "The file has been sent!")
+                        } catch (n) {
+                                console.error(n), setStatus("Transfer failed. Please try again.", "error", !0), autoQueued = !1, await d("Sorry!",
+                                        "Something went wrong 😢")
+                        } finally {
+                                sending = !1, updateUi()
+                        }
+                }
                 window.transferTool = {
                         loadFileFromArrayBuffer(e, n = {}) {
                                 try {
                                         const o = e instanceof Uint8Array ? e : new Uint8Array(e),
                                                 a = t.parseFile(o);
-                                        if (!t.isValid(a)) return s = null, i(), {
-                                                success: !1,
-                                                reason: "invalid"
-                                        };
+                                        if (!t.isValid(a)) return s = null, autoQueued = !1, unlockStatus(), setStatus("The provided file is not a valid TI calculator file.", "error", !0),
+                                                updateUi(), {
+                                                        success: !1,
+                                                        reason: "invalid"
+                                                };
                                         const l = "string" == typeof n ? n : n && n.name ? n.name : "";
                                         l && (a.displayName = l);
-                                        if (r && !r.canReceive(a)) return {
-                                                success: !1,
-                                                reason: "incompatible",
-                                                device: r.name || null
-                                        };
-                                        return s = a, i(), {
-                                                success: !0
+                                        if (r && !r.canReceive(a)) return autoQueued = !1, setStatus(r.name ? `The selected file is not compatible with your ${r.name}.` : "The selected file is not compatible with the connected calculator.", "error", !0),
+                                                {
+                                                        success: !1,
+                                                        reason: "incompatible",
+                                                        device: r.name || null
+                                                };
+                                        return s = a, autoQueued = !1, unlockStatus(), updateUi(), {
+                                                success: !0,
+                                                details: getFileDetails(a)
                                         }
                                 } catch (e) {
-                                        return console.error("Automatic load failed", e), {
+                                        return console.error("Automatic load failed", e), setStatus("We couldn't load that file. Please try again.", "error", !0), {
                                                 success: !1,
                                                 reason: "error",
                                                 message: e && e.message ? e.message : String(e)
@@ -937,96 +1041,465 @@
                                 }
                         },
                         clearFile() {
-                                s = null, i()
+                                s = null, autoQueued = !1, unlockStatus(), updateUi()
                         },
                         getState() {
                                 return {
                                         hasDevice: !!r,
                                         deviceName: r ? r.name : null,
                                         hasFile: !!s,
-                                        fileName: s && (s.displayName || s.name || s.fileName || "")
+                                        fileName: s && (s.displayName || s.name || s.fileName || ""),
+                                        fileDetails: s ? getFileDetails(s) : null,
+                                        isSending: sending
                                 }
                         }
                 }
                 window.addEventListener("load", (() => {
-			e.browserSupported() ? (function() {
-					const t = e.models().filter((e => "supported" == e.status || "beta" == e.status)).map((e => "beta" == e.status ? e
-						.name + " (beta)" : e.name)).join(", ");
-					document.querySelector("#supported").innerText = t
-				}(), e.addEventListener("disconnect", (e => {
-					e == r && (r = null, i())
-				})), e.addEventListener("connect", (async e => "experimental" == e.status || "beta" == e.status ? l("Be careful!",
-					`Your device (${e.name}) only has ${e.status} support. Are you sure you want to continue?`).then((() =>
-					c(e))).catch((() => {})) : c(e))), i(), document.querySelector("#connect").addEventListener("click", (() => e
-					.choose().catch((e => o(e))))), document.querySelector("#upload").addEventListener("click", (() => function() {
-					const e = document.createElement("input");
-					e.type = "file", e.accept = ".8xp,.8xg,.83p,.83g,.82p,.82g", e.addEventListener("change", (async e => {
-						if (s = t.parseFile(await
-								function(e) {
-									return new Promise(((t, n) => {
-										var r = new FileReader;
-										r.addEventListener("load", (e => t(new Uint8Array(e.target
-											.result)))), r.readAsArrayBuffer(e)
-									}))
-								}(e.target.files[0])), console.log(s), t.isValid(s) || (s = null, d("Sorry!",
-								"The file you have selected does not seem to be a valid calculator file")), r &&
-							!r.canReceive(s)) return d("Careful!",
-							`The file you have selected does not appear to be a valid file for your ${r.name}.`
-							);
-						i()
-					})), e.click()
-				}())), document.querySelector("#start").addEventListener("click", (() => async function() {
-					if (r && s) {
-						if (!r.canReceive(s)) return d("Sorry!",
-							`The file you have selected does not appear to be a valid file for your ${r.name}.`);
-						if (!(await r.getStorageDetails(s)).fits) return d("Sorry!",
-							"Your calculator does not have enough free memory to receive this file.");
-						try {
-							await r.sendFile(s), document.querySelector("#start").classList.remove("active"), document
-								.querySelector("#start").classList.add("complete"), d("Success!", "The file has been sent!")
-						} catch (e) {
-							d("Sorry!", "Something went wrong 😢"), console.error(e)
-						}
-					}
-				}())), e.init({
-					supportLevel: "none"
-				}).catch((e => o(e))), document.querySelector("#flow").classList.add("active"), document.querySelector("#incompatible")
-				.classList.remove("active")) : (document.querySelector("#flow").classList.remove("active"), document.querySelector(
-				"#incompatible").classList.add("active"))
-		}))
+                        if (e.browserSupported()) {
+                                (function() {
+                                        const t = e.models().filter((e => "supported" == e.status || "beta" == e.status)).map((e => "beta" == e.status ? e.name + " (beta)" : e.name)).join(", ");
+                                        document.querySelector("#supported").innerText = t
+                                })();
+                                e.addEventListener("disconnect", (e => {
+                                        if (e == r) {
+                                                r = null, autoQueued = !1, unlockStatus(), setStatus("Calculator disconnected. Reconnect to continue.", "error", !0), updateUi()
+                                        }
+                                }));
+                                e.addEventListener("connect", (async t => "experimental" == t.status || "beta" == t.status ? l("Be careful!",
+                                        `Your device (${t.name}) only has ${t.status} support. Are you sure you want to continue?`).then((() => c(t))).catch((() => {})) : c(t)));
+                                updateUi();
+                                const n = document.querySelector("#connect");
+                                n && n.addEventListener("click", (() => e.choose().catch((e => o(e)))));
+                                const i = document.querySelector("#upload");
+                                i && i.addEventListener("click", (() => {
+                                        const e = document.createElement("input");
+                                        e.type = "file", e.accept = ".8xp,.8xg,.83p,.83g,.82p,.82g", e.addEventListener("change", (async e => {
+                                                const n = e.target.files && e.target.files[0];
+                                                if (!n) return;
+                                                autoQueued = !1, unlockStatus();
+                                                try {
+                                                        s = t.parseFile(await function(e) {
+                                                                return new Promise(((t, n) => {
+                                                                        var r = new FileReader;
+                                                                        r.addEventListener("load", (e => t(new Uint8Array(e.target.result)))), r.readAsArrayBuffer(e)
+                                                                }))
+                                                        }(n))
+                                                } catch (t) {
+                                                        return console.error(t), s = null, setStatus("We couldn't read that file. Please try another one.", "error", !0), void updateUi()
+                                                }
+                                                if (!t.isValid(s)) return s = null, setStatus("The file you have selected does not seem to be a valid calculator file.", "error", !0), await d("Sorry!", "The file you have selected does not seem to be a valid calculator file"), updateUi(),
+                                                        void 0;
+                                                if (r && !r.canReceive(s)) return setStatus(`The file you have selected does not appear to be a valid file for your ${r.name}.`, "error", !0), void await d("Careful!", `The file you have selected does not appear to be a valid file for your ${r.name}.`);
+                                                updateUi()
+                                        })), e.click()
+                                }));
+                                const c = document.querySelector("#start");
+                                c && c.addEventListener("click", (() => {
+                                        startTransfer(!1)
+                                }));
+                                e.init({
+                                        supportLevel: "none"
+                                }).catch((t => o(t)));
+                                document.querySelector("#flow").classList.add("active"), document.querySelector("#incompatible").classList.remove("active")
+                        } else document.querySelector("#flow").classList.remove("active"), document.querySelector("#incompatible").classList.add("active");
+                        updateUi()
+                }))
 	})()
 })();
     </script>
     <style>
+        :root {
+            color-scheme: dark;
+        }
+        * {
+            box-sizing: border-box;
+        }
         body {
+            margin: 0;
+            padding: 0;
+            font-family: "Heebo", "Helvetica Neue", Arial, sans-serif;
+            color: #f8fafc;
             background: transparent !important;
-        } 
-        h1, p {
-            color: white !important;
+        }
+        a {
+            color: #8bd3ff;
+        }
+        main.transfer-app {
+            padding: 2rem clamp(1rem, 3vw, 2.5rem);
+        }
+        .transfer-app section {
+            display: none;
+        }
+        .transfer-app section.active {
+            display: block;
+        }
+        .transfer-header {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+        .transfer-header h1 {
+            margin: 0 0 0.5rem;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            letter-spacing: -0.02em;
+        }
+        .transfer-header p {
+            margin: 0;
+            max-width: 42rem;
+            color: rgba(226, 232, 240, 0.86);
+            font-size: 1.05rem;
+        }
+        .card-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .card-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        .card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.85));
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 18px;
+            padding: 1.75rem;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+        }
+        .card h2 {
+            margin: 0 0 0.75rem;
+            font-size: 1.35rem;
+            color: #ffffff;
+        }
+        .card-status {
+            margin: 0 0 1.25rem;
+            color: rgba(226, 232, 240, 0.75);
+            font-size: 0.98rem;
+        }
+        .file-summary {
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(96, 165, 250, 0.45);
+            border-radius: 14px;
+            padding: 1.25rem;
+            min-height: 9.5rem;
+            font-size: 0.95rem;
+            color: rgba(226, 232, 240, 0.9);
+            overflow: hidden;
+        }
+        .file-summary p {
+            margin: 0;
+        }
+        .summary-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        .summary-header h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .summary-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            background: rgba(45, 212, 191, 0.18);
+            border: 1px solid rgba(45, 212, 191, 0.4);
+            color: #5eead4;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .summary-meta {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem 1rem;
+            margin: 0 0 0.75rem;
+        }
+        .summary-meta div {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        .summary-meta dt {
+            margin: 0;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: rgba(148, 163, 184, 0.8);
+        }
+        .summary-meta dd {
+            margin: 0;
+            font-weight: 600;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+        }
+        .entry-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0.5rem;
+            display: grid;
+            gap: 0.35rem;
+        }
+        .entry-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            background: rgba(15, 23, 42, 0.65);
+            border-radius: 10px;
+            padding: 0.55rem 0.75rem;
+        }
+        .entry-name {
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .entry-meta {
+            font-size: 0.85rem;
+            color: rgba(148, 163, 184, 0.85);
+        }
+        .entry-tag {
+            margin-left: 0.5rem;
+            padding: 0.1rem 0.5rem;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.2);
+            color: #bfdbfe;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .entry-more {
+            justify-content: flex-start;
+            color: rgba(148, 163, 184, 0.85);
+            font-style: italic;
+        }
+        .summary-comment {
+            margin: 0;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+            color: rgba(203, 213, 225, 0.8);
+            font-size: 0.9rem;
+        }
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+        .button {
+            appearance: none;
+            border: none;
+            border-radius: 999px;
+            padding: 0.75rem 1.6rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease, color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .button--primary {
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            color: #0f172a;
+            box-shadow: 0 16px 35px rgba(99, 102, 241, 0.35);
+        }
+        .button--primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(99, 102, 241, 0.45);
+        }
+        .button--ghost {
+            background: transparent;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            color: rgba(226, 232, 240, 0.9);
+        }
+        .button--ghost:hover:not(:disabled) {
+            border-color: rgba(148, 163, 184, 0.7);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        #connect.is-active {
+            box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.0);
+        }
+        #connect.is-complete::after {
+            content: "Connected";
+            margin-left: 0.6rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(15, 23, 42, 0.8);
+        }
+        #start.is-ready:not(:disabled) {
+            box-shadow: 0 16px 35px rgba(45, 212, 191, 0.35);
+            background: linear-gradient(135deg, #34d399, #22d3ee);
+            color: #052e16;
+        }
+        #start.is-sending {
+            position: relative;
+        }
+        #start.is-sending::after {
+            content: "";
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            border: 2px solid rgba(15, 23, 42, 0.2);
+            border-top-color: rgba(15, 23, 42, 0.6);
+            animation: spin 0.75s linear infinite;
+            display: inline-block;
+            margin-left: 0.75rem;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .auto-indicator {
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: rgba(34, 211, 238, 0.8);
+        }
+        .transfer-footer {
+            margin-top: 2rem;
+            display: grid;
+            gap: 1rem;
+        }
+        .status-banner {
+            padding: 1rem 1.25rem;
+            border-radius: 14px;
+            font-weight: 500;
+            transition: background 0.2s ease, border-color 0.2s ease;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+        }
+        .status-info {
+            background: rgba(30, 64, 175, 0.25);
+            border-color: rgba(59, 130, 246, 0.35);
+        }
+        .status-ready {
+            background: rgba(16, 185, 129, 0.18);
+            border-color: rgba(52, 211, 153, 0.45);
+            color: #bbf7d0;
+        }
+        .status-working {
+            background: rgba(14, 165, 233, 0.25);
+            border-color: rgba(14, 165, 233, 0.45);
+        }
+        .status-success {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.5);
+            color: #dcfce7;
+        }
+        .status-error {
+            background: rgba(248, 113, 113, 0.2);
+            border-color: rgba(248, 113, 113, 0.45);
+            color: #fee2e2;
+        }
+        .support-note {
+            margin: 0;
+            font-size: 0.9rem;
+            color: rgba(203, 213, 225, 0.7);
+        }
+        .support-note span {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+        #incompatible {
+            text-align: center;
+            padding: 4rem 1.5rem;
+        }
+        #incompatible h1 {
+            margin-bottom: 1rem;
+        }
+        #incompatible p {
+            color: rgba(226, 232, 240, 0.8);
+            font-size: 1.05rem;
+        }
+        footer.transfer-footer-meta {
+            padding: 1.5rem;
+            text-align: center;
+            color: rgba(148, 163, 184, 0.75);
+            font-size: 0.85rem;
+        }
+        footer.transfer-footer-meta a {
+            color: rgba(129, 140, 248, 0.9);
+        }
+        #popup {
+            font-family: inherit;
+        }
+        #popup #content {
+            border-radius: 18px;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            color: #f8fafc;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.45);
+        }
+        #popup button {
+            border-radius: 999px;
+            border: none;
+            padding: 0.6rem 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        #popup button.yes {
+            background: linear-gradient(135deg, #34d399, #22d3ee);
+            color: #052e16;
+        }
+        #popup button.no {
+            background: rgba(148, 163, 184, 0.25);
+            color: #e2e8f0;
         }
     </style>
   </head>
   <body>
-    <main>
+    <main class="transfer-app">
       <section id="flow" class="active">
-        <h1>Transfer</h1>
-        <p>Send a file to your calculator over USB from right here in your web browser.</p>
-        <section class="buttons">
-          <button id="connect" class="active"><span>1</span> Select calculator</button>
-          <button id="upload"><span>2</span> Select file</button>
-          <button id="start"><span>3</span> Send it!</button>
-        </section>
-        <p>Currently supported: <span id="supported">TI-84 Plus, TI-84 Plus SE (beta), TI-83 Premium CE (beta), TI-84 Plus CE (beta)</span></p>
+        <header class="transfer-header">
+          <h1>Calculator Transfer</h1>
+          <p>Automatically send calculator games to your TI device directly from the browser.</p>
+        </header>
+        <div class="card-grid">
+          <article class="card">
+            <h2>1. Connect your calculator</h2>
+            <p id="device-status" class="card-status">No calculator connected yet.</p>
+            <button id="connect" class="button button--primary">Connect calculator</button>
+          </article>
+          <article class="card">
+            <h2>2. Choose a game file</h2>
+            <div id="file-summary" class="file-summary">
+              <p>Select a TI game file to see its details.</p>
+            </div>
+            <div class="button-row">
+              <button id="upload" class="button button--ghost">Choose file</button>
+              <button id="start" class="button button--primary" disabled>Send to calculator</button>
+            </div>
+            <p id="auto-send-indicator" class="auto-indicator" hidden>Ready to transfer automatically once everything is connected.</p>
+          </article>
+        </div>
+        <div class="transfer-footer">
+          <div id="transfer-status" class="status-banner status-info" data-state="info">Connect your calculator and load a game file to start.</div>
+          <p class="support-note">Supported calculators: <span id="supported">TI-84 Plus, TI-84 Plus SE (beta), TI-83 Premium CE (beta), TI-84 Plus CE (beta)</span></p>
+        </div>
       </section>
       <section id="incompatible">
-        <h1>ticalc.link</h1>
-        <p>Sorry, this web browser does not support WebUSB. Please try using a different web browser!</p>
+        <h1>Browser not supported</h1>
+        <p>Sorry, this web browser does not support WebUSB. Please try using a different browser such as Google Chrome.</p>
       </section>
     </main>
-    <footer>
-      <p>
-        Credit: <a href="https://github.com/Timendus/ticalc.link">on Github</a>.
-      </p>
+    <footer class="transfer-footer-meta">
+      <p>Credit: <a href="https://github.com/Timendus/ticalc.link">ticalc.link on GitHub</a>.</p>
     </footer>
     <section id="popup">
       <section id="content">
@@ -1035,6 +1508,6 @@
         <section class="buttons"></section>
       </section>
     </section>
-  
+
 
 </body></html>
