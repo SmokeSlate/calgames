@@ -855,9 +855,9 @@
 			ticalc: e,
 			tifiles: t
 		} = n(918);
-                let r = null,
-                        s = null,
-                        sending = !1,
+                let connectedDevice = null,
+                        selectedFile = null,
+                        isSending = !1,
                         autoQueued = !1,
                         statusLocked = !1;
 
@@ -923,22 +923,22 @@
                                 o = document.getElementById("device-status"),
                                 a = document.getElementById("file-summary"),
                                 u = document.getElementById("auto-send-indicator");
-                        e && (e.classList.toggle("is-complete", !!r), e.classList.toggle("is-active", !r), e.disabled = sending), t && (t.disabled = sending,
-                                t.classList.toggle("is-ready", !!s));
+                        e && (e.classList.toggle("is-complete", !!connectedDevice), e.classList.toggle("is-active", !connectedDevice), e.disabled = isSending), t && (t.disabled = isSending,
+                                t.classList.toggle("is-ready", !!selectedFile));
                         if (n) {
-                                n.disabled = !r || !s || sending, n.classList.toggle("is-ready", !!r && !!s), n.classList.toggle("is-sending", sending), n.textContent = sending ? "Sending…" : "Send to calculator"
+                                n.disabled = !connectedDevice || !selectedFile || isSending, n.classList.toggle("is-ready", !!connectedDevice && !!selectedFile), n.classList.toggle("is-sending", isSending), n.textContent = isSending ? "Sending…" : "Send to calculator"
                         }
-                        o && (o.textContent = r ? r.name + " connected" : "No calculator connected yet."), a && (a.innerHTML = s ? renderFileSummary(s) : "<p>Select a TI game file to see its details.</p>"),
-                                u && (u.hidden = !(r && s));
-                        if (!r || !s) return autoQueued = !1, sending || (unlockStatus(), r ? setStatus("Choose a calculator game to send to your device.", "info") : s ? setStatus("Connect your calculator to begin the transfer.", "info") : setStatus("Connect your calculator and load a game file to start.", "info")),
+                        o && (o.textContent = connectedDevice ? (connectedDevice.name ? connectedDevice.name + " connected" : "Calculator connected") : "No calculator connected yet."), a && (a.innerHTML = selectedFile ? renderFileSummary(selectedFile) : "<p>Select a TI game file to see its details.</p>"),
+                                u && (u.hidden = !(connectedDevice && selectedFile));
+                        if (!connectedDevice || !selectedFile) return autoQueued = !1, isSending || (unlockStatus(), connectedDevice ? setStatus("Choose a calculator game to send to your device.", "info") : selectedFile ? setStatus("Connect your calculator to begin the transfer.", "info") : setStatus("Connect your calculator and load a game file to start.", "info")),
                                 void 0;
-                        if (sending) return void setStatus("Sending your game…", "working");
+                        if (isSending) return void setStatus("Sending your game…", "working");
                         autoQueued || (setStatus("Ready! Starting the transfer automatically…", "ready"), autoQueued = !0, setTimeout((() => {
                                 startTransfer(!0)
                         }), 150))
                 }
                 async function c(e) {
-                        await e.isReady() ? (r = e, autoQueued = !1, unlockStatus(), setStatus("Calculator connected. Choose a game to transfer.", "ready"), updateUi()) : d("Sorry!", "The connected device does not seem to be responding.")
+                        await e.isReady() ? (connectedDevice = e, autoQueued = !1, unlockStatus(), setStatus("Calculator connected. Choose a game to transfer.", "ready"), updateUi()) : d("Sorry!", "The connected device does not seem to be responding.")
                 }
 
                 function o(e) {
@@ -982,21 +982,22 @@
                         }))
                 }
                 async function startTransfer(e) {
-                        if (!r || !s || sending) return;
-                        if (!r.canReceive(s)) return setStatus(`The selected file is not compatible with your ${r.name}.`, "error", !0), autoQueued = !1, void await d("Careful!",
-                                `The file you have selected does not appear to be a valid file for your ${r.name}.`);
+                        if (!connectedDevice || !selectedFile || isSending) return;
+                        const deviceName = connectedDevice.name || "connected calculator";
+                        if (!connectedDevice.canReceive(selectedFile)) return setStatus(`The selected file is not compatible with your ${deviceName}.`, "error", !0), autoQueued = !1, void await d("Careful!",
+                                `The file you have selected does not appear to be a valid file for your ${deviceName}.`);
                         let t;
                         try {
-                                t = await r.getStorageDetails(s)
+                                t = await connectedDevice.getStorageDetails(selectedFile)
                         } catch (n) {
                                 return console.error(n), setStatus("Could not check calculator storage.", "error", !0), autoQueued = !1, void await d("Sorry!",
                                         "We couldn't check the calculator storage.")
                         }
                         if (!t.fits) return setStatus("Not enough free memory on your calculator for this game.", "error", !0), autoQueued = !1, void await d("Sorry!",
                                 "Your calculator does not have enough free memory to receive this file.");
-                        sending = !0, setStatus(e ? "Sending your game automatically…" : "Sending your game…", "working"), updateUi();
+                        isSending = !0, setStatus(e ? "Sending your game automatically…" : "Sending your game…", "working"), updateUi();
                         try {
-                                await r.sendFile(s);
+                                await connectedDevice.sendFile(selectedFile);
                                 const t = document.getElementById("start");
                                 t && t.classList.add("complete"), setStatus("Transfer complete! Enjoy your game 🎉", "success", !0), e || await d("Success!",
                                         "The file has been sent!")
@@ -1004,7 +1005,7 @@
                                 console.error(n), setStatus("Transfer failed. Please try again.", "error", !0), autoQueued = !1, await d("Sorry!",
                                         "Something went wrong 😢")
                         } finally {
-                                sending = !1, updateUi()
+                                isSending = !1, updateUi()
                         }
                 }
                 window.transferTool = {
@@ -1012,20 +1013,20 @@
                                 try {
                                         const o = e instanceof Uint8Array ? e : new Uint8Array(e),
                                                 a = t.parseFile(o);
-                                        if (!t.isValid(a)) return s = null, autoQueued = !1, unlockStatus(), setStatus("The provided file is not a valid TI calculator file.", "error", !0),
+                                        if (!t.isValid(a)) return selectedFile = null, autoQueued = !1, unlockStatus(), setStatus("The provided file is not a valid TI calculator file.", "error", !0),
                                                 updateUi(), {
                                                         success: !1,
                                                         reason: "invalid"
                                                 };
                                         const l = "string" == typeof n ? n : n && n.name ? n.name : "";
                                         l && (a.displayName = l);
-                                        if (r && !r.canReceive(a)) return autoQueued = !1, setStatus(r.name ? `The selected file is not compatible with your ${r.name}.` : "The selected file is not compatible with the connected calculator.", "error", !0),
+                                        if (connectedDevice && !connectedDevice.canReceive(a)) return autoQueued = !1, setStatus(connectedDevice.name ? `The selected file is not compatible with your ${connectedDevice.name}.` : "The selected file is not compatible with the connected calculator.", "error", !0),
                                                 {
                                                         success: !1,
                                                         reason: "incompatible",
-                                                        device: r.name || null
+                                                        device: connectedDevice.name || null
                                                 };
-                                        return s = a, autoQueued = !1, unlockStatus(), updateUi(), {
+                                        return selectedFile = a, autoQueued = !1, unlockStatus(), updateUi(), {
                                                 success: !0,
                                                 details: getFileDetails(a)
                                         }
@@ -1038,16 +1039,16 @@
                                 }
                         },
                         clearFile() {
-                                s = null, autoQueued = !1, unlockStatus(), updateUi()
+                                selectedFile = null, autoQueued = !1, unlockStatus(), updateUi()
                         },
                         getState() {
                                 return {
-                                        hasDevice: !!r,
-                                        deviceName: r ? r.name : null,
-                                        hasFile: !!s,
-                                        fileName: s && (s.displayName || s.name || s.fileName || ""),
-                                        fileDetails: s ? getFileDetails(s) : null,
-                                        isSending: sending
+                                        hasDevice: !!connectedDevice,
+                                        deviceName: connectedDevice ? connectedDevice.name : null,
+                                        hasFile: !!selectedFile,
+                                        fileName: selectedFile && (selectedFile.displayName || selectedFile.name || selectedFile.fileName || ""),
+                                        fileDetails: selectedFile ? getFileDetails(selectedFile) : null,
+                                        isSending: isSending
                                 }
                         }
                 }
@@ -1058,8 +1059,8 @@
                                         document.querySelector("#supported").innerText = t
                                 })();
                                 e.addEventListener("disconnect", (e => {
-                                        if (e == r) {
-                                                r = null, autoQueued = !1, unlockStatus(), setStatus("Calculator disconnected. Reconnect to continue.", "error", !0), updateUi()
+                                        if (e == connectedDevice) {
+                                                connectedDevice = null, autoQueued = !1, unlockStatus(), setStatus("Calculator disconnected. Reconnect to continue.", "error", !0), updateUi()
                                         }
                                 }));
                                 e.addEventListener("connect", (async t => "experimental" == t.status || "beta" == t.status ? l("Be careful!",
@@ -1075,18 +1076,21 @@
                                                 if (!n) return;
                                                 autoQueued = !1, unlockStatus();
                                                 try {
-                                                        s = t.parseFile(await function(e) {
+                                                        selectedFile = t.parseFile(await function(e) {
                                                                 return new Promise(((t, n) => {
                                                                         var r = new FileReader;
                                                                         r.addEventListener("load", (e => t(new Uint8Array(e.target.result)))), r.readAsArrayBuffer(e)
                                                                 }))
                                                         }(n))
                                                 } catch (t) {
-                                                        return console.error(t), s = null, setStatus("We couldn't read that file. Please try another one.", "error", !0), void updateUi()
+                                                        return console.error(t), selectedFile = null, setStatus("We couldn't read that file. Please try another one.", "error", !0), void updateUi()
                                                 }
-                                                if (!t.isValid(s)) return s = null, setStatus("The file you have selected does not seem to be a valid calculator file.", "error", !0), await d("Sorry!", "The file you have selected does not seem to be a valid calculator file"), updateUi(),
+                                                if (!t.isValid(selectedFile)) return selectedFile = null, setStatus("The file you have selected does not seem to be a valid calculator file.", "error", !0), await d("Sorry!", "The file you have selected does not seem to be a valid calculator file"), updateUi(),
                                                         void 0;
-                                                if (r && !r.canReceive(s)) return setStatus(`The file you have selected does not appear to be a valid file for your ${r.name}.`, "error", !0), void await d("Careful!", `The file you have selected does not appear to be a valid file for your ${r.name}.`);
+                                                if (connectedDevice && !connectedDevice.canReceive(selectedFile)) {
+                                                        const deviceName = connectedDevice.name || "connected calculator";
+                                                        return setStatus(`The file you have selected does not appear to be a valid file for your ${deviceName}.`, "error", !0), void await d("Careful!", `The file you have selected does not appear to be a valid file for your ${deviceName}.`)
+                                                }
                                                 updateUi()
                                         })), e.click()
                                 }));
