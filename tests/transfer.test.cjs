@@ -57,3 +57,25 @@ test('invalid files clear the actual transfer bridge ready state', async () => {
   await new Promise(resolve => setImmediate(resolve));
   w.close();
 });
+
+test('discovery keeps distinct USB devices separate and reconnects after disconnect', async () => {
+  const start = script.indexOf('async function p(e) {');
+  const end = script.indexOf('function T()', start);
+  const initialization = script.match(/const a = [^,]+,/)[0].replace(/,$/, ';');
+  let connections = 0;
+  const context = vm.createContext({
+    o: [{ matcher: { vendorId: 1 }, connect: async device => ({ device, connection: ++connections }) }],
+    console: { debug() {} }, u: { connect: [], disconnect: [] }
+  });
+  vm.runInContext(initialization + '\n' + script.slice(start, end), context);
+  const first = { vendorId: 1 }, second = { vendorId: 1 };
+  const a = await context._(first), b = await context._(second);
+  assert.equal(a.device, first);
+  assert.equal(b.device, second);
+  const expression = script.match(/navigator\.usb\.addEventListener\("disconnect", (\(e => \{[\s\S]*?\}\))\)/)[1];
+  const disconnect = vm.runInContext(expression, context);
+  disconnect({ device: first });
+  const reconnected = await context._(first);
+  assert.notEqual(reconnected, a);
+  assert.equal(reconnected.device, first);
+});
