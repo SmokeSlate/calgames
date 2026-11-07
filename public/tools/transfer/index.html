@@ -539,7 +539,7 @@
 							s = [n(699), n(662), n(340), n(986), n(659), n(770), n(484)],
 							i = ["none", "experimental", "beta", "partial-support", "supported"];
 						let c, o = d();
-						const a = {},
+						const a = new WeakMap(),
 							u = {
 								connect: [],
 								disconnect: []
@@ -563,10 +563,10 @@
 								device: e
 							};
 							const n = await t.connect(e);
-							return a[e.toString()] = n, n
+							return a.set(e, n), n
 						}
 						async function _(e) {
-							return a[e] || await p(e)
+							return a.get(e) || await p(e)
 						}
 
 						function T() {
@@ -601,7 +601,8 @@
 									const t = await _(e.device);
 									console.debug("📱 Calculator connected"), t && u.connect.forEach((e => e(t)))
 								})), navigator.usb.addEventListener("disconnect", (e => {
-									const t = a[e.device];
+									const t = a.get(e.device);
+                                    a.delete(e.device);
 									console.debug("📱 Calculator disconnected"), t && u.disconnect.forEach((e => e(t)))
 								}));
 								const t = await navigator.usb.getDevices();
