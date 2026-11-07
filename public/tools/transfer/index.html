@@ -598,7 +598,7 @@
 							},
 							init: async (e = {}) => {
 								e.usb || T(), o = d(e.supportLevel), navigator.usb.addEventListener("connect", (async e => {
-									const t = await _(device);
+									const t = await _(e.device);
 									console.debug("📱 Calculator connected"), t && u.connect.forEach((e => e(t)))
 								})), navigator.usb.addEventListener("disconnect", (e => {
 									const t = a[e.device];
@@ -703,8 +703,38 @@
 							return 26 == e[0] && 12 == e[1] && 0 == e[2] ? "TI-85 style signature present" : 26 == e[0] && 10 == e[1] &&
 								0 == e[2] ? "TI-73/82/83/86 style signature present" : "NONE"
 						}
+                        function validVariableFile(bytes) {
+                            if (!bytes || bytes.length < 57) return false;
+                            const signature = r.bytesToAscii(bytes.slice(0, 8));
+                            if (!["**TI73**", "**TI82**", "**TI83**", "**TI83F*", "**TI85**", "**TI86**"].includes(signature)) return false;
+                            const read16 = offset => bytes[offset] | (bytes[offset + 1] << 8);
+                            if (bytes[8] !== 26 || bytes[9] !== (signature === "**TI85**" ? 12 : 10)) return false;
+                            // Byte 10 is a product/export identifier, not a fixed zero byte.
+                            const size = read16(53);
+                            const end = 55 + size;
+                            if (!size || end + 2 !== bytes.length) return false;
+                            let sum = 0;
+                            for (let offset = 55; offset < end; offset++) sum = (sum + bytes[offset]) & 65535;
+                            if (sum !== read16(end)) return false;
+                            let offset = 55;
+                            while (offset < end) {
+                                if (offset + 6 > end) return false;
+                                const header = read16(offset);
+                                const nameLength = bytes[offset + 5];
+                                if (signature === "**TI85**" || signature === "**TI86**") {
+                                    if (nameLength < 1 || nameLength > 8 || header !== 4 + (signature === "**TI86**" && header >= 12 ? 8 : nameLength)) return false;
+                                } else if (header !== 11 && header !== 13) return false;
+                                const headerSize = header + 4;
+                                if (offset + headerSize > end) return false;
+                                const dataSize = read16(offset + 2);
+                                if (dataSize !== read16(offset + headerSize - 2) || offset + headerSize + dataSize > end) return false;
+                                offset += headerSize + dataSize;
+                            }
+                            return offset === end;
+                        }
 						e.exports = {
 							parseFile: e => {
+                                if (!validVariableFile(e)) return { calcType: "NONE", size: 0, entries: [], debug: { sizeCorrect: false } };
 								const t = (n = e.slice(0, 8), {
 									"**TI73**": "TI-73",
 									"**TI82**": "TI-82",
