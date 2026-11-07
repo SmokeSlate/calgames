@@ -53,6 +53,7 @@
     <p>Not affiliated with TI. Use at your own risk.</p>
 </footer>
 
+<script src="/assets/js/catalog.js"></script>
 <script src="/assets/js/site.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
@@ -126,24 +127,24 @@
         const uploaderLink = Array.isArray(game.fileUpload) && game.fileUpload.length
             ? `<a href="/tools/uploader/?files=${encodeURIComponent(JSON.stringify(game.fileUpload))}&title=${encodeURIComponent(game.title)}" class="button button--secondary">Load in uploader</a>`
             : '';
-        const description = truncateDescription(game.description);
+        const description = truncateDescription(CalgamesCatalog.plainDescription(game.description));
         const author = typeof game.author === 'string' && game.author.trim()
-            ? `<p class="card__meta">${game.author.trim()}</p>`
+            ? `<p class="card__meta">${CalgamesCatalog.text(game.author.trim())}</p>`
             : '';
 
         return `
             <article class="card card--game js-reveal">
                 <figure class="card__art">
-                    <img src="${game.image}" alt="${game.title}" loading="lazy">
+                    <img src="${CalgamesCatalog.text(CalgamesCatalog.url(game.image))}" alt="${CalgamesCatalog.text(game.title)}" loading="lazy">
                 </figure>
                 <div class="card__info">
                     <div class="card__body">
-                        <h3 class="card__title">${game.title}</h3>
+                        <h3 class="card__title">${CalgamesCatalog.text(game.title)}</h3>
                         ${author}
-                        <p class="card__description">${description}</p>
+                        <p class="card__description">${CalgamesCatalog.text(description)}</p>
                     </div>
                     <div class="card__actions">
-                        <a href="${detailLink}" class="button">View game</a>
+                        <a href="${CalgamesCatalog.text(CalgamesCatalog.url(detailLink))}" class="button">View game</a>
                         ${uploaderLink}
                     </div>
                 </div>

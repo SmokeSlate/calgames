@@ -84,6 +84,7 @@
         <div id="game-list">
             <!-- List items will be populated here -->
         </div>
+        <button onclick="loadGames()">Load from GitHub, replace draft</button>
         <button onclick="saveOrder()">Save Order</button>
         <div class="output">
             <h3>Reordered List Output</h3>
@@ -102,7 +103,9 @@ const GITHUB_REPO = 'calgames';
 const GITHUB_FILE_PATH = 'public/games/games.json';
 const GITHUB_API_URL = `https://api.github.com/repos/smokeslate/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
 let games = []; // List of games from JSON
-let sha; // File SHA needed to update the file
+let sha = null;
+let githubToken = '';
+let saving = false;
 
 // Login function
 function login() {
@@ -120,16 +123,28 @@ function login() {
 }
 
 // Fetch the games from the JSON file
-function loadGames() {
-    fetch('/games/games.json')
-        .then(response => response.json())
-        .then(data => {
-            games = data;
-            renderGames();
-        })
-        .catch(error => {
-            console.error('Error fetching games:', error);
+async function loadGames() {
+    const token = prompt('Enter a GitHub token with repository write access to load this catalogue:');
+    if (!token) return;
+    const draft = JSON.stringify(games);
+    sha = null;
+    try {
+        const response = await fetch(GITHUB_API_URL + '?ref=main', {
+            cache: 'no-store', headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' }
         });
+        if (!response.ok) throw new Error(`GitHub load rejected (${response.status}).`);
+        const file = await response.json();
+        const content = decodeURIComponent(escape(atob((file.content || '').replace(/\s/g, ''))));
+        const loaded = JSON.parse(content);
+        if (!Array.isArray(loaded) || !file.sha) throw new Error('GitHub returned an invalid catalogue or revision.');
+        if (draft !== JSON.stringify(games)) throw new Error('Your draft changed while loading. It has been kept; load again when ready.');
+        games = loaded;
+        sha = file.sha;
+        githubToken = token;
+        renderGames();
+    } catch (error) {
+        alert(error.message || 'Catalogue load failed. Your current draft has been kept.');
+    }
 }
 
 // Function to render games on the page
@@ -140,7 +155,9 @@ function renderGames() {
         const gameItem = document.createElement('div');
         gameItem.className = 'list-item';
         gameItem.setAttribute('draggable', true);
-        gameItem.innerHTML = `<strong>${game.title}</strong> - ${game.author}zx`;
+        const title = document.createElement('strong');
+        title.textContent = game.title || '';
+        gameItem.append(title, document.createTextNode(' - ' + (game.author || '')));
         gameItem.dataset.index = index;
         gameList.appendChild(gameItem);
     });
@@ -189,51 +206,32 @@ function saveOrder() {
 }
 
 // GitHub API call to update the JSON file
-function updateGitHubFile() {
-    const token = prompt("Enter your GitHub Personal Access Token:");
-    
-    if (!token) {
-        alert("GitHub token is required to update the file.");
+async function updateGitHubFile() {
+    if (saving) return;
+    if (!sha || !githubToken) {
+        alert('Load the catalogue from GitHub before saving. Your draft has been kept.');
         return;
     }
-
-    // Fetch the current file's SHA (needed for update)
-    fetch(GITHUB_API_URL, {
-        headers: {
-            Authorization: `token ${token}`,
-            Accept: "application/vnd.github.v3+json"
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        sha = data.sha;
-        const updatedContent = btoa(unescape(encodeURIComponent(JSON.stringify(games, null, 2))));
-        
-        // Make the PUT request to update the file
-        fetch(GITHUB_API_URL, {
+    saving = true;
+    try {
+        const response = await fetch(GITHUB_API_URL, {
             method: 'PUT',
-            headers: {
-                Authorization: `token ${token}`,
-                Accept: "application/vnd.github.v3+json"
-            },
+            headers: { Authorization: `Bearer ${githubToken}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 message: 'Update games.json via admin reorder',
-                content: updatedContent,
-                sha: sha,
+                content: btoa(unescape(encodeURIComponent(JSON.stringify(games, null, 2)))),
+                sha,
+                branch: 'main'
             })
-        })
-        .then(response => response.json())
-        .then(result => {
-            alert('Games.json updated successfully!');
-            console.log(result);
-        })
-        .catch(error => {
-            console.error('Error updating the file:', error);
         });
-    })
-    .catch(error => {
-        console.error('Error fetching file SHA:', error);
-    });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || `GitHub update rejected (${response.status}).`);
+        if (!result.content?.sha) { sha = null; throw new Error('GitHub accepted the request without a revision. Reload before saving again.'); }
+        sha = result.content.sha;
+        alert('Games.json updated successfully!');
+    } catch (error) {
+        alert(error.message || 'Update failed. Your draft has been kept.');
+    } finally { saving = false; }
 }
 
 </script>

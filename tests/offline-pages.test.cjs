@@ -17,6 +17,7 @@ async function page(file, route, particles) {
   w.fetch = async url => { calls.push(String(url)); return { ok: true, json: async () => [fixture] }; };
   const frame = w.document.getElementById('uploader-frame');
   if (frame) frame.contentWindow.transferTool = { getState: () => ({}), loadFileFromArrayBuffer: () => ({ success: true }) };
+  if (fs.existsSync('public/assets/js/catalog.js')) w.eval(fs.readFileSync('public/assets/js/catalog.js', 'utf8'));
   for (const script of w.document.querySelectorAll('script:not([src])')) w.eval(script.textContent);
   await tick();
   return { w, calls };

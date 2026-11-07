@@ -21,3 +21,10 @@ and [modern header product identifiers](https://github.com/TI-Toolkit/tivars_lib
 
 These are offline checks, not verification of real calculator transfers, firmware
 compatibility or delivery by an external contact backend.
+
+Catalogue renderers share `public/assets/js/catalog.js`. Titles/authors are encoded
+as text, links/images accept only HTTP(S), and rich descriptions retain only basic
+paragraphs, line breaks, emphasis, lists, code and safe links with no supplied attributes.
+The admin reorder tool loads content and its blob SHA together from GitHub and
+saves against that revision. Rejected/conflicting writes preserve the draft and
+require reloading/reconciling before retrying; no newest-SHA lookup bypasses conflicts.
