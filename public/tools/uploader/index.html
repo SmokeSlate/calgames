@@ -66,6 +66,7 @@
     <p>Not affiliated with TI. Use at your own risk.</p>
 </footer>
 
+<script src="/assets/js/catalog.js"></script>
 <script src="/assets/js/site.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
@@ -131,11 +132,7 @@
     }
 
     function toAbsoluteUrl(url) {
-        try {
-            return new URL(url, window.location.href).toString();
-        } catch (err) {
-            return url;
-        }
+        return CalgamesCatalog.url(url);
     }
 
     function fileNameFromUrl(url) {
@@ -160,6 +157,7 @@
         }
         if (typeof entry === 'string') {
             const absoluteUrl = toAbsoluteUrl(entry);
+            if (!absoluteUrl) return null;
             return {
                 url: absoluteUrl,
                 displayName: fileNameFromUrl(absoluteUrl)
@@ -171,6 +169,7 @@
                 return null;
             }
             const absoluteUrl = toAbsoluteUrl(sourceUrl);
+            if (!absoluteUrl) return null;
             const displayName = entry.name || entry.title || entry.filename || fileNameFromUrl(absoluteUrl);
             return {
                 url: absoluteUrl,

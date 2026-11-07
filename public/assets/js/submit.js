@@ -318,12 +318,12 @@ function formatDescriptionForListing(text) {
     .filter(Boolean);
 
   if (!paragraphs.length) {
-    return value.replace(/\r?\n/g, '<br>');
+    return window.CalgamesCatalog.description(value.replace(/\r?\n/g, '<br>'));
   }
 
-  return paragraphs
+  return window.CalgamesCatalog.description(paragraphs
     .map(paragraph => paragraph.replace(/\r?\n/g, '<br>'))
-    .join('<br><br>');
+    .join('<br><br>'));
 }
 
 function generateNextGameId(games) {
