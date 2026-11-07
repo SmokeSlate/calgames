@@ -199,7 +199,8 @@
 <script src="/assets/js/site.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
-    particlesJS('particles-js', {
+    try {
+        if (typeof particlesJS === 'function') particlesJS('particles-js', {
         "particles": {
             "number": {
                 "value": 80,
@@ -220,6 +221,7 @@
         "interactivity": {"events": {"resize": true}},
         "retina_detect": true
     });
+    } catch (_) { console.warn('Optional background animation is unavailable.'); }
 </script>
 <script>
     // Replace the placeholders below with your GitHub OAuth app and repository details.

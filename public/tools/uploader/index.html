@@ -69,7 +69,8 @@
 <script src="/assets/js/site.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
-    particlesJS('particles-js', {
+    try {
+        if (typeof particlesJS === 'function') particlesJS('particles-js', {
         "particles": {
             "number": {
                 "value": 90,
@@ -104,6 +105,7 @@
             }
         }
     });
+    } catch (_) { console.warn('Optional background animation is unavailable.'); }
 
     const urlParams = new URLSearchParams(window.location.search);
     const titleParam = urlParams.get('title');
@@ -117,7 +119,7 @@
     const iframeEl = document.getElementById('uploader-frame');
 
     if (titleParam) {
-        decodedTitle = decodeURIComponent(titleParam);
+        decodedTitle = titleParam;
         titleEl.textContent = `${decodedTitle} · File Uploader`;
         document.title = `${decodedTitle} · Calculator File Uploader`;
         descriptionEl.textContent = `Load the files for ${decodedTitle} below or choose a file manually.`;
@@ -220,26 +222,9 @@
         }
 
         if (files.length > 1) {
-            const loadAllButton = document.createElement('button');
-            loadAllButton.textContent = 'Load all files sequentially';
-            loadAllButton.className = 'button button--secondary';
-            loadAllButton.addEventListener('click', async () => {
-                loadAllButton.disabled = true;
-                loadAllButton.classList.add('loading');
-                updateStatus('Loading files…', 'notice');
-                for (const file of files) {
-                    const result = await loadFileIntoUploader(file);
-                    if (!result.success) {
-                        loadAllButton.disabled = false;
-                        loadAllButton.classList.remove('loading');
-                        return;
-                    }
-                }
-                updateStatus('All files were loaded. Use the uploader to send them one at a time.', 'success');
-                loadAllButton.disabled = false;
-                loadAllButton.classList.remove('loading');
-            });
-            fileControlsEl.appendChild(loadAllButton);
+            const instructions = document.createElement('p');
+            instructions.textContent = 'Load and send one file at a time in the order shown. Finish the current transfer before loading the next file.';
+            fileControlsEl.appendChild(instructions);
         }
 
         files.forEach(file => {

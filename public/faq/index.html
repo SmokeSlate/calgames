@@ -72,7 +72,8 @@
 <script src="/assets/js/site.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
-    particlesJS('particles-js', {
+    try {
+        if (typeof particlesJS === 'function') particlesJS('particles-js', {
         "particles": {
             "number": {
                 "value": 90,
@@ -107,6 +108,7 @@
             }
         }
     });
+    } catch (_) { console.warn('Optional background animation is unavailable.'); }
 </script>
 </body>
 </html>
